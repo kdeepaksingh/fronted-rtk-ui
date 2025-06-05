@@ -1,11 +1,13 @@
 import { Outlet } from "react-router-dom";
+import Header from "../pages/home/header/Header";
+import Footer from "../pages/home/footer/Footer";
 
 const PublicLayout = () => {
   return (
     <>
-      <h1>Header component calling here</h1>
+      <Header />
       <Outlet />
-      <h1>Footer component here</h1>
+      <Footer />
     </>
   );
 };

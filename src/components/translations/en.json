@@ -1,0 +1,11 @@
+{
+  "Header": {
+    "UserName": "Header Page"
+  },
+  "Title": {
+    "Dashboard": "Dashboard"
+  },
+  "Loader": {
+    "Loading": "loading..."
+  }
+}

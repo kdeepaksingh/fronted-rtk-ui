@@ -1,11 +1,12 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import "./index.css";
 import RouteProvider from "./routes/RouteProvider.tsx";
+import { ThemeProvider } from "@mui/material";
 import { Provider } from "react-redux";
 import { store } from "./store/store.ts";
-import { ThemeProvider } from "@mui/material";
+import "./components/translations";
 import theme from "./theme.ts";
+import "./index.css";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
