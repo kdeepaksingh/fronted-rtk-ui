@@ -58,9 +58,9 @@ const Link = ({
       onClick={handleClick}
       className={`
         font-semibold 
-        underline underline-dotted 
+        underline-dotted 
         cursor-pointer 
-        text-[1.3rem] 
+        text-[0.8rem] 
         ${textColorClass} 
         ${className}
       `}

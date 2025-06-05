@@ -33,7 +33,7 @@ const PublicRoutes = {
     },
     {
       path: "*",
-      element: <h1>Page Not found!</h1>,
+      element: <PageNotFound />,
     },
   ],
 };

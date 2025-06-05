@@ -1,9 +1,7 @@
 import * as React from "react";
 import * as MuiIcons from "@mui/icons-material";
-import EmpIcon from "../../assets/png/emp.png";
 
 const Icons: Record<string, any> = {
-  EmpIcon,
   ...MuiIcons,
 };
 

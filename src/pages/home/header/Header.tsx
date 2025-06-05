@@ -1,10 +1,9 @@
-import { useTranslation } from "react-i18next";
+import TopHeader from "./TopHeader";
 
 const Header = () => {
-    const { t } = useTranslation();
   return (
     <div>
-      <h1>{t("Header.UserName")}</h1>
+       <TopHeader />
     </div>
   )
 }

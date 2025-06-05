@@ -1,8 +1,9 @@
+import CopyRight from "./CopyRight"
 
 const Footer = () => {
   return (
     <div>
-      <h1>Footer Component</h1>
+      <CopyRight />
     </div>
   )
 }

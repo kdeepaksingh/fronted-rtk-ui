@@ -5,7 +5,40 @@
   "Title": {
     "Dashboard": "Dashboard"
   },
+  "Link": {
+    "ForgotPassword": "Forgot Password?",
+    "Feedback": "Feedback",
+    "Login": "Login",
+    "Register": "Register",
+    "BackToHome": "Back to Home",
+    "SkipToMainContent": "Skip to main content",
+    "ScreenReaderAccess": "Screen Reader Access",
+    "BackToDashboard": "Back to Dashboard"
+  },
   "Loader": {
     "Loading": "loading..."
+  },
+  "Typo": {
+    "SelectOnEmpty": "Select {{label}}",
+    "LastUpdated": "Last Updated By  {{date}}",
+    "TopLogoDescription": "<strong>Ministry of Labour and<br/>Employment<br/>Government of India</strong>",
+    "TotalVisitors": " | Total Unique Visitors is {{count}}",
+    "MinMaxCharCount": "min <b>{{mincount}}</b> characters required, max allowed characters <b>{{maxcount}}</b>, current characters count <b>({{current}})</b>",
+    "FooterContent": "Employee Management System, developed and maintained by Deepak Singh | ",
+    "FooterCopyRight": "ABC Technologies Pvt. Ltd. All rights reserved.",
+    "MaxCharCount": "max allowed characters <b>{{count}}</b>, current characters count <b>({{current}})</b>",
+    "FooterImgDescription": "<strong>Ministry of Labour and Employment</strong><br/>Government of India<br/>Shram Shakti Bhawan<br/>Rafi Marg, New Delhi-110001",
+    "DisclaimerContent": "The approval of implementation of National Child Labour Project (NCLP) Scheme was up to 31.03.2021. Thereafter, the scheme has been subsumed / merged with Samagra Shiksha Abhiyan (SSA). Thus, opening of new Special Training Centre (STCs) or enrolment of new children in the STCs after 31.03.2021, is not permitted. The children enrolled in STCs before 31.03.2021 will be mainstreamed as per NCLP Guidelines. This Ministry will not release fund for running of those STCs which have been opened & children have been enrolled after 31.03.2021.",
+    "CharCount": "minimum <b>{{count}}</b> characters required, current characters count <b>({{current}})</b>"
+  },
+  "Description": {
+    "ErrorMsg": "Oops! The page you're looking for doesn't exist or was moved. Try going back to the homepage.",
+    "ChildDesc": "Whoever, having been convicted of an offence under section 3 or section 3A commits a like offence afterwards, he shall be punishable with imprisonment for a term which shall not be less than one year but which may extend to three years.",
+    "Child2Desc": "The parents or guardian having been convicted of an offence under section 3 or section 3A, commits a like offence afterwards, he shall be punishable with a fine which may extend to ten thousand rupees.",
+    "NeighbourDesc": "The appropriate Government may confer such powers and impose such duties on a District Magistrate as may be necessary, to ensure that the provisions of this Act are properly carried out."
+  },
+  "Error": {
+    "DataNotFound": "Data Not Found!",
+    "PageNotFound": "404 - Page Not Found"
   }
 }
