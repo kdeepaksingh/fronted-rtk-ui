@@ -1,13 +1,61 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>EMP MANAGEMENT PORTAL</title>
+    <style>
+      @keyframes start-animation {
+        from {
+          opacity: 0;
+        }
+
+        to {
+          opacity: 1;
+        }
+      }
+      .bg-loader-initial {
+        background: #eab53a1d;
+      }
+      .initial-load-animation {
+        animation-name: start-animation;
+        animation-duration: 1s;
+        animation-timing-function: ease;
+        animation-iteration-count: infinite;
+        animation-direction: alternate;
+      }
+    </style>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div
+        style="
+          width: 100vw;
+          height: 100vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: fixed;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          top: 0;
+        "
+      >
+        <div
+          style="height: 100vh; position: absolute; top: 0; width: 100%"
+          class="bg-loader-initial"
+        ></div>
+        <div style="position: relative">
+          <img
+            src="/assets/svg/emp.svg"
+            alt="EMP LOGO"
+            class="initial-load-animation"
+          />
+        </div>
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
