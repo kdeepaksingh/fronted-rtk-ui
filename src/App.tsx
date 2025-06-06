@@ -1,16 +1,41 @@
-import { Button } from "@mui/material";
+import { useDispatch } from "react-redux";
 import "./App.css";
+import AlertMessage from "./components/alert/AlertMessage";
+import {
+  clearAlert,
+  showError,
+  showSuccess,
+} from "./features/alertSlice/alertSlice";
+import { useSelector } from "react-redux";
+import type { RootState } from "./store/store";
 
 function App() {
+  const dispatch = useDispatch();
+  const alert = useSelector((state: RootState) => state.alert);
+
+  const handleClickSuccess = () => {
+    dispatch(showSuccess("This is a success message!"));
+  };
+
+  const handleClickError = () => {
+    dispatch(showError("This is an error message!"));
+  };
   return (
     <>
-      <div className="p-6 bg-gray-100 min-h-screen">
-        <h1 className="text-3xl font-bold text-blue-600 mb-4">
-          Welcome to My App
-        </h1>
-        <Button variant="contained" color="primary">
-          MUI Button
-        </Button>
+      <div>
+        <button onClick={handleClickSuccess}>Show Success</button>
+        <button onClick={handleClickError}>Show Error</button>
+
+        <AlertMessage
+          message={alert.message}
+          success={alert.success}
+          error={alert.error}
+          onClose={() => dispatch(clearAlert())}
+          autoCloseIn={3}
+          type="snackbar"
+          successSnack
+          errorSnack
+        />
       </div>
     </>
   );

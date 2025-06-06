@@ -7,12 +7,14 @@ import { store } from "./store/store.ts";
 import "./components/translations";
 import theme from "./theme.ts";
 import "./index.css";
+import App from "./App.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ThemeProvider theme={theme}>
       <Provider store={store}>
         <RouteProvider />
+        <App />
       </Provider>
     </ThemeProvider>
   </StrictMode>

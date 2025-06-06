@@ -20,7 +20,7 @@ interface RHFTextInputProps {
   maxCharCount?: number;
   helptooltip?: string;
   onIconClick?: () => void;
-  control: Control<FieldValues, any>;
+  control: Control<FieldValues, unknown>;
   rules?: object;
   error?: string | boolean;
   defaultValue?: string;
@@ -124,7 +124,8 @@ const RHFTextInput = ({
 
 export default RHFTextInput;
 
-{/* <RHFTextInput
+{
+  /* <RHFTextInput
         name="name"
         label="Full Name"
         placeholder="Enter your full name"
@@ -132,4 +133,5 @@ export default RHFTextInput;
         rules={{ required: "Name is required" }}
         required
         icon="User"
-      /> */}
+      /> */
+}
