@@ -20,4 +20,18 @@ export class Css {
     black: colors["ui-black"],
     link: colors["ui-blue"],
   };
+
+  static LinkColor = {
+    black: "text-ui-black",
+    link: "text-ui-link",
+  };
+
+  static TabColors = {
+    tab1: "tab-orange",
+    tab2: "tab-pink",
+    tab3: "tab-green",
+    tab4: "tab-orange",
+    tab5: "tab-orange",
+    tab6: "tab-orange",
+  };
 }
