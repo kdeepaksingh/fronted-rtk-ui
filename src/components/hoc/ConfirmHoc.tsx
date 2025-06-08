@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Modal from "../modal/CustomModal";
+import Modal from "../modal/Modal";
 import type { FC, ComponentType } from "react";
 
 interface ConfirmAction {

@@ -6,3 +6,4 @@ export const STRENGTH_STRONG = "Strong";
 export const STRENGTH_MEDIUM = "Medium";
 export const STRENGTH_WEAK = "Weak";
 export const NONE = "none";
+export const DUM_FUCTION = () => {};

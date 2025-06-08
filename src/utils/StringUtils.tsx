@@ -78,6 +78,14 @@ export class StringUtils {
 
     return format(`.${decimal}f`)(value);
   };
+
+  static numberToFixed = (value = 0, toFixed = 2, truncate = true) => {
+    return isNaN(value)
+      ? value
+      : !truncate
+      ? Math.trunc(value * 100) / 100
+      : Number(value).toFixed(toFixed).replace(".00", "");
+  };
 }
 
 export default StringUtils;

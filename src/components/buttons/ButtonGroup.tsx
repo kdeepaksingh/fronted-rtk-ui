@@ -4,6 +4,7 @@ import MainButton from "./MainButton";
 
 type Action = {
   text: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 };
 

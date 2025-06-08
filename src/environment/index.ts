@@ -1,9 +1,9 @@
 class Environment {
   static APIURI: string = import.meta.env.VITE_API_BASE_URL as string;
   static isLocal = String(window.location.host).includes("localhost");
+  static PUBLIC_URI: string = import.meta.env.PUBLIC_URL as string;
 
   // static FERNET = process.env.REACT_APP_FERNET;
-  // static PublicUri = process.env.PUBLIC_URL;
   // static SupersetUser = "admin";
   // static DashReportUrl = process.env.REACT_APP_DASH_REPORT_URL;
   // static isProduction = process.env.REACT_APP_ENV === "PRODUCTION";
