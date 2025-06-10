@@ -1,4 +1,9 @@
+import type { KeyboardEvent } from "react";
+
 export class CommonUtils {
+  static isEnterKey = (e: KeyboardEvent<HTMLDivElement>) => {
+    return [13, "Enter"].includes(e.key || e.keyCode || e.which);
+  };
   static toggleFullscreen = (element: HTMLElement): boolean => {
     if (!document.fullscreenElement) {
       if (element.requestFullscreen) {

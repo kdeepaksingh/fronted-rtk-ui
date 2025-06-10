@@ -1,139 +1,121 @@
-import React from "react";
-import type { ReactNode } from "react";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
-import type { DialogTitleProps } from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import IconButton from "@mui/material/IconButton";
-import Grid from "@mui/material/Grid";
-import Slide from "@mui/material/Slide";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import ButtonGroup from "../buttons/ButtonGroup";
-import RHFTextInput from "../inputs/RHFTextInput";
 import Condition from "../commons/Condition";
+import CommonTitle from "../typography/CommonTitle";
 import Icon from "../icon/Icon";
-import PageTitle from "../typography/PageTitle";
+import colors from "../../color";
+import ButtonGroup from "../buttons/ButtonGroup";
 
-// Type for action buttons
-type ActionButton = {
-  label: string;
-  onClick: () => void;
-  color?: string;
-  variant?: "text" | "outlined" | "contained";
-  [key: string]: any;
-};
-
-type ModalTitleProps = DialogTitleProps & {
-  onClose?: () => void;
-  onBack?: () => void;
+interface ModalTitleProps {
+  onClose?: (() => void) | false;
+  onBack?: (() => void) | false;
   currentStep?: string;
   icon?: string;
-  title?: string;
+  title: string;
   titleClassName?: string;
-  titleChildren?: ReactNode;
+  titleChildren?: React.ReactNode;
   color?: string;
-};
+  borderLeft?: string;
+  [key: string]: any;
+}
 
-const ModalTitle: React.FC<ModalTitleProps> = ({
-  onClose,
-  onBack,
+const ModalTitle = ({
+  onClose = false,
+  onBack = false,
   currentStep = "",
   icon = "",
-  title = "",
+  title,
   titleClassName = "",
   titleChildren = null,
-  color = "primary",
+  color = colors["ui-orange"],
+  borderLeft,
   ...rest
-}) => (
+}: ModalTitleProps) => (
   <DialogTitle
     {...rest}
-    className={`capitalize ${
-      title && "borderleft-style"
-    } !px-8 !py-4 !shadow-inner ${titleClassName} ${color}`}
+    className={`capitalize px-5 py-[10px] shadow-inner ${
+      title ? "border-l-[5px] border-[#882D00]" : ""
+    }`}
   >
-    <Grid container alignItems="center">
-      <Grid item xs={10} className="relative">
-        <PageTitle
+    <div className="flex items-center w-full">
+      <div className="relative flex-1">
+        <CommonTitle
           text={title}
           className="!mb-0 !text-base"
-          onBack={onBack}
+          onBack={typeof onBack === "function" ? onBack : undefined}
           weight={600}
           icon={icon}
           color={color}
         />
         {titleChildren}
-      </Grid>
-      <Grid item xs={2} className="text-right absolute right-1.5 top-1.5">
-        {onClose && (
+      </div>
+      <div className="absolute right-3 top-3 text-right w-12">
+        {onClose ? (
           <IconButton onClick={onClose}>
-            <Icon name="CloseIcon" />
+            <Icon name={"Close"} style={{fontSize:"20px"}} />
           </IconButton>
-        )}
-      </Grid>
-    </Grid>
+        ) : null}
+      </div>
+    </div>
   </DialogTitle>
 );
 
-// Props for the main Modal component
-type ModalProps = {
+import React from "react";
+
+interface ModalProps {
   title?: string;
-  children: ReactNode;
+  children?: React.ReactNode;
   open?: boolean;
-  actions?: ActionButton[];
-  onClose?: () => void;
-  maxWidth?: "xs" | "sm" | "md" | "lg" | "xl";
+  actions?: any[];
+  onClose?: (() => void) | false;
+  maxWidth?: false | "xs" | "sm" | "md" | "lg" | "xl";
   fullWidth?: boolean;
-  onBack?: () => void;
+  onBack?: (() => void) | false;
   steps?: string;
   currentStep?: number;
   height?: string;
+  width?: string;
   btnClass?: string;
   disableEscapeKeyDown?: boolean;
   search?: boolean;
-  searchPlaceholder?: string;
-  onChangeSearch?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  searchTerm?: string;
   bodyClassName?: string;
   parentClass?: string;
   icon?: string;
   scroll?: "body" | "paper";
   keepMounted?: boolean;
-  bodyPaddingClassName?: string;
   titleClassName?: string;
-  onDontShow?: (checked: boolean) => void;
   color?: string;
-};
+}
 
-export const Modal: React.FC<ModalProps> = ({
+export const Modal = ({
   title = "",
   children,
   open = false,
   actions = [],
-  onClose,
+  onClose = false,
   maxWidth = "sm",
   fullWidth = true,
-  onBack,
+  onBack = false,
   steps = "",
   currentStep = 1,
-  height = "h-80",
-  btnClass = "!justify-start",
+  height = "h-[320px]",
+  width = "",
+  btnClass = "flex-start",
   disableEscapeKeyDown = false,
   search = false,
-  searchPlaceholder = "",
-  onChangeSearch = () => {},
-  searchTerm = "",
   bodyClassName = "",
   parentClass = "",
   icon = "",
   scroll = "body",
   keepMounted = false,
-  bodyPaddingClassName = "!px-8 !py-2",
   titleClassName = "",
-  onDontShow,
-  color = "primary",
-}) => {
+  color = colors["ui-orange"],
+}: ModalProps) => {
   return (
     <Dialog
       open={open}
@@ -142,8 +124,8 @@ export const Modal: React.FC<ModalProps> = ({
       disableEscapeKeyDown={disableEscapeKeyDown}
       scroll={scroll}
       keepMounted={keepMounted}
-      TransitionComponent={Slide}
       className={parentClass}
+      sx={width ? { width: width } : {}}
     >
       <Condition show={Boolean(title) || Boolean(onClose)}>
         <ModalTitle
@@ -159,43 +141,23 @@ export const Modal: React.FC<ModalProps> = ({
       </Condition>
 
       <Condition show={search}>
-        <div className="px-6 -mt-4 bg-white z-10">
-          <RHFTextInput
-            placeholder={searchPlaceholder}
-            onChange={onChangeSearch}
-            value={searchTerm}
-          />
+        <div className="pl-6 pr-6 -mt-4 bg-white z-10">
+          {/* search input component */}
         </div>
       </Condition>
 
       <DialogContent
-        className={`${bodyClassName} ${bodyPaddingClassName} overflow-auto ${height} text-sm`}
+        className={`overflow-auto text-base px-8 py-4 ${height} ${bodyClassName}`}
       >
         {children}
       </DialogContent>
 
       {actions?.length > 0 && (
         <DialogActions
-          className={`!px-8 !py-4 justify-end ${btnClass} !text-upag-black-01 !uppercase !font-semibold shadow-inner`}
+          className={`px-8 py-[10px] shadow-inner font-semibold uppercase text-black ${
+            btnClass === "flex-start" ? "justify-start" : "justify-end"
+          }`}
         >
-          <Condition show={Boolean(onDontShow)}>
-            <div className="grow">
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    size="small"
-                    className="!p-0"
-                    onChange={(e) => onDontShow?.(e.target.checked)}
-                  />
-                }
-                label={
-                  <span className="text-xs leading-tight text-black capitalize pl-1">
-                    Don't show this message until the next login?
-                  </span>
-                }
-              />
-            </div>
-          </Condition>
           <ButtonGroup actions={actions} />
         </DialogActions>
       )}
@@ -205,124 +167,142 @@ export const Modal: React.FC<ModalProps> = ({
 
 export default Modal;
 
-// /* eslint-disable @typescript-eslint/no-unused-vars */
-// /* eslint-disable @typescript-eslint/no-explicit-any */
+// import React from "react";
+// import type { ReactNode } from "react";
 // import Dialog from "@mui/material/Dialog";
 // import DialogTitle from "@mui/material/DialogTitle";
+// import type { DialogTitleProps } from "@mui/material/DialogTitle";
 // import DialogContent from "@mui/material/DialogContent";
 // import DialogActions from "@mui/material/DialogActions";
 // import IconButton from "@mui/material/IconButton";
-// import Condition from "../commons/Condition";
-// import CommonTitle from "../typography/CommonTitle";
-// import Icon from "../icon/Icon";
-// import colors from "../../color";
+// import Grid from "@mui/material/Grid";
+// import Slide from "@mui/material/Slide";
+// import FormControlLabel from "@mui/material/FormControlLabel";
+// import Checkbox from "@mui/material/Checkbox";
 // import ButtonGroup from "../buttons/ButtonGroup";
+// import RHFTextInput from "../inputs/RHFTextInput";
+// import Condition from "../commons/Condition";
+// import Icon from "../icon/Icon";
+// import PageTitle from "../typography/PageTitle";
 
-// interface ModalTitleProps {
-//   onClose?: (() => void) | false;
-//   onBack?: (() => void) | false;
+// // Type for action buttons
+// type ActionButton = {
+//   label: string;
+//   onClick: () => void;
+//   color?: string;
+//   variant?: "text" | "outlined" | "contained";
+//   [key: string]: any;
+// };
+
+// type ModalTitleProps = DialogTitleProps & {
+//   onClose?: () => void;
+//   onBack?: () => void;
 //   currentStep?: string;
 //   icon?: string;
-//   title: string;
+//   title?: string;
 //   titleClassName?: string;
-//   titleChildren?: React.ReactNode;
+//   titleChildren?: ReactNode;
 //   color?: string;
-//   borderLeft?: string;
-//   [key: string]: any;
-// }
+// };
 
-// const ModalTitle = ({
-//   onClose = false,
-//   onBack = false,
+// const ModalTitle: React.FC<ModalTitleProps> = ({
+//   onClose,
+//   onBack,
 //   currentStep = "",
 //   icon = "",
-//   title,
+//   title = "",
 //   titleClassName = "",
 //   titleChildren = null,
-//   color = colors["ui-orange"],
-//   borderLeft,
+//   color = "primary",
 //   ...rest
-// }: ModalTitleProps) => (
+// }) => (
 //   <DialogTitle
 //     {...rest}
-//     className={`capitalize px-5 py-[10px] shadow-inner ${
-//       title ? "border-l-[5px] border-[#882D00]" : ""
-//     }`}
+//     className={`capitalize ${
+//       title && "borderleft-style"
+//     } !px-8 !py-4 !shadow-inner ${titleClassName} ${color}`}
 //   >
-//     <div className="flex items-center w-full">
-//       <div className="relative flex-1">
-//         <CommonTitle
+//     <Grid container alignItems="center">
+//       <Grid item xs={10} className="relative">
+//         <PageTitle
 //           text={title}
 //           className="!mb-0 !text-base"
-//           onBack={typeof onBack === "function" ? onBack : undefined}
+//           onBack={onBack}
 //           weight={600}
 //           icon={icon}
 //           color={color}
 //         />
 //         {titleChildren}
-//       </div>
-//       <div className="absolute right-3 top-3 text-right w-12">
-//         {onClose ? (
+//       </Grid>
+//       <Grid item xs={2} className="text-right absolute right-1.5 top-1.5">
+//         {onClose && (
 //           <IconButton onClick={onClose}>
-//             <Icon name={"Close"} />
+//             <Icon name="CloseIcon" />
 //           </IconButton>
-//         ) : null}
-//       </div>
-//     </div>
+//         )}
+//       </Grid>
+//     </Grid>
 //   </DialogTitle>
 // );
 
-// import React from "react";
-
-// interface ModalProps {
+// // Props for the main Modal component
+// type ModalProps = {
 //   title?: string;
-//   children?: React.ReactNode;
+//   children: ReactNode;
 //   open?: boolean;
-//   actions?: any[];
-//   onClose?: (() => void) | false;
-//   maxWidth?: false | "xs" | "sm" | "md" | "lg" | "xl";
+//   actions?: ActionButton[];
+//   onClose?: () => void;
+//   maxWidth?: "xs" | "sm" | "md" | "lg" | "xl";
 //   fullWidth?: boolean;
-//   onBack?: (() => void) | false;
+//   onBack?: () => void;
 //   steps?: string;
 //   currentStep?: number;
 //   height?: string;
-//   width?: string;
 //   btnClass?: string;
 //   disableEscapeKeyDown?: boolean;
 //   search?: boolean;
+//   searchPlaceholder?: string;
+//   onChangeSearch?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+//   searchTerm?: string;
 //   bodyClassName?: string;
 //   parentClass?: string;
 //   icon?: string;
 //   scroll?: "body" | "paper";
 //   keepMounted?: boolean;
+//   bodyPaddingClassName?: string;
 //   titleClassName?: string;
+//   onDontShow?: (checked: boolean) => void;
 //   color?: string;
-// }
+// };
 
-// export const Modal = ({
+// export const Modal: React.FC<ModalProps> = ({
 //   title = "",
 //   children,
 //   open = false,
 //   actions = [],
-//   onClose = false,
+//   onClose,
 //   maxWidth = "sm",
 //   fullWidth = true,
-//   onBack = false,
+//   onBack,
 //   steps = "",
 //   currentStep = 1,
-//   height = "h-[320px]",
-//   width = "",
-//   btnClass = "flex-start",
+//   height = "h-80",
+//   btnClass = "!justify-start",
 //   disableEscapeKeyDown = false,
 //   search = false,
+//   searchPlaceholder = "",
+//   onChangeSearch = () => {},
+//   searchTerm = "",
 //   bodyClassName = "",
 //   parentClass = "",
 //   icon = "",
 //   scroll = "body",
 //   keepMounted = false,
+//   bodyPaddingClassName = "!px-8 !py-2",
 //   titleClassName = "",
-//   color = colors["ui-orange"],
-// }: ModalProps) => {
+//   onDontShow,
+//   color = "primary",
+// }) => {
 //   return (
 //     <Dialog
 //       open={open}
@@ -331,8 +311,8 @@ export default Modal;
 //       disableEscapeKeyDown={disableEscapeKeyDown}
 //       scroll={scroll}
 //       keepMounted={keepMounted}
+//       TransitionComponent={Slide}
 //       className={parentClass}
-//       sx={width ? { width: width } : {}}
 //     >
 //       <Condition show={Boolean(title) || Boolean(onClose)}>
 //         <ModalTitle
@@ -348,23 +328,43 @@ export default Modal;
 //       </Condition>
 
 //       <Condition show={search}>
-//         <div className="pl-6 pr-6 -mt-4 bg-white z-10">
-//           {/* search input component */}
+//         <div className="px-6 -mt-4 bg-white z-10">
+//           <RHFTextInput
+//             placeholder={searchPlaceholder}
+//             onChange={onChangeSearch}
+//             value={searchTerm}
+//           />
 //         </div>
 //       </Condition>
 
 //       <DialogContent
-//         className={`overflow-auto text-base px-8 py-4 ${height} ${bodyClassName}`}
+//         className={`${bodyClassName} ${bodyPaddingClassName} overflow-auto ${height} text-sm`}
 //       >
 //         {children}
 //       </DialogContent>
 
 //       {actions?.length > 0 && (
 //         <DialogActions
-//           className={`px-8 py-[10px] shadow-inner font-semibold uppercase text-black ${
-//             btnClass === "flex-start" ? "justify-start" : "justify-end"
-//           }`}
+//           className={`!px-8 !py-4 justify-end ${btnClass} !text-upag-black-01 !uppercase !font-semibold shadow-inner`}
 //         >
+//           <Condition show={Boolean(onDontShow)}>
+//             <div className="grow">
+//               <FormControlLabel
+//                 control={
+//                   <Checkbox
+//                     size="small"
+//                     className="!p-0"
+//                     onChange={(e) => onDontShow?.(e.target.checked)}
+//                   />
+//                 }
+//                 label={
+//                   <span className="text-xs leading-tight text-black capitalize pl-1">
+//                     Don't show this message until the next login?
+//                   </span>
+//                 }
+//               />
+//             </div>
+//           </Condition>
 //           <ButtonGroup actions={actions} />
 //         </DialogActions>
 //       )}
@@ -373,3 +373,5 @@ export default Modal;
 // };
 
 // export default Modal;
+
+

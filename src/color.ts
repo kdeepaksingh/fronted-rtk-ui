@@ -11,7 +11,7 @@ const colors = {
   "ui-brown": "#9C3B00",
   "ui-brown-scroll": "#6a2808",
   "ui-brown-dark": "#882D00",
-  "ui-blue": "#1d4ed8",
+  "ui-blue": "#051860",
   "ui-black-01": "#202E3B",
   "ui-white": "#ffffff",
   "ui-white-1": "#ffffff57",

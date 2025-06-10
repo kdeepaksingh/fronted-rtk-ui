@@ -3,8 +3,10 @@ import type { ReactNode } from "react";
 import PublicLayout from "../layouts/PublicLayout";
 import PageNotFound from "../pages/page-not-found/PageNotFound";
 import PageLoader from "../components/loader/PageLoader";
+import Url from "../components/constants/Url";
 
-const LoginForm = lazy(() => import('../pages/auth/Login'));
+const LoginForm = lazy(() => import("../pages/auth/Login"));
+const ScreenReaderAccess = lazy(() => import("../pages/screen-reader/ScreenReaderAccess"));
 
 type SuspendProps = {
   children: ReactNode;
@@ -24,6 +26,14 @@ const PublicRoutes = {
       element: (
         <Suspend>
           <LoginForm />
+        </Suspend>
+      ),
+    },
+    {
+      path: Url.ScreenReaderAccess,
+      element: (
+        <Suspend>
+          <ScreenReaderAccess />
         </Suspend>
       ),
     },

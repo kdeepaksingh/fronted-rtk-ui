@@ -18,8 +18,17 @@
   "Loader": {
     "Loading": "loading..."
   },
+  "Columns": {
+    "ScreenReader": "Screen Reader",
+    "FreeorCommercial": "Free/Commercial",
+    "Website": "Website"
+  },
   "Typo": {
     "SelectOnEmpty": "Select {{label}}",
+    "ProvideFeedback": "Provide Feedback",
+    "LinkExternal": "(link is external)",
+    "ExternalWebsite": "(External website that opens in a new window)",
+    "HomeIconDesc": "<strong>Employee Management System</strong> <br> <strong>XYZ Pvt. Ltd.</strong> <br><strong>Hitech City Hyderabad</strong>",
     "LastUpdated": "Last Updated By  {{date}}",
     "TopLogoDescription": "<strong>Ministry of Labour and<br/>Employment<br/>Government of India</strong>",
     "TotalVisitors": " | Total Unique Visitors is {{count}}",

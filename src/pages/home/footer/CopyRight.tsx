@@ -37,12 +37,12 @@ const CopyRight = () => {
           <Translate
             dataKey="Typo.LastUpdated"
             params={{ date: todayDate }}
-          />{" "}
-          &nbsp;
+          /> 
+          {/* &nbsp;
           <Translate
             dataKey="Typo.TotalVisitors"
             params={{ count: totalVisitors }}
-          />
+          /> */}
           <br />
           &copy;{currentYear} <Translate dataKey={"Typo.FooterCopyRight"} />
         </Typography>

@@ -43,7 +43,7 @@ const Link = ({
       case "black":
         return "text-black";
       case "primary":
-        return "text-blue-600";
+        return "text-blue-800";
       case "secondary":
         return "text-gray-600";
       case "danger":

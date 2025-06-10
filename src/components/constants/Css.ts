@@ -17,8 +17,8 @@ export class Css {
   };
 
   static LinkColors = {
-    black: colors["ui-black"],
-    link: colors["ui-blue"],
+    black: colors["ui-blue"],
+    link: colors["ui-brown"],
   };
 
   static LinkColor = {

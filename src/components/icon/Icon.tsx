@@ -1,7 +1,11 @@
 import * as React from "react";
 import * as MuiIcons from "@mui/icons-material";
+import EmpMngIcon from "../../assets/png/EmpIcon.png";
+import Screenreader from "../../assets/png/screenreader.png";
 
 const Icons: Record<string, any> = {
+  EmpMngIcon,
+  Screenreader,
   ...MuiIcons,
 };
 

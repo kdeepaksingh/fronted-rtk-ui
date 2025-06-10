@@ -16,12 +16,12 @@ export const Text: React.FC<TextProps> = ({ text = "", size = 24, search = "", i
     <div
       style={{
         fontSize: `${parseFloat(size.toString()) / 16}rem`,
-        color: colors["ui-black"],
+        color: colors["ui-blue"],
         ...props.style,
       }}
       {...props}
     >
-      {icon && <Icon name={icon} />}
+      {icon && <Icon name={icon} style={{fontSize:"23px"}} />}
       <Translate dataKey={text} search={search} />
     </div>
   );
