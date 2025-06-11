@@ -1,6 +1,10 @@
 import Modal from "../../components/modal/Modal"
 
-const FeedbackForm = ({open, onClose}) => {
+interface FeedbackFormProps {
+  open: boolean;
+  onClose: () => void;
+}
+const FeedbackForm = ({open, onClose} : FeedbackFormProps) => {
   return (
     <div>
       <Modal

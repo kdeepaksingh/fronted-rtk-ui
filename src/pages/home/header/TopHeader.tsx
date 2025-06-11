@@ -3,24 +3,31 @@ import Url from "../../../components/constants/Url";
 import Icon from "../../../components/icon/Icon";
 import Text from "../../../components/typography/Text";
 import Translate from "../../../components/typography/Translate";
+import { AccessibilityTools } from "../../screen-reader/AccessibilityTools";
 import ScreenReader from "../../screen-reader/ScreenReader";
 import { useNavigate } from "react-router-dom";
+
 
 const TopHeader = () => {
   const navigate = useNavigate();
   return (
     <div className="container-fluid">
-      <div className="bg-sky-100 border-b-[2px] border-b-[#b47d7d] flex items-center gap-1 py-1 px-1">
-        {/* <Link onClick={() => navigate(Url.Home)}> */}
+      <div className="bg-sky-100 border-b-[2px] border-b-[#b47d7d] flex items-center justify-between py-1 px-1">
+        {/* Make Link contents inline with gap */}
+        <Link
+          onClick={() => navigate(Url.Home)}
+          className="flex items-center gap-2"
+        >
           <Icon
             name="EmpMngIcon"
             className="w-[50px] h-[50px] ml-[5px] mr-[5px]"
           />
-          <div className="text-[10px] w-48">
+          <div className="text-[10px] whitespace-nowrap">
             <Translate dataKey="Typo.HomeIconDesc" htmlContent />
           </div>
-        {/* </Link> */}
-        <div className="w-full flex justify-end gap-4 pr-4 mb-2">
+        </Link>
+
+        <div className="flex items-center gap-4 pr-4">
           <Text
             text={"Link.SkipToMainContent"}
             size={14}
@@ -28,6 +35,7 @@ const TopHeader = () => {
             className="font-semibold cursor-pointer"
           />
           <ScreenReader />
+          <AccessibilityTools />
         </div>
       </div>
     </div>
@@ -35,3 +43,4 @@ const TopHeader = () => {
 };
 
 export default TopHeader;
+

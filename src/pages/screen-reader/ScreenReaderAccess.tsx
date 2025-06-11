@@ -17,22 +17,22 @@ export const ScreenReaderAccess = () => {
     {
       name: t("Typo.ScreenReaderinfo3"),
       website: "http://www.yourdolphin.co.uk/productdetail.asp?id=5",
-      type: t("Typo.Commercial"),
+      type: t("Typo.Vision"),
     },
     {
       name: t("Typo.ScreenReaderinfo4"),
       website: "http://www.freedomscientific.com/Downloads/JAWS",
-      type: t("Typo.Commercial"),
+      type: t("Typo.Mission"),
     },
     {
       name: t("Typo.ScreenReaderinfo5"),
       website: "http://www.yourdolphin.co.uk/productdetail.asp?id=1",
-      type: t("Typo.Commercial"),
+      type: t("Typo.Policy"),
     },
     {
       name: t("Typo.ScreenReaderinfo6"),
       website: "http://www.gwmicro.com/Window-Eyes/",
-      type: t("Typo.Commercial"),
+      type: t("Typo.Sitemap"),
     },
   ];
 
