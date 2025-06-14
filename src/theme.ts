@@ -6,7 +6,7 @@ const font = "'Open Sans'";
 const theme = createTheme({
   typography: {
     fontFamily: font,
-    fontSize: 18,
+    fontSize: 16,
     body1: { lineHeight: 1, color: colors["ui-black"] },
   },
   palette: {
@@ -63,15 +63,15 @@ const theme = createTheme({
       },
       styleOverrides: {
         root: {
-          fontSize: 16,
+          fontSize: 14,
           "&.MuiInputBase-root": {
             background: "#fff",
             fieldset: {
-              borderColor:colors["ui-orange"],
+              borderColor: colors["ui-blue"],
             },
             "&:focus": {
               fieldset: {
-                borderColor: colors["ui-brown"],
+                borderColor: colors["ui-blue"],
               },
             },
           },
@@ -97,11 +97,11 @@ const theme = createTheme({
           props: { size: "small" },
           style: {
             "& .MuiInputBase-root": {
-              fontSize: "15px",
+              fontSize: "14px",
               padding: "2px",
             },
             "& .MuiInputLabel-root": {
-              fontSize: "15px",
+              fontSize: "14px",
             },
             "& .MuiInputBase-input": {
               padding: "6.5px 10px",
@@ -128,7 +128,7 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           fieldset: {
-            borderColor: colors['ui-card-light'],
+            borderColor: colors["ui-card-light"],
           },
           "&:hover": {
             fieldset: {

@@ -5,6 +5,18 @@
   "Title": {
     "Dashboard": "Dashboard"
   },
+  "Label": {
+    "FullName": "Full Name",
+    "MobileNumber": "Mobile",
+    "Email": "Email",
+    "FeedbackCategory": "Feedback Category"
+  },
+  "Placeholder": {
+    "EnterFullName": "Enter Your Full Name",
+    "EnterEmail": "Enter Your Email",
+    "EnterMobileNumber": "Enter Your (10 digits) Mobile Number",
+    "SelectFeedbackCategory": "Select Feedback Category"
+  },
   "Link": {
     "ForgotPassword": "Forgot Password?",
     "Feedback": "Feedback",
@@ -25,7 +37,7 @@
   },
   "Typo": {
     "SelectOnEmpty": "Select {{label}}",
-    "ProvideFeedback": "Provide Feedback",
+    "ProvideFeedback": "Provide Us Your Feedback",
     "LinkExternal": "(link is external)",
     "ScreenReaderinfo1": "Non Visual Desktop Access (NVDA)",
     "ScreenReaderinfo2": "Webanywhere",

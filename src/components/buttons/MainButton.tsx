@@ -83,7 +83,9 @@ const MainButton: React.FC<MainButtonProps> = ({
         placement={placement}
         arrow
       >
-        <span className={`${(props as any).fullWidth ? "w-full h-full" : ""}`}>
+        <span
+          className={`mr-2 ${(props as any).fullWidth ? "w-full h-full" : ""}`}
+        >
           <Button
             type={type}
             disabled={disabled || loading}

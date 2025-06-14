@@ -1,24 +1,138 @@
-import Modal from "../../components/modal/Modal"
+import { useForm } from "react-hook-form";
+import RHFTextInput from "../../components/inputs/RHFTextInput";
+import Modal from "../../components/modal/Modal";
+import RHFListInput from "../../components/dropdowns/RHFListInput";
+import RHFTextArea from "../../components/inputs/RHFTextArea";
+import HelpCharacterCount from "../../components/typography/HelpCharacterCount";
+import MainButton from "../../components/buttons/MainButton";
 
 interface FeedbackFormProps {
   open: boolean;
   onClose: () => void;
 }
-const FeedbackForm = ({open, onClose} : FeedbackFormProps) => {
+const FeedbackForm = ({ open, onClose }: FeedbackFormProps) => {
+  const { control, reset, watch, handleSubmit } = useForm({
+    defaultValues: {
+      fullName: "",
+      email: "",
+      feedbackCategory: "",
+      mobileNumber: "",
+      comments: "",
+    },
+  });
+
+  const commentChars = watch("comments");
+
+  const handleReset = () => {
+    reset(); // ✅ reset all fields
+  };
+
+  const onSubmit = (data: any) => {
+    console.log("feedback form submittinng data===>", data);
+    onClose(); // optional
+  };
+
   return (
     <div>
       <Modal
         title={"Typo.ProvideFeedback"}
-        maxWidth="sm"
+        maxWidth="xs"
         height={"h-auto overflow-x-hidden"}
         open={open}
         onClose={onClose}
         scroll="body"
       >
-        <h1>Feedback form data</h1>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="p-3 mt-3">
+            <RHFTextInput
+              type="text"
+              name="fullName"
+              placeholder={"Placeholder.EnterFullName"}
+              label={"Label.FullName"}
+              control={control}
+              maxCharCount={20}
+              required
+              rules={{
+                required: "Full Name is required",
+                pattern: {
+                  value: /^[A-Za-z\s]+$/,
+                  message: "Only letters are allowed in full name",
+                },
+              }}
+              icon={"Person"}
+              className="mt"
+            />
+            <RHFTextInput
+              type="email"
+              name="email"
+              placeholder={"Placeholder.EnterEmail"}
+              label={"Label.Email"}
+              control={control}
+              required
+              rules={{
+                required: "Email is required",
+                pattern: {
+                  value: /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i,
+                  message: "Enter a valid email address",
+                },
+              }}
+              icon={"Email"}
+            />
+            <RHFListInput
+              name="feedbackCategory"
+              placeholder={"Placeholder.SelectFeedbackCategory"}
+              label={"Label.FeedbackCategory"}
+              control={control}
+              data={[
+                { id: "User_Experience", value: "user Experience" },
+                { id: "Ui_Bugs", value: "Bugs" },
+                { id: "Ui_Functionality", value: "Functionality" },
+              ]}
+              dataID="id"
+              dataValue="value"
+            />
+            <RHFTextInput
+              type="tel"
+              name="mobileNumber"
+              placeholder={"Placeholder.EnterMobileNumber"}
+              label={"Label.MobileNumber"}
+              control={control}
+              maxCharCount={10}
+              required
+              rules={{
+                required: "Mobile Number is required",
+                pattern: {
+                  value: /^[6-9]\d{9}$/,
+                  message:
+                    "Enter a valid 10-digit mobile number starting with 6, 7, 8, or 9",
+                },
+              }}
+              icon={"PhoneIphone"}
+            />
+
+            <RHFTextArea
+              name="comments"
+              label="Comments"
+              placeholder="Enter Your Comments"
+              control={control}
+              maxCharCount={300}
+              helptooltip="Alphabets,Special Character Allowed"
+            />
+            <HelpCharacterCount max={300} min={3} value={commentChars} />
+
+            <div className="flex justify-end gap-3 mt-4">
+              <MainButton
+                ButtonName="Reset"
+                type="button"
+                onClick={handleReset}
+              />
+              <MainButton ButtonName="Submit" type="submit" />
+            </div>
+          </div>
+        </form>
       </Modal>
     </div>
-  )
-}
+  );
+};
 
-export default FeedbackForm
+export default FeedbackForm;

@@ -30,6 +30,11 @@ export const ScreenReaderAccess = () => {
       type: t("Typo.Policy"),
     },
     {
+      name: t("Typo.ScreenReaderinfo5"),
+      website: "http://www.yourdolphin.co.uk/productdetail.asp?id=1",
+      type: t("Typo.Policy"),
+    },
+    {
       name: t("Typo.ScreenReaderinfo6"),
       website: "http://www.gwmicro.com/Window-Eyes/",
       type: t("Typo.Sitemap"),
@@ -38,8 +43,8 @@ export const ScreenReaderAccess = () => {
 
   return (
     <div className="py-3 px-3 pt-1 pb-2 mb-2">
-        <CommonTitle text="Screen Reader Access" className="mb-2" />
-         <ScreenReaderTable rows={rows} />
+      <CommonTitle text="Screen Reader Access" className="mb-2" />
+      <ScreenReaderTable rows={rows} />
     </div>
   );
 };

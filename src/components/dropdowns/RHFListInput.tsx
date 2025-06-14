@@ -1,15 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import { Controller, type Control } from "react-hook-form";
-import {
-  FormControl,
-  MenuItem,
-  TextField,
-  Tooltip,
-} from "@mui/material";
+import { FormControl, MenuItem, TextField, Tooltip } from "@mui/material";
 import colors from "../../color";
 import Icon from "../icon/Icon";
 import StringToHtml from "../typography/StringToHtml";
 import Translate from "../typography/Translate";
+import { t } from "i18next";
 
 interface ListInputProps {
   name: string;
@@ -73,7 +70,7 @@ export const RHFListInput = ({
       isMounted = false;
       clearTimeout(timeout);
     };
-  }, [showTooltipOnEmpty]);
+  }, [showToolTip, showTooltipOnEmpty]);
 
   return (
     <FormControl
@@ -133,7 +130,7 @@ export const RHFListInput = ({
                 required={required}
                 size="small"
                 disabled={disabled}
-                label={label}
+                label={t(label)}
                 value={selectedValue ?? ""}
                 onChange={(e) => onChange(e.target.value)}
                 error={error}
@@ -154,7 +151,7 @@ export const RHFListInput = ({
                     disabled={!allowEmpty}
                     style={!allowEmpty ? { display: "none" } : {}}
                   >
-                    <span style={{ color: "#888" }}>{placeholder}</span>
+                    <span style={{ color: "#888" }}>{t(placeholder)}</span>
                   </MenuItem>
                 )}
 
@@ -163,7 +160,11 @@ export const RHFListInput = ({
                     {listWithIcon && item.icon && (
                       <Icon name={item.icon as string} className="mr-2 -ml-2" />
                     )}
-                    {render ? render(item) : <StringToHtml text={item?.[dataValue]} />}
+                    {render ? (
+                      render(item)
+                    ) : (
+                      <StringToHtml text={item?.[dataValue]} />
+                    )}
                   </MenuItem>
                 ))}
               </TextField>
@@ -176,8 +177,6 @@ export const RHFListInput = ({
 };
 
 export default RHFListInput;
-
-
 
 // import { useEffect, useState } from "react";
 // import { Controller, type Control } from "react-hook-form";

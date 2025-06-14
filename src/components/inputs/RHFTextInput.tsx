@@ -24,6 +24,7 @@ interface RHFTextInputProps {
   rules?: object;
   error?: string | boolean;
   defaultValue?: string;
+  className?: string;
 }
 
 const RHFTextInput = ({
@@ -59,7 +60,7 @@ const RHFTextInput = ({
               inputRef={ref}
               label={
                 <>
-                  {label}
+                  {t(label)}
                   {required && <span style={{ color: "red" }}> *</span>}
                 </>
               }
@@ -67,11 +68,33 @@ const RHFTextInput = ({
               type={type}
               onChange={(e) => {
                 let val = FormValidationUtils.removeTag(e.target.value);
-                if (maxCharCount) {
-                  val = FormValidationUtils.removeExtraSpaces(val).substring(
-                    0,
-                    maxCharCount
-                  );
+
+                if (type === "tel") {
+                  val = val.replace(/\D/g, ""); // ✅ Allow only digits
+
+                  // ✅ Show warning if first digit isn't 6–9
+                  if (val.length > 0 && !/^[6-9]/.test(val)) {
+                    // Optionally show live error or feedback — see suggestions below
+                    // Example: toast.error("Mobile number must start with 6, 7, 8 or 9");
+                  }
+                  if (maxCharCount) {
+                    val = val.substring(0, maxCharCount);
+                  }
+                } else if (type === "email") {
+                  // ✅ Allow only valid email characters (basic filter)
+                  val = val.replace(/[^a-zA-Z0-9@._-]/g, ""); // restrict to valid email chars
+                  val = val.replace(/\s+/g, ""); // remove any spaces
+                  // Optional: You can add stricter checks, but RHF's `pattern` will do full validation
+                } else {
+                  val = val.replace(/[^A-Za-z\s]/g, ""); // ✅ Keep only letters and spaces
+
+                  val = val.replace(/\s+/g, " "); // ✅ Replace multiple spaces with a single space
+
+                  val = val.trimStart(); // // ✅ Remove leading and trailing spaces
+                  // ✅ Apply max length restriction
+                  if (maxCharCount) {
+                    val = val.substring(0, maxCharCount);
+                  }
                 }
                 onChange(val);
               }}
@@ -80,7 +103,7 @@ const RHFTextInput = ({
               size="small"
               fullWidth
               value={value || ""}
-              className="!text-sm input-plcholder-sigin"
+              className="!text-sm !mb-2"
               autoComplete="off"
               InputProps={{
                 [`${position}Adornment`]: (
@@ -89,14 +112,16 @@ const RHFTextInput = ({
                       <InputAdornment
                         position={position}
                         onClick={onIconClick}
-                        className={`${onIconClick && "cursor-pointer"}`}
+                        className={`!text-amber-600 ${
+                          onIconClick && "cursor-pointer"
+                        }`}
                       >
                         <Icon name={icon} />
                       </InputAdornment>
                     )}
                     <Condition show={!!helptooltip}>
                       <InputAdornment
-                        className="absolute m-1 !bottom-[14px] !right-[0px]"
+                        className="absolute m-1 !right-[0px] !text-white font-semibold rounded-full bg-amber-700 "
                         position="end"
                       >
                         <HelpTextIcon tooltip={helptooltip} icon={<Help />} />
@@ -126,12 +151,21 @@ export default RHFTextInput;
 
 {
   /* <RHFTextInput
-        name="name"
-        label="Full Name"
-        placeholder="Enter your full name"
-        control={control}
-        rules={{ required: "Name is required" }}
-        required
-        icon="User"
-      /> */
+            type="text"
+            name="fullName"
+            placeholder={"Placeholder.EnterFullName"}
+            label={"Label.FullName"}
+            control={control}
+            maxCharCount={20}
+            required
+            rules={{
+              required: "Full Name is required",
+              pattern: {
+                value: /^[A-Za-z\s]+$/,
+                message: "Only letters are allowed in full name",
+              },
+            }}
+            // helptooltip={"Only letters are allowed"}
+            icon={"Person"}
+          /> */
 }

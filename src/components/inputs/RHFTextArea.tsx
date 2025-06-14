@@ -68,22 +68,31 @@ const RHFTextArea = ({
             value={value || ""}
             onChange={(e) => {
               let val = FormValidationUtils.removeTag(e.target.value);
+
+              val = val.replace(/[0-9]/g, ""); // ✅ Remove all digits (0–9)
+
+              val = val.replace(/\s+/g, " "); // ✅ Replace multiple spaces with a single space
+
+              val = val.trimStart(); // ✅ Optionally trim leading space (but allow trailing space while typing)
+
               if (maxCharCount) {
-                val = FormValidationUtils.removeExtraSpaces(val).substring(
-                  0,
-                  maxCharCount
-                );
+                val = val.substring(0, maxCharCount); // ✅ Apply max character count if needed
               }
+
               onChange(val);
             }}
             onBlur={onBlur}
             disabled={disabled}
+            className="!mb-2"
             error={Boolean(error)}
             helperText={error || ""}
             InputProps={{
               endAdornment: (
                 <Condition show={!!helptooltip}>
-                  <InputAdornment position="end">
+                  <InputAdornment
+                    className="absolute m-1 !right-0 !bottom-[-0px] !text-white !font-semibold rounded-full bg-amber-700"
+                    position="end"
+                  >
                     <HelpTextIcon tooltip={helptooltip} icon={<Help />} />
                   </InputAdornment>
                 </Condition>

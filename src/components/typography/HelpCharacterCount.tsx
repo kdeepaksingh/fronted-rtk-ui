@@ -15,7 +15,7 @@ export const HelpCharacterCount = ({ max = 0, min = 0, value = "" }) => {
   return (
     <Translate
       dataKey={dataKey}
-      className="text-gray-500 text-xxs"
+      className="text-gray-400 text-sm !mb-2"
       params={{
         count: max || min,
         mincount: min,
