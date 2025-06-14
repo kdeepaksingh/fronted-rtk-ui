@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from "react";
 import * as MuiIcons from "@mui/icons-material";
 import EmpMngIcon from "../../assets/png/EmpIcon.png";
@@ -10,7 +11,7 @@ const Icons: Record<string, any> = {
 };
 
 interface IconProps extends React.HTMLAttributes<HTMLElement> {
-  name: string;
+  name: any;
   defaultIcon?: string;
 }
 
@@ -33,7 +34,13 @@ const Icon: React.FC<IconProps> = ({ name, defaultIcon = null, ...props }) => {
 
   // If it's a string (e.g., imported image path)
   if (typeof IconComponent === "string") {
-    return <img src={IconComponent} alt={name} {...(props as React.ImgHTMLAttributes<HTMLImageElement>)} />;
+    return (
+      <img
+        src={IconComponent}
+        alt={name}
+        {...(props as React.ImgHTMLAttributes<HTMLImageElement>)}
+      />
+    );
   }
 
   return null;

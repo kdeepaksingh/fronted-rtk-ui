@@ -14,7 +14,7 @@ const YoutubeVideo: React.FC<YoutubeVideoProps> = ({
   className,
 }) => {
   const iframeZoomLevel = useSelector(
-    (state: RootState) => state.global.iframeZoomLevel // update based on your state structure
+    (state: RootState) => state.global.iframeZoomLevel
   );
 
   return (

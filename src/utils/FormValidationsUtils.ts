@@ -1,4 +1,9 @@
-import { STRENGTH_MEDIUM, STRENGTH_STRONG, STRENGTH_WEAK } from "../components/constants";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import {
+  STRENGTH_MEDIUM,
+  STRENGTH_STRONG,
+  STRENGTH_WEAK,
+} from "../components/constants";
 import StringUtils from "./StringUtils";
 import { sum } from "lodash";
 
@@ -9,6 +14,25 @@ export class FormValidationUtils {
 
   static isNumber = (number: string | number): boolean => {
     return /^\d*$/.test(String(number));
+  };
+
+  static allowEveryThing = (text: any, min: any) => {
+    if (text && min) {
+      return (
+        FormValidationUtils.isValid(text) &&
+        FormValidationUtils.minCharCount(text, min) &&
+        new RegExp(
+          /^[a-zA-Z][a-zA-Z0-9!@#$%^&*()_+:/\\`'",.?~=\s-]{2,}$/i
+        ).test(text)
+      );
+    }
+
+    return (
+      FormValidationUtils.isValid(text) &&
+      new RegExp(/^[a-zA-Z][a-zA-Z0-9!@#$%^&*()_+:/\\`'",.?~=\s-]{2,}$/i).test(
+        text
+      )
+    );
   };
 
   static isValidNumber = (
@@ -70,17 +94,17 @@ export class FormValidationUtils {
     new RegExp(/^[a-zA-Z][a-zA-Z0-9\s]{1,}[a-zA-Z0-9]$/).test(text);
 
   //start with char only, end with char/num only, limit 3 char, one space and restrict /[];
-  static minThreeValidate = (text:any) =>
+  static minThreeValidate = (text: any) =>
     FormValidationUtils.isValid(text) &&
     new RegExp(
       /^[a-zA-Z][a-zA-Z0-9\s.!"#$%&'()*+,-/:=?@^_`{|}~]*[a-zA-Z0-9.]{2,}$/
     ).test(text);
 
-  static minThreeChar = (text:any) =>
+  static minThreeChar = (text: any) =>
     FormValidationUtils.isValid(text) &&
     new RegExp(/^([0-9]*[a-zA-Z\s0-9]){3,}[0-9]*$/i).test(text);
 
-  static allowEveryThing = (text:any, min:any) => {
+  static allowEveryThing = (text: any, min: any) => {
     if (text && min) {
       return (
         FormValidationUtils.isValid(text) &&
@@ -121,20 +145,23 @@ export class FormValidationUtils {
   static removeTag = (v: string): string =>
     String(v).replace(/</g, "&lt;").replace(/>/g, "");
 
-static removeExtraSpaces = (text: string): string => {
+  static removeExtraSpaces = (text: string): string => {
     const cleanedInput: string = text.replace(/\s+/g, " ");
     return cleanedInput;
-};
+  };
 
-static removeSpaces = (text: string): string => {
+  static removeSpaces = (text: string): string => {
     const cleanedInput: string = text.replace(/\s+/g, "");
     return cleanedInput;
-};
+  };
 
-static maxCharacters = (text: string, count: number = 300, space: boolean = false): boolean =>
-    StringUtils.charCount(text, space) <= count;
+  static maxCharacters = (
+    text: string,
+    count: number = 300,
+    space: boolean = false
+  ): boolean => StringUtils.charCount(text, space) <= count;
 
-  static maxDeciCount = (text:any, count = 5) => {
+  static maxDeciCount = (text: any, count = 5) => {
     let reg = `^\\d+(\\.\\d{0,${count}})?$`;
 
     if (Number(count) === 0) {
@@ -167,7 +194,7 @@ static maxCharacters = (text: string, count: number = 300, space: boolean = fals
     );
   };
 
-  static passwordStrength = (text:any) => {
+  static passwordStrength = (text: any) => {
     let strongPassword = new RegExp(
       "(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})"
     ).test(text);
@@ -194,66 +221,77 @@ static maxCharacters = (text: string, count: number = 300, space: boolean = fals
     };
   };
 
-static isValidCode = (text: string): boolean => {
+  static isValidCode = (text: string): boolean => {
     return new RegExp(/[0-9]{6,}/i).test(text);
-};
-static isValidAlpha = (text: string): boolean => {
+  };
+  static isValidAlpha = (text: string): boolean => {
     return new RegExp(/^(?!.*\s{2})(?! )[a-zA-Z0-9 ]{3,15}$/i).test(text);
-};
+  };
 
-static minUpperCase = (text: string): boolean => {
+  static minUpperCase = (text: string): boolean => {
     return RegExp(/[A-Z]/).test(text);
-};
+  };
 
-static minLowerCase = (text: string): boolean => {
+  static minLowerCase = (text: string): boolean => {
     return RegExp(/[a-z]/).test(text);
-};
+  };
 
-static minNumberChar = (text: string): boolean => {
+  static minNumberChar = (text: string): boolean => {
     return RegExp(/[0-9]/).test(text);
-};
+  };
 
-static minSpecialChar = (text: string): boolean => {
+  static minSpecialChar = (text: string): boolean => {
     return RegExp(/[!@#$%^&*]/).test(text);
-};
+  };
 
-static wrongSpecialChar = (text: string): boolean => {
+  static wrongSpecialChar = (text: string): boolean => {
     return RegExp(/[^a-zA-Z0-9!@#$%^&*]/).test(text);
-};
+  };
 
   static allEmpty = (values = []) => values.every((val) => !val);
-  static allValid = (values = [], action: keyof typeof FormValidationUtils = "isValid") =>
-      values.every((val) => (FormValidationUtils[action] as (arg: any) => boolean)(val));
-
-static validPhoneNumber = (text: string): boolean => {
-    return RegExp(/^(?!([6-9])\1{9})[6-9][0-9]{9}$/).test(text);
-};
-
-static validOptionalPhoneNumber = (text: string, optional: boolean = false): boolean => {
-    if (!text && optional) return true;
-    return RegExp(/^[0-9]{10}$/).test(text);
-};
-
-static validOTP = (text: string): boolean => {
-    return RegExp(/^[0-9]{6}$/).test(text);
-};
-
-static validOptional: (text: string, optional?: boolean) => boolean;
-
-static isLessThan = (v1: string | number, v2: string | number, equal: boolean = true): boolean =>
-    +v1 < +v2 || (equal ? +v1 === +v2 : false);
-
-static validateParams = (
-    rules: { [key: string]: (value: any) => boolean },
-    parmas: { [key: string]: any }
-): boolean =>
-    Object.keys(parmas).every((key) =>
-        rules[key] ? rules[key](parmas[key]) : true
+  static allValid = (
+    values = [],
+    action: keyof typeof FormValidationUtils = "isValid"
+  ) =>
+    values.every((val) =>
+      (FormValidationUtils[action] as (arg: any) => boolean)(val)
     );
 
-static isValidPercentage = (value: string | number): boolean => {
+  static validPhoneNumber = (text: string): boolean => {
+    return RegExp(/^(?!([6-9])\1{9})[6-9][0-9]{9}$/).test(text);
+  };
+
+  static validOptionalPhoneNumber = (
+    text: string,
+    optional: boolean = false
+  ): boolean => {
+    if (!text && optional) return true;
+    return RegExp(/^[0-9]{10}$/).test(text);
+  };
+
+  static validOTP = (text: string): boolean => {
+    return RegExp(/^[0-9]{6}$/).test(text);
+  };
+
+  static validOptional: (text: string, optional?: boolean) => boolean;
+
+  static isLessThan = (
+    v1: string | number,
+    v2: string | number,
+    equal: boolean = true
+  ): boolean => +v1 < +v2 || (equal ? +v1 === +v2 : false);
+
+  static validateParams = (
+    rules: { [key: string]: (value: any) => boolean },
+    parmas: { [key: string]: any }
+  ): boolean =>
+    Object.keys(parmas).every((key) =>
+      rules[key] ? rules[key](parmas[key]) : true
+    );
+
+  static isValidPercentage = (value: string | number): boolean => {
     return FormValidationUtils.isValidNumber(value, true) && +value <= 100;
-};
+  };
 
   static percentageSum = (values = []) => {
     return sum(
@@ -266,14 +304,21 @@ static isValidPercentage = (value: string | number): boolean => {
     return percentage <= 100 && (greaterThanZero ? percentage > 0 : true);
   };
 
-static percentageSumm(values: Array<number | string>): number {
-    return values.reduce((sum: number, value: number | string) => sum + parseFloat(value as string) || 0, 0);
-}
+  static percentageSumm(values: Array<number | string>): number {
+    return values.reduce(
+      (sum: number, value: number | string) =>
+        sum + parseFloat(value as string) || 0,
+      0
+    );
+  }
 
-static isValidPercentageSumm(values: Array<number | string>, exact: boolean = false): boolean {
+  static isValidPercentageSumm(
+    values: Array<number | string>,
+    exact: boolean = false
+  ): boolean {
     const sum = this.percentageSumm(values);
     return exact ? sum === 100 : sum <= 100;
-}
+  }
 }
 
 export default FormValidationUtils;

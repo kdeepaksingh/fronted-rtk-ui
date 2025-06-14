@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { format } from "d3-format";
 import FormValidationUtils from "./FormValidationsUtils";
 
@@ -7,6 +8,15 @@ export class StringUtils {
     const imageName: string = url.substr(index);
     return imageName;
   };
+
+  static numberToFixedDecimalLocalString = (
+    value: any,
+    decimal: any,
+    raw: any
+  ) => StringUtils.numberToFixedDecimal(value, decimal, raw);
+
+  static replaceMultipleSpaces = (text: any) =>
+    String(text).trimStart().replace(/\s+/g, " ");
 
   static charCount = (text: string | null, space: boolean = false): number =>
     text !== null ? String(text).replace(space ? /\s/g : "", "").length : 0;

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { TextField, InputAdornment } from "@mui/material";
 import Help from "@mui/icons-material/Help";
 import { Controller } from "react-hook-form";
@@ -6,7 +7,6 @@ import { t } from "i18next";
 import FormValidationUtils from "../../utils/FormValidationsUtils";
 import Condition from "../commons/Condition";
 import HelpTextIcon from "../buttons/HelpTextIcon";
-
 
 interface RHFTextAreaProps {
   name: string;
@@ -21,6 +21,10 @@ interface RHFTextAreaProps {
   helptooltip?: string;
   rules?: object;
   defaultValue?: string;
+  value?: any;
+  maxHeight?: any;
+  className?: string;
+  autoFocus?: any;
 }
 
 const RHFTextArea = ({
@@ -80,10 +84,7 @@ const RHFTextArea = ({
               endAdornment: (
                 <Condition show={!!helptooltip}>
                   <InputAdornment position="end">
-                    <HelpTextIcon
-                      tooltip={helptooltip}
-                      icon={<Help />}
-                    />
+                    <HelpTextIcon tooltip={helptooltip} icon={<Help />} />
                   </InputAdornment>
                 </Condition>
               ),
@@ -97,11 +98,8 @@ const RHFTextArea = ({
 
 export default RHFTextArea;
 
-
-
-
-
-{/* <RHFTextArea
+{
+  /* <RHFTextArea
         name="remarks"
         label="Remarks"
         placeholder="Enter your remarks"
@@ -110,4 +108,5 @@ export default RHFTextArea;
         helptooltip="Please share relevant details"
         maxCharCount={500}
         required
-      /> */}
+      /> */
+}

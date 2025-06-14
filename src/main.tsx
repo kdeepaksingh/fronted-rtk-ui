@@ -8,17 +8,18 @@ import "./components/translations";
 import theme from "./theme.ts";
 import "./index.css";
 import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-alpine.css"; 
+import "ag-grid-community/styles/ag-theme-alpine.css";
 import "ag-grid-community/styles/ag-theme-balham.css";
 import ErrorBoundary from "./ErrorBoundary.tsx";
-
+import App from "./App.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <ErrorBoundary>
     <ThemeProvider theme={theme}>
       <Provider store={store}>
         <SnackbarProvider hideIconVariant preventDuplicate>
-        <RouteProvider />
+          <RouteProvider />
+          <App />
         </SnackbarProvider>
       </Provider>
     </ThemeProvider>

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import { Button, CircularProgress, Tooltip } from "@mui/material";
 import type { ButtonProps } from "@mui/material";
@@ -10,10 +11,17 @@ interface MainButtonProps extends Omit<ButtonProps, "color"> {
   ButtonName?: string;
   translateParams?: Record<string, any>;
   disabled?: boolean;
-  icon?: string;
+  icon?: any;
   children?: React.ReactNode;
   type?: "button" | "submit" | "reset";
-  buttonColor?: "inherit" | "primary" | "secondary" | "success" | "error" | "info" | "warning";
+  buttonColor?:
+    | "inherit"
+    | "primary"
+    | "secondary"
+    | "success"
+    | "error"
+    | "info"
+    | "warning";
   variant?: "text" | "outlined" | "contained";
   onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   url?: string;
