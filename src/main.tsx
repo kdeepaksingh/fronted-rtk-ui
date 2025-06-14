@@ -11,7 +11,6 @@ import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import "ag-grid-community/styles/ag-theme-balham.css";
 import ErrorBoundary from "./ErrorBoundary.tsx";
-import App from "./App.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <ErrorBoundary>
@@ -19,7 +18,7 @@ createRoot(document.getElementById("root")!).render(
       <Provider store={store}>
         <SnackbarProvider hideIconVariant preventDuplicate>
           <RouteProvider />
-          <App />
+          {/* <App /> */}
         </SnackbarProvider>
       </Provider>
     </ThemeProvider>
