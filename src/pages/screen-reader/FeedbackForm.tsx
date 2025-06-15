@@ -1,16 +1,24 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
+import AlertMessage from "../../components/alert/AlertMessage";
 import RHFTextInput from "../../components/inputs/RHFTextInput";
 import Modal from "../../components/modal/Modal";
 import RHFListInput from "../../components/dropdowns/RHFListInput";
 import RHFTextArea from "../../components/inputs/RHFTextArea";
 import HelpCharacterCount from "../../components/typography/HelpCharacterCount";
 import MainButton from "../../components/buttons/MainButton";
+import { clearAlert, showSuccess } from "../../features/alertSlice/alertSlice";
+import type { RootState } from "../../store/store";
 
 interface FeedbackFormProps {
   open: boolean;
   onClose: () => void;
 }
 const FeedbackForm = ({ open, onClose }: FeedbackFormProps) => {
+  const dispatch = useDispatch();
+  const alert = useSelector((state: RootState) => state.alert);
   const { control, reset, watch, handleSubmit } = useForm({
     defaultValues: {
       fullName: "",
@@ -28,12 +36,23 @@ const FeedbackForm = ({ open, onClose }: FeedbackFormProps) => {
   };
 
   const onSubmit = (data: any) => {
+    dispatch(showSuccess("Feedback sumitted successfully"));
     console.log("feedback form submittinng data===>", data);
-    onClose(); // optional
+    setTimeout(() => {
+      onClose(); // optional
+    }, 5000);
   };
 
   return (
     <div>
+      <AlertMessage
+        message={alert.message}
+        success={alert.success}
+        onClose={() => dispatch(clearAlert())}
+        autoCloseIn={3}
+        type="snackbar"
+        successSnack
+      />
       <Modal
         title={"Typo.ProvideFeedback"}
         maxWidth="xs"
@@ -120,13 +139,13 @@ const FeedbackForm = ({ open, onClose }: FeedbackFormProps) => {
             />
             <HelpCharacterCount max={300} min={3} value={commentChars} />
 
-            <div className="flex justify-end gap-3 mt-4">
+            <div className="flex justify-end gap-0 mt-4">
+              <MainButton ButtonName="Submit" type="submit" />
               <MainButton
                 ButtonName="Reset"
                 type="button"
                 onClick={handleReset}
               />
-              <MainButton ButtonName="Submit" type="submit" />
             </div>
           </div>
         </form>

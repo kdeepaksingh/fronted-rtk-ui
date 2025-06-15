@@ -37,7 +37,7 @@ const CommonTitle = ({
 
       <Translate
         dataKey={text}
-        className={`text-[1.8rem] font-sans text-center`}
+        className={`text-[1.6rem] font-sans text-center`}
         style={{
           fontWeight: weight,
           color,

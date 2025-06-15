@@ -38,11 +38,11 @@ const ScreenReaderTable = ({ rows }: ScreenReaderTableProps) => {
           sx={{
             borderCollapse: "separate",
             borderSpacing: 0,
-            '& th, & td': {
+            "& th, & td": {
               border: "none",
-              borderBottom: "1px solid #d97b00", 
+              borderBottom: "1px solid #d97b00",
             },
-            '& thead th': {
+            "& thead th": {
               backgroundColor: "#f9e7dc",
               color: "#ec6d05",
               textAlign: "center",
@@ -50,7 +50,7 @@ const ScreenReaderTable = ({ rows }: ScreenReaderTableProps) => {
               textTransform: "uppercase",
               fontSize: "14px",
             },
-            '& tbody td': {
+            "& tbody td": {
               textAlign: "center",
             },
           }}
@@ -63,11 +63,11 @@ const ScreenReaderTable = ({ rows }: ScreenReaderTableProps) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <TableRow key={row.name}>
+            {rows.map((row, index) => (
+              <TableRow key={`${row.name}-${index}`}>
                 <TableCell>{row.name}</TableCell>
                 <TableCell>
-                  <p
+                  <span
                     className="inline-block lg:inline-flex items-center cursor-pointer"
                     onClick={() => RouterUtils.confirmAndRedirect(row.website)}
                   >
@@ -78,7 +78,7 @@ const ScreenReaderTable = ({ rows }: ScreenReaderTableProps) => {
                       className="ml-0 lg:ml-2"
                       color="primary"
                     />
-                  </p>
+                  </span>
                   <Text text="Typo.ExternalWebsite" size={14} />
                 </TableCell>
                 <TableCell>{row.type}</TableCell>
@@ -92,10 +92,3 @@ const ScreenReaderTable = ({ rows }: ScreenReaderTableProps) => {
 };
 
 export default ScreenReaderTable;
-
-
-
-
-
-
-

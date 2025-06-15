@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { TextField, InputAdornment } from "@mui/material";
 import { t } from "i18next";
-import { Controller, type Control, type FieldValues } from "react-hook-form";
+import { Controller, type Control } from "react-hook-form";
+// type FieldValues
 import Help from "@mui/icons-material/Help";
 import Condition from "../commons/Condition";
 import Icon from "../icon/Icon";
@@ -20,7 +22,7 @@ interface RHFTextInputProps {
   maxCharCount?: number;
   helptooltip?: string;
   onIconClick?: () => void;
-  control: Control<FieldValues, unknown>;
+  control: Control<any>;
   rules?: object;
   error?: string | boolean;
   defaultValue?: string;

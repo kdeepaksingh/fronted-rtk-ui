@@ -2,7 +2,7 @@
 import { TextField, InputAdornment } from "@mui/material";
 import Help from "@mui/icons-material/Help";
 import { Controller } from "react-hook-form";
-import type { Control, FieldValues } from "react-hook-form";
+import type { Control } from "react-hook-form";
 import { t } from "i18next";
 import FormValidationUtils from "../../utils/FormValidationsUtils";
 import Condition from "../commons/Condition";
@@ -10,7 +10,7 @@ import HelpTextIcon from "../buttons/HelpTextIcon";
 
 interface RHFTextAreaProps {
   name: string;
-  control: Control<FieldValues, any>;
+  control: Control<any>;
   label?: string;
   placeholder?: string;
   required?: boolean;

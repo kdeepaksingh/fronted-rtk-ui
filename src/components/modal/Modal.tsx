@@ -38,8 +38,8 @@ const ModalTitle = ({
 }: ModalTitleProps) => (
   <DialogTitle
     {...rest}
-    className={`capitalize px-5 py-[10px] shadow-inner ${
-      title ? "border-l-[5px] border-[#882D00]" : ""
+    className={`capitalize !px-[10px] !py-[5px] shadow-inner ${
+      title ? "border-l-[4px] border-[#882D00]" : ""
     }`}
   >
     <div className="flex items-center w-full">
@@ -57,7 +57,7 @@ const ModalTitle = ({
       <div className="absolute right-3 top-3 text-right w-12">
         {onClose ? (
           <IconButton onClick={onClose}>
-            <Icon name={"Close"} style={{fontSize:"20px"}} />
+            <Icon name={"Close"} style={{ fontSize: "20px" }} />
           </IconButton>
         ) : null}
       </div>
@@ -373,5 +373,3 @@ export default Modal;
 // };
 
 // export default Modal;
-
-
