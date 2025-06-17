@@ -13,9 +13,9 @@ import AlertMessage from "../../components/alert/AlertMessage";
 import { clearAlert, showSuccess } from "../../features/alertSlice/alertSlice";
 
 interface FormData {
-  name: string;
+  userName: string;
   email: string;
-  mobile: string;
+  mobileNumber: string;
   verificationCode: string;
 }
 
@@ -28,12 +28,6 @@ const Register = () => {
   const email = watch("email");
   const mobileNumber = watch("mobileNumber");
   const verificationCode = watch("verificationCode");
-  // const [loginData, setLoginData] = useState({
-  //   userName: "",
-  //   email: "",
-  //   mobileNumber: "",
-  //   verificationCode: "",
-  // });
 
   const [captchaNum1, setCaptchaNum1] = useState(() =>
     Math.floor(Math.random() * 10)
@@ -44,9 +38,9 @@ const Register = () => {
   const correctCaptchaAnswer = String(captchaNum1 + captchaNum2);
 
   const isFormValid =
-    userName &&
-    email?.trim() &&
-    mobileNumber &&
+    !!userName &&
+    !!email &&
+    !!mobileNumber &&
     verificationCode?.trim() === correctCaptchaAnswer;
 
   const handleReset = () => {
@@ -61,6 +55,7 @@ const Register = () => {
   const onSubmit = (data: FormData) => {
     console.log("Form Data:", data);
     dispatch(showSuccess("Registration successfully!"));
+    refreshCaptcha();
   };
 
   return (
@@ -153,9 +148,8 @@ const Register = () => {
               rules={{
                 required: "Verification code required",
                 pattern: {
-                  value: /^[6-9]\d{9}$/,
-                  message:
-                    "Enter a valid digit or number for verification code",
+                  value: /^\d{1,3}$/,
+                  message: "Enter a valid verification code",
                 },
               }}
               className="w-1/2"
@@ -172,15 +166,16 @@ const Register = () => {
 
           <div className="flex justify-center mt-4">
             <MainButton
-              ButtonName={"Action.Submit"}
-              type="button"
-              disabled={!isFormValid}
-              variant="outlined"
-            />
-            <MainButton
               ButtonName={"Action.Reset"}
               type="button"
               onClick={handleReset}
+            />
+
+            <MainButton
+              ButtonName={"Action.Submit"}
+              type="submit"
+              disabled={!isFormValid}
+              variant="outlined"
             />
           </div>
 

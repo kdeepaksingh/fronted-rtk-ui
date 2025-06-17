@@ -6,8 +6,10 @@ import PageLoader from "../components/loader/PageLoader";
 import Url from "../components/constants/Url";
 
 const LoginForm = lazy(() => import("../pages/auth/Login"));
-const RegisterForm = lazy(() => import("../pages/auth/Register"))
-const ScreenReaderAccess = lazy(() => import("../pages/screen-reader/ScreenReaderAccess"));
+const RegisterForm = lazy(() => import("../pages/auth/Register"));
+const ScreenReaderAccess = lazy(
+  () => import("../pages/screen-reader/ScreenReaderAccess")
+);
 
 type SuspendProps = {
   children: ReactNode;
@@ -18,7 +20,7 @@ export const Suspend = ({ children }: SuspendProps) => (
 );
 
 const PublicRoutes = {
-  path: "/",
+  path: Url.Home,
   element: <PublicLayout />,
   errorElement: <PageNotFound />,
   children: [
@@ -31,6 +33,10 @@ const PublicRoutes = {
       ),
     },
     {
+      path: `${Url.Auth.Login}`,
+      element: <LoginForm />,
+    },
+    {
       path: Url.ScreenReaderAccess,
       element: (
         <Suspend>
@@ -39,7 +45,7 @@ const PublicRoutes = {
       ),
     },
     {
-      path: "register",
+      path: `${Url.Auth.Register}`,
       element: <RegisterForm />,
     },
     {
