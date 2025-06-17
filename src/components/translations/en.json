@@ -1,18 +1,28 @@
 {
   "Header": {
-    "UserName": "Header Page"
+    "UserName": "Header Page",
+    "NewUserRegister": "New User - Register"
   },
   "Title": {
     "Dashboard": "Dashboard"
   },
+  "Action": {
+    "Submit": "Submit",
+    "Reset": "Reset",
+    "LoginWithParichay": "Login with Parichay"
+  },
   "Label": {
     "FullName": "Full Name",
+    "UserName": "User Name",
+    "VerificationCode": "Verification Code",
     "MobileNumber": "Mobile",
     "Email": "Email",
     "FeedbackCategory": "Feedback Category"
   },
   "Placeholder": {
     "EnterFullName": "Enter Your Full Name",
+    "EnterVerificationCode": "Enter Verification Code",
+    "EnterUserName": "Enter Your User Name",
     "EnterEmail": "Enter Your Email",
     "EnterMobileNumber": "Enter Your (10 digits) Mobile Number",
     "SelectFeedbackCategory": "Select Feedback Category"

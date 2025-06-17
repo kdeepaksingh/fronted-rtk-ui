@@ -2,11 +2,17 @@
 import * as React from "react";
 import * as MuiIcons from "@mui/icons-material";
 import EmpMngIcon from "../../assets/png/EmpIcon.png";
+import UserIcon from "../../assets/svg/user.svg";
+import RefreshIcon from "../../assets/svg/refresh.svg";
+import registerBg from "../../assets/svg/register-bg.svg";
 import Screenreader from "../../assets/png/screenreader.png";
 
 const Icons: Record<string, any> = {
   EmpMngIcon,
   Screenreader,
+  UserIcon,
+  RefreshIcon,
+  registerBg,
   ...MuiIcons,
 };
 

@@ -4,10 +4,11 @@ import Translate from "./Translate";
 import React from "react";
 import Condition from "../commons/Condition";
 import Icon from "../icon/Icon";
+import colors from "../../color";
 
 const colorTypes: Record<string, string> = {
-  primary: "text-upag-primary",
-  error: "text-upag-error",
+  primary: colors["ui-blue"],
+  error: colors["ui-red-light"],
 };
 
 interface PageTitleProps {
@@ -35,7 +36,7 @@ const PageTitle: React.FC<PageTitleProps> = ({
   translate = true,
   titleType = "",
   icon = "",
-  color = "primary",
+  color = colors['ui-brown-dark'],
 }) => {
   if (!text) return null;
 

@@ -6,6 +6,7 @@ import PageLoader from "../components/loader/PageLoader";
 import Url from "../components/constants/Url";
 
 const LoginForm = lazy(() => import("../pages/auth/Login"));
+const RegisterForm = lazy(() => import("../pages/auth/Register"))
 const ScreenReaderAccess = lazy(() => import("../pages/screen-reader/ScreenReaderAccess"));
 
 type SuspendProps = {
@@ -39,7 +40,7 @@ const PublicRoutes = {
     },
     {
       path: "register",
-      element: <h1>Registration component here</h1>,
+      element: <RegisterForm />,
     },
     {
       path: "*",
