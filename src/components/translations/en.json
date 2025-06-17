@@ -47,6 +47,7 @@
   },
   "Typo": {
     "SelectOnEmpty": "Select {{label}}",
+    "IndiaMobileCode": "+91",
     "ProvideFeedback": "Provide Us Your Feedback",
     "LinkExternal": "(link is external)",
     "ScreenReaderinfo1": "Non Visual Desktop Access (NVDA)",

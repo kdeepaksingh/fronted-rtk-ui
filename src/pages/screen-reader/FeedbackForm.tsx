@@ -103,9 +103,12 @@ const FeedbackForm = ({ open, onClose }: FeedbackFormProps) => {
               label={"Label.FeedbackCategory"}
               control={control}
               data={[
-                { id: "User_Experience", value: "user Experience" },
-                { id: "Ui_Bugs", value: "Bugs" },
+                { id: "User_Experience", value: "User Experience" },
                 { id: "Ui_Functionality", value: "Functionality" },
+                {
+                  id: "Suggestion_Improvements",
+                  value: "Suggestions and Improvements",
+                },
               ]}
               dataID="id"
               dataValue="value"
@@ -126,6 +129,20 @@ const FeedbackForm = ({ open, onClose }: FeedbackFormProps) => {
                     "Enter a valid 10-digit mobile number starting with 6, 7, 8, or 9",
                 },
               }}
+              // InputProps={{
+              //   startAdornment: (
+              //     <InputAdornment
+              //       position="start"
+              //       style={{
+              //         backgroundColor: "#E2EFFF",
+              //         padding: "18px",
+              //         marginLeft: "-14px",
+              //       }}
+              //     >
+              //       <Translate dataKey={"Typo.IndiaMobileCode"} />
+              //     </InputAdornment>
+              //   ),
+              // }}
               icon={"PhoneIphone"}
             />
 

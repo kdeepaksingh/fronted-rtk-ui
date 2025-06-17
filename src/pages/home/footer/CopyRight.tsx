@@ -6,7 +6,6 @@ import Translate from "../../../components/typography/Translate";
 const CopyRight = () => {
   const todayDate = moment().format("DD-MMM-YYYY");
   const currentYear = moment().format("YYYY");
-  const totalVisitors = "0018338";
 
   return (
     <Box
@@ -34,10 +33,7 @@ const CopyRight = () => {
           }}
         >
           <Translate dataKey={"Typo.FooterContent"} />
-          <Translate
-            dataKey="Typo.LastUpdated"
-            params={{ date: todayDate }}
-          /> 
+          <Translate dataKey="Typo.LastUpdated" params={{ date: todayDate }} />
           {/* &nbsp;
           <Translate
             dataKey="Typo.TotalVisitors"

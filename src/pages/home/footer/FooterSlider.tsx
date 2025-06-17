@@ -1,0 +1,44 @@
+import Emp from "../../../../public/assets/png/emp.webp";
+import Emp1 from "../../../../public/assets/png/emp1.png";
+import Emp2 from "../../../../public/assets/png/emp2.png";
+import Emp3 from "../../../../public/assets/png/employee.png";
+import Emp4 from "../../../../public/assets/png/employee-management.jpg";
+import FooterCarousel from "../../../components/slick/FooterCarousel";
+
+const FooterSliderFeature = () => {
+  const portalList = [
+    {
+      Name: "Cashlessindia",
+      Image: Emp,
+      Link: "http://cashlessindia.gov.in/",
+    },
+    {
+      Name: "public",
+      Image: Emp1,
+      Link: "https://pgportal.gov.in/",
+    },
+    {
+      Name: "webdirectory",
+      Image: Emp2,
+      Link: "https://igod.gov.in/",
+    },
+    {
+      Name: "degitalindia",
+      Image: Emp3,
+      Link: "https://www.digitalindia.gov.in/",
+    },
+    {
+      Name: "mygov",
+      Image: Emp4,
+      Link: "https://www.mygov.in/",
+    },
+  ];
+
+  return (
+    <div className="clients-carousel mx-2 md:mx-[-10px] bg-green-900 p-8">
+      <FooterCarousel data={portalList} />
+    </div>
+  );
+};
+
+export default FooterSliderFeature;

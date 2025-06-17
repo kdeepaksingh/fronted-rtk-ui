@@ -72,7 +72,7 @@ const FooterCarousel = ({ data = [] }: FooterCarouselProps) => {
                   <img
                     src={item?.Image}
                     alt={item?.Name || ""}
-                    className="block mx-auto rounded-2xl"
+                    className="block mx-auto rounded-2xl w-96 h-48"
                   />
                 </Link>
               </Box>
