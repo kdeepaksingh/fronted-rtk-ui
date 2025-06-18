@@ -23,6 +23,8 @@ const Register = () => {
   const dispatch = useDispatch();
   const alert = useSelector((state: RootState) => state.alert);
   const { control, handleSubmit, reset, watch } = useForm<FormData>();
+  const [captchaReload, setCaptchaReload] = useState(0);
+  const [isCaptchaValid, setIsCaptchaValid] = useState(false);
 
   const userName = watch("userName");
   const email = watch("email");
@@ -81,7 +83,7 @@ const Register = () => {
             size={20}
             className="text-amber-900 mt-2 mb-2"
           />
-          <hr className="border-t border-orange-300 w-full mt-2" />
+          <hr className="border-t border-[2px] border-orange-300 w-full mt-2" />
         </div>
         <form onSubmit={handleSubmit(onSubmit)} className="px-6 space-y-4 pb-4">
           <RHFTextInput

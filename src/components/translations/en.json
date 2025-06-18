@@ -1,7 +1,8 @@
 {
   "Header": {
     "UserName": "Header Page",
-    "NewUserRegister": "New User - Register"
+    "NewUserRegister": "New User - Register",
+    "LoginUser": "Existing User - Login"
   },
   "Title": {
     "Dashboard": "Dashboard"
@@ -9,6 +10,7 @@
   "Action": {
     "Submit": "Submit",
     "Reset": "Reset",
+    "SendOTP": "Send OTP",
     "LoginWithParichay": "Login with Parichay"
   },
   "Label": {
@@ -17,6 +19,8 @@
     "VerificationCode": "Verification Code",
     "MobileNumber": "Mobile",
     "Email": "Email",
+    "Password": "Password",
+    "OTP": "OTP",
     "FeedbackCategory": "Feedback Category"
   },
   "Placeholder": {
@@ -24,6 +28,8 @@
     "EnterVerificationCode": "Enter Verification Code",
     "EnterUserName": "Enter Your User Name",
     "EnterEmail": "Enter Your Email",
+    "EnterPassword": "Enter Your Password",
+    "EnterOtp": "Enter Your OTP",
     "EnterMobileNumber": "Enter Your (10 digits) Mobile Number",
     "SelectFeedbackCategory": "Select Feedback Category"
   },

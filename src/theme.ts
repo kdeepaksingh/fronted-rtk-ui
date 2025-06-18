@@ -6,7 +6,7 @@ const font = "'Open Sans'";
 const theme = createTheme({
   typography: {
     fontFamily: font,
-    fontSize: 16,
+    fontSize: 14,
     body1: { lineHeight: 1, color: colors["ui-black"] },
   },
   palette: {

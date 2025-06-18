@@ -7,11 +7,11 @@ import {
   FormHelperText,
 } from "@mui/material";
 import { Controller } from "react-hook-form";
-import type { Control, FieldValues } from "react-hook-form";
+import type { Control } from "react-hook-form";
 
 interface RHFRadioButtonsProps {
   name: string;
-  control: Control<FieldValues, any>;
+  control: Control<any>;
   label?: string;
   required?: boolean;
   disabled?: boolean;
@@ -19,6 +19,8 @@ interface RHFRadioButtonsProps {
   rules?: object;
   error?: string | boolean;
   defaultValue?: string;
+  className?: string;
+  row?: boolean;
 }
 
 const RHFRadioButtons = ({
@@ -31,9 +33,16 @@ const RHFRadioButtons = ({
   rules = {},
   error,
   defaultValue = "",
+  className,
+  row = false,
 }: RHFRadioButtonsProps) => {
   return (
-    <FormControl component="fieldset" error={Boolean(error)} sx={{ width: "100%" }}>
+    <FormControl
+      component="fieldset"
+      error={Boolean(error)}
+      sx={{ width: "100%" }}
+      className={className}
+    >
       {label && (
         <FormLabel component="legend">
           {label}
@@ -47,7 +56,7 @@ const RHFRadioButtons = ({
         rules={rules}
         defaultValue={defaultValue}
         render={({ field }) => (
-          <RadioGroup row {...field}>
+          <RadioGroup {...field} row={row}>
             {data.map((item) => (
               <FormControlLabel
                 key={item.key}
@@ -67,8 +76,8 @@ const RHFRadioButtons = ({
 
 export default RHFRadioButtons;
 
-
-{/* <RHFRadioButtons
+{
+  /* <RHFRadioButtons
         name="gender"
         label="Gender"
         control={control}
@@ -79,4 +88,5 @@ export default RHFRadioButtons;
         ]}
         rules={{ required: "Please select a gender" }}
         // error={errors.gender?.message as string}
-      /> */}
+      /> */
+}
