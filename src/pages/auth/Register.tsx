@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { IconButton } from "@mui/material";
@@ -11,6 +11,7 @@ import RHFTextInput from "../../components/inputs/RHFTextInput";
 import MainButton from "../../components/buttons/MainButton";
 import AlertMessage from "../../components/alert/AlertMessage";
 import { clearAlert, showSuccess } from "../../features/alertSlice/alertSlice";
+import Modal from "../../components/modal/Modal";
 
 interface FormData {
   userName: string;
@@ -25,6 +26,7 @@ const Register = () => {
   const { control, handleSubmit, reset, watch } = useForm<FormData>();
   const [captchaReload, setCaptchaReload] = useState(0);
   const [isCaptchaValid, setIsCaptchaValid] = useState(false);
+  const [isParichayModal, setIsParichayModal] = useState(false);
 
   const userName = watch("userName");
   const email = watch("email");
@@ -194,9 +196,46 @@ const Register = () => {
             type="button"
             ButtonName={"Action.LoginWithParichay"}
             className="hover:!bg-[#d97706] text-white"
+            onClick={() => setIsParichayModal(true)}
           />
         </div>
       </div>
+
+      <Modal
+        title={"Header.ParichayLogin"}
+        maxWidth="xs"
+        height={"h-auto overflow-x-hidden"}
+        onClose={() => setIsParichayModal(false)}
+        open={isParichayModal}
+        scroll="body"
+      >
+        <form className="mt-4 p-3">
+          <RHFTextInput
+            type="email"
+            name="email"
+            placeholder={"Placeholder.EnterEmail"}
+            label={"Label.Email"}
+            control={control}
+            required
+            rules={{
+              required: "Email is required",
+              pattern: {
+                value: /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i,
+                message: "Enter a valid email address",
+              },
+            }}
+            icon={"Email"}
+          />
+          <div className="flex justify-center gap-0 mt-4">
+            <MainButton ButtonName="Submit" type="submit" />
+            <MainButton
+              ButtonName="Reset"
+              type="button"
+              onClick={handleReset}
+            />
+          </div>
+        </form>
+      </Modal>
     </div>
   );
 };

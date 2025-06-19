@@ -4,6 +4,7 @@ import Emp2 from "../../../../public/assets/png/emp2.png";
 import Emp3 from "../../../../public/assets/png/employee.png";
 import Emp4 from "../../../../public/assets/png/employee-management.jpg";
 import FooterCarousel from "../../../components/slick/FooterCarousel";
+import colors from "../../../color";
 
 const FooterSliderFeature = () => {
   const portalList = [
@@ -35,7 +36,10 @@ const FooterSliderFeature = () => {
   ];
 
   return (
-    <div className="clients-carousel mx-2 md:mx-[-10px] bg-green-900 p-8">
+    <div
+      className="mx-2 md:mx-[-10px] p-8"
+      style={{ backgroundColor: colors["ui-card-light1"] }}
+    >
       <FooterCarousel data={portalList} />
     </div>
   );

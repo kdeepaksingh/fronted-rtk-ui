@@ -7,6 +7,7 @@ import Url from "../components/constants/Url";
 
 const LoginForm = lazy(() => import("../pages/auth/Login"));
 const RegisterForm = lazy(() => import("../pages/auth/Register"));
+const LandingTemplate = lazy(() => import("../pages/home/LandingPage"));
 const ScreenReaderAccess = lazy(
   () => import("../pages/screen-reader/ScreenReaderAccess")
 );
@@ -28,7 +29,7 @@ const PublicRoutes = {
       index: true,
       element: (
         <Suspend>
-          <LoginForm />
+          <LandingTemplate />
         </Suspend>
       ),
     },
