@@ -1,6 +1,6 @@
 import { FaUsers, FaClock, FaChartBar } from "react-icons/fa";
-import MainButton from "../../components/buttons/MainButton";
 import { FaFacebookF, FaTwitter, FaLinkedinIn, FaGithub } from "react-icons/fa";
+import MainButton from "../../components/buttons/MainButton";
 import { motion } from "framer-motion";
 import RHFTextInput from "../../components/inputs/RHFTextInput";
 import { useForm } from "react-hook-form";
@@ -51,8 +51,8 @@ const LandingPage = () => {
 
       {/* Features */}
       <section id="features" className="py-20 bg-white text-center">
-        <h3 className="text-3xl font-bold text-gray-800 mb-12">
-          Why Choose EmpManage?
+        <h3 className="text-3xl font-bold text-orange-600 mb-12">
+          Why Choose Employee Management System?
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 px-10">
           <div className="p-6 bg-blue-50 rounded-xl shadow-md hover:shadow-lg transition">

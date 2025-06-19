@@ -11,6 +11,7 @@
   "Action": {
     "Submit": "Submit",
     "Reset": "Reset",
+    "Login": "Login",
     "Subscribe": "Subscribe",
     "SendOTP": "Send OTP",
     "LoginWithParichay": "Login with Parichay"
