@@ -4,7 +4,7 @@ import FooterSliderFeature from "./FooterSlider";
 const Footer = () => {
   return (
     <div>
-      <FooterSliderFeature />
+      {/* <FooterSliderFeature /> */}
       <CopyRight />
     </div>
   );

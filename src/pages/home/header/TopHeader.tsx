@@ -6,7 +6,7 @@ import Translate from "../../../components/typography/Translate";
 import { AccessibilityTools } from "../../screen-reader/AccessibilityTools";
 import ScreenReader from "../../screen-reader/ScreenReader";
 import { useNavigate } from "react-router-dom";
-
+import DarkModeToggle from "../DarkModeToggle";
 
 const TopHeader = () => {
   const navigate = useNavigate();
@@ -35,6 +35,7 @@ const TopHeader = () => {
             className="font-semibold cursor-pointer"
           />
           <ScreenReader />
+          <DarkModeToggle />
           <AccessibilityTools />
         </div>
       </div>
@@ -43,4 +44,3 @@ const TopHeader = () => {
 };
 
 export default TopHeader;
-

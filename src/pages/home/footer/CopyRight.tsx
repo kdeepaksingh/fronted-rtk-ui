@@ -41,6 +41,10 @@ const CopyRight = () => {
           /> */}
           <br />
           &copy;{currentYear} <Translate dataKey={"Typo.FooterCopyRight"} />
+          {/* Footer */}
+          {/* <footer className="bg-white py-6 text-center text-gray-500 border-t mt-auto">
+            &copy; {new Date().getFullYear()} EmpManage. All rights reserved.
+          </footer> */}
         </Typography>
       </Container>
     </Box>

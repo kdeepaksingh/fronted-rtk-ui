@@ -37,8 +37,8 @@ const FooterSliderFeature = () => {
 
   return (
     <div
-      className="mx-2 md:mx-[-10px] p-8"
-      style={{ backgroundColor: colors["ui-card-light1"] }}
+      className="p-8 !bg-gradient-to-r from-[#31aea8] to-[#05438a]"
+      style={{ backgroundColor: colors["ui-card-light"] }}
     >
       <FooterCarousel data={portalList} />
     </div>
