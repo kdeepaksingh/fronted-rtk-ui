@@ -14,16 +14,28 @@ const NavBar = () => {
           Employee Management
         </div>
         <nav className="space-x-6 hidden md:block">
-          <Link to="#features" className="hover:underline !font-semibold">
+          <Link
+            to={`${Url.Auth.Feature}`}
+            className="hover:underline !font-semibold"
+          >
             Features
           </Link>
-          <Link to="#about" className="hover:underline !font-semibold">
+          <Link
+            to={`${Url.Auth.AboutUs}`}
+            className="hover:underline !font-semibold"
+          >
             About
           </Link>
-          <Link to="#contact" className="hover:underline !font-semibold">
+          <Link
+            to={`${Url.Auth.ContactUs}`}
+            className="hover:underline !font-semibold"
+          >
             Contact
           </Link>
-          <Link to="#contact" className="hover:underline !font-semibold">
+          <Link
+            to={`${Url.Auth.Services}`}
+            className="hover:underline !font-semibold"
+          >
             Services
           </Link>
         </nav>

@@ -4,6 +4,10 @@ export class Url {
   static Auth = {
     Register: "register",
     Login: "login",
+    AboutUs: "about",
+    Feature: "features",
+    ContactUs: "contact",
+    Services: "services",
   };
 }
 
