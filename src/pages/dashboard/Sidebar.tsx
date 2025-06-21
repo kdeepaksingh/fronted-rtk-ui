@@ -13,19 +13,23 @@ export default function Sidebar() {
     <motion.aside
       initial={{ x: -200 }}
       animate={{ x: 0 }}
-      transition={{ type: "spring", stiffness: 100 }}
-      className="bg-gradient-to-b from-orange-600 to-orange-800 text-white w-64 h-screen p-6 fixed left-0 top-0 shadow-lg"
+      transition={{ type: "spring", stiffness: 90 }}
+      className="w-64 bg-white shadow-xl rounded-r-3xl py-10 px-6 sticky top-0 h-screen z-20"
     >
-      <h2 className="text-2xl font-bold mb-10 text-center">EmpManage</h2>
-      <ul className="space-y-6">
+      <h2 className="text-3xl font-bold text-orange-700 text-center mb-10 tracking-wide">
+        EmpManage
+      </h2>
+      <ul className="space-y-6 text-lg">
         {menuItems.map((item) => (
-          <li
+          <motion.li
             key={item.label}
-            className="flex items-center gap-3 text-lg cursor-pointer hover:text-yellow-200"
+            whileHover={{ scale: 1.05 }}
+            transition={{ type: "spring", stiffness: 300 }}
+            className="flex items-center gap-4 p-2 rounded-lg text-gray-700 hover:bg-orange-100 cursor-pointer transition"
           >
-            {item.icon}
-            {item.label}
-          </li>
+            <span className="text-xl">{item.icon}</span>
+            <span>{item.label}</span>
+          </motion.li>
         ))}
       </ul>
     </motion.aside>

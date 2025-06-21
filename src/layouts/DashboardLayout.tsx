@@ -1,11 +1,9 @@
-import EmployeeDashboard from "../pages/dashboard/EmployeeDashboard";
+import Dashboard from "../pages/dashboard/Dashboard";
 
 const DashboardLayout = () => {
   return (
     <div>
-      {/* <Dashboard /> */}
-      <EmployeeDashboard />
-      {/* <EmployeeHideAndShowDashboard /> */}
+      <Dashboard />
     </div>
   );
 };

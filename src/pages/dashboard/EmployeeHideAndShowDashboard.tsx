@@ -37,21 +37,26 @@ export default function EmployeeHideAndShowDashboard() {
       <motion.aside
         animate={{ width: isSidebarOpen ? 240 : 72 }}
         transition={{ type: "spring", stiffness: 120 }}
-        className="bg-gradient-to-b from-indigo-600 to-indigo-800 text-white h-screen p-4 relative"
+        className="bg-gradient-to-b from-indigo-600 to-indigo-800 text-white h-screen p-4 relative overflow-hidden"
       >
+        {/* Toggle Button */}
         <button
-          className="absolute top-4 right-4 text-xl"
-          onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+          className="absolute top-4 right-4 text-xl cursor-pointer z-20"
+          onClick={() => setIsSidebarOpen((prev) => !prev)}
         >
           {isSidebarOpen ? "«" : "»"}
         </button>
-        <h2
-          className={`text-2xl font-bold text-center mb-8 transition-opacity duration-300 ${
-            isSidebarOpen ? "opacity-100" : "opacity-0"
+
+        {/* Sidebar Title */}
+        <div
+          className={`text-2xl font-bold text-center mb-8 transition-all duration-300 ${
+            isSidebarOpen ? "opacity-100 scale-100" : "opacity-0 scale-0"
           }`}
         >
           EmpManage
-        </h2>
+        </div>
+
+        {/* Menu Items */}
         <ul>
           {menuItems.map((item) => (
             <motion.li
@@ -61,7 +66,9 @@ export default function EmployeeHideAndShowDashboard() {
               transition={{ type: "spring", stiffness: 200 }}
             >
               {item.icon}
-              {isSidebarOpen && <span>{item.label}</span>}
+              {isSidebarOpen && (
+                <span className="whitespace-nowrap">{item.label}</span>
+              )}
             </motion.li>
           ))}
         </ul>
@@ -88,7 +95,7 @@ export default function EmployeeHideAndShowDashboard() {
                 initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: idx * 0.2 }}
-                className={`p-6 rounded-xl shadow-md bg-white`}
+                className="p-6 rounded-xl shadow-md bg-white"
               >
                 <h3 className="text-lg font-semibold text-gray-700">
                   {stat.title}

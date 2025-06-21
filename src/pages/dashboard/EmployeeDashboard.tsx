@@ -66,7 +66,7 @@ export default function EmployeeDashboard() {
           EmpManage
         </h2>
         <ul className="space-y-6 text-lg">
-          {menuItems.map((item, idx) => (
+          {menuItems.map((item) => (
             <motion.li
               key={item.label}
               whileHover={{ scale: 1.05 }}
