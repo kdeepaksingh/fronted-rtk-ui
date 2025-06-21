@@ -205,8 +205,8 @@ export default function ContactUs() {
           <motion.div className="col-span-2" variants={inputVariants}>
             <RHFTextArea
               name="message"
-              label="Label.Message"
-              placeholder="Placeholder.EnterMessage"
+              label={"Label.Message"}
+              placeholder={"Placeholder.EnterMessage"}
               control={control}
               maxCharCount={300}
               helptooltip="Alphabets,Special Character Allowed"

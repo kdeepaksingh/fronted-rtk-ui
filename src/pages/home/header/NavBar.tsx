@@ -15,10 +15,10 @@ const NavBar = () => {
         </div>
         <nav className="space-x-6 hidden md:block">
           <Link
-            to={`${Url.Auth.Feature}`}
+            to={`${Url.Auth.ContactUs}`}
             className="hover:underline !font-semibold"
           >
-            Features
+            Contact
           </Link>
           <Link
             to={`${Url.Auth.AboutUs}`}
@@ -27,10 +27,10 @@ const NavBar = () => {
             About
           </Link>
           <Link
-            to={`${Url.Auth.ContactUs}`}
+            to={`${Url.Auth.Feature}`}
             className="hover:underline !font-semibold"
           >
-            Contact
+            Features
           </Link>
           <Link
             to={`${Url.Auth.Services}`}

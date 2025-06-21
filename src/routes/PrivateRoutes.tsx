@@ -1,12 +1,32 @@
-import { Navigate } from "react-router-dom";
+import { Suspense, type ReactNode } from "react";
+import Url from "../components/constants/Url";
+import PageNotFound from "../pages/page-not-found/PageNotFound";
+import PageLoader from "../components/loader/PageLoader";
+import DashboardLayout from "../layouts/DashboardLayout";
 
+export const Suspend = ({ children }: SuspendProps) => (
+  <Suspense fallback={<PageLoader showLogo={false} />}>{children}</Suspense>
+);
+
+type SuspendProps = {
+  children: ReactNode;
+};
 const PrivateRoutes = {
-  path: "/",
-  element: "",
+  path: `${Url.Dashboard}`,
+  element: <DashboardLayout />,
+  errorElement: <PageNotFound />,
   children: [
+    // {
+    //   index: true,
+    //   element: (
+    //     <Suspend>
+    //       <DashboardTemplate />
+    //     </Suspend>
+    //   ),
+    // },
     { path: "dashboard", element: <h1>Dashboard component</h1> },
     { path: "profile", element: <h1>Profile component</h1> },
-    { path: "*", element: <Navigate to="/dashboard" replace /> },
+    { path: "*", element: <PageNotFound /> },
   ],
 };
 

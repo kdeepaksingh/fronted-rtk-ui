@@ -4,14 +4,14 @@ import PublicLayout from "../layouts/PublicLayout";
 import PageNotFound from "../pages/page-not-found/PageNotFound";
 import PageLoader from "../components/loader/PageLoader";
 import Url from "../components/constants/Url";
-import Features from "../pages/home/feature/Feature";
-import Services from "../pages/home/services/Services";
-import ContactUs from "../pages/home/contact-us/ContactUs";
 
 const LoginForm = lazy(() => import("../pages/auth/Login"));
 const RegisterForm = lazy(() => import("../pages/auth/Register"));
 const LandingTemplate = lazy(() => import("../pages/home/LandingPage"));
 const AboutUs = lazy(() => import("../pages/home/about/AboutUs"));
+const ContactUs = lazy(() => import("../pages/home/contact-us/ContactUs"));
+const Services = lazy(() => import("../pages/home/services/Services"));
+const Features = lazy(() => import("../pages/home/feature/Feature"));
 const ScreenReaderAccess = lazy(
   () => import("../pages/screen-reader/ScreenReaderAccess")
 );

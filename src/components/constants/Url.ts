@@ -1,5 +1,6 @@
 export class Url {
   static Home = "/";
+  static Dashboard = "dashboard";
   static ScreenReaderAccess = "screen-reader-access";
   static Auth = {
     Register: "register",
