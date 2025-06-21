@@ -55,7 +55,7 @@ const RHFTextArea = ({
             inputRef={ref}
             label={
               <>
-                {label}
+                {t(label)}
                 {required && <span style={{ color: "red" }}> *</span>}
               </>
             }

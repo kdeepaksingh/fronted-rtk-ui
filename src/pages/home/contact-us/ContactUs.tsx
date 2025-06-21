@@ -1,6 +1,15 @@
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
+import Lottie from "lottie-react";
 import { FaMapMarkerAlt, FaPhoneAlt, FaEnvelope } from "react-icons/fa";
-import AnimatedContactUs from "./AnimatedContactUs";
+
+import RHFTextInput from "../../../components/inputs/RHFTextInput";
+import RHFTextArea from "../../../components/inputs/RHFTextArea";
+import HelpCharacterCount from "../../../components/typography/HelpCharacterCount";
+import MainButton from "../../../components/buttons/MainButton";
+import Translate from "../../../components/typography/Translate";
+import PageLoader from "../../../components/loader/PageLoader";
 
 const inputVariants = {
   hidden: { opacity: 0, y: 20 },
@@ -15,86 +24,212 @@ const inputVariants = {
   }),
 };
 
+const fadeIn = {
+  hidden: { opacity: 0, y: 30 },
+  visible: (i: number = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: i * 0.2,
+      duration: 0.6,
+      ease: "easeOut",
+    },
+  }),
+};
+
 export default function ContactUs() {
+  const { control, watch } = useForm();
+  const messageChars = watch("message");
+  const [animationData, setAnimationData] = useState<any>(null);
+
+  useEffect(() => {
+    fetch("https://assets10.lottiefiles.com/packages/lf20_9cyyl8i4.json")
+      .then((res) => res.json())
+      .then(setAnimationData)
+      .catch(console.error);
+  }, []);
+
+  if (!animationData) {
+    return <PageLoader />;
+  }
+
   return (
-    <section className="min-h-screen py-20 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 px-4">
-      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-        {/* Left: Contact Info */}
+    <section className="min-h-screen py-10 px-4 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100">
+      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10">
+        {/* Left Side: Get in Touch + Lottie */}
         <motion.div
-          className="space-y-8"
-          initial={{ opacity: 0, x: -50 }}
+          className="space-y-6"
+          initial={{ opacity: 0, x: -60 }}
           whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.8 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-4xl font-bold mb-4">Get in Touch</h2>
-          <p className="text-gray-600 dark:text-gray-400">
+          <Translate
+            dataKey={"Get in Touch"}
+            className="font-semibold text-3xl text-orange-800"
+          />
+          <p className="text-orange-400 dark:text-gray-400 font-semibold">
             Have questions about our employee platform? Reach out via any method
             below and our team will respond within 24 hours.
           </p>
-          <div className="space-y-4">
+
+          <div className="space-y-2">
             <div className="flex items-center gap-4">
               <FaMapMarkerAlt className="text-blue-600 text-xl" />
-              <span>123 Corporate Drive, Tech City, India</span>
+              <strong>123 Corporate Drive, Tech City, India</strong>
             </div>
             <div className="flex items-center gap-4">
               <FaPhoneAlt className="text-green-600 text-xl" />
-              <span>+91 98765 43210</span>
+              <strong>+91 98765 43210</strong>
             </div>
             <div className="flex items-center gap-4">
               <FaEnvelope className="text-red-600 text-xl" />
-              <span>support@empmanage.com</span>
+              <strong>support@empmanage.com</strong>
             </div>
           </div>
+
+          <Lottie
+            animationData={animationData}
+            loop
+            className="w-full h-[300px] mt-6"
+          />
         </motion.div>
 
-        {/* Right: Contact Form */}
+        {/* Right Side: Form */}
         <motion.form
-          className="bg-gray-50 dark:bg-gray-800 p-8 rounded-2xl shadow-md space-y-6"
+          className="bg-gray-200 border-orange-800 border-[2px] dark:bg-gray-800 p-8 rounded-2xl shadow-md grid grid-cols-1 md:grid-cols-2 gap-2"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
         >
-          {["Name", "Email", "Subject"].map((label, i) => (
-            <motion.div
-              key={i}
-              className="flex flex-col"
-              custom={i}
-              variants={inputVariants}
+          <motion.div
+            className="col-span-2 text-center"
+            variants={inputVariants}
+          >
+            <motion.h2
+              className="text-3xl font-semibold mb-2 text-orange-800 dark:text-white"
+              variants={fadeIn}
+              custom={0}
             >
-              <label htmlFor={label} className="mb-1 font-medium">
-                {label}
-              </label>
-              <input
-                type={label === "Email" ? "email" : "text"}
-                placeholder={`Enter your ${label.toLowerCase()}`}
-                className="p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </motion.div>
-          ))}
-
-          <motion.div custom={3} variants={inputVariants}>
-            <label htmlFor="message" className="mb-1 font-medium block">
-              Message
-            </label>
-            <textarea
-              rows={4}
-              placeholder="Enter your message"
-              className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            ></textarea>
+              Contact Our Team
+            </motion.h2>
+            <motion.p
+              className="text-orange-500 dark:text-gray-400 mb-4 font-semibold"
+              variants={fadeIn}
+              custom={1}
+            >
+              Let us know how we can help you.
+            </motion.p>
           </motion.div>
 
-          <motion.div custom={4} variants={inputVariants}>
-            <button
-              type="submit"
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg transition duration-300"
+          <motion.div variants={inputVariants}>
+            <RHFTextInput
+              type="text"
+              name="fullName"
+              placeholder="Placeholder.EnterFullName"
+              label="Label.FullName"
+              control={control}
+              maxCharCount={20}
+              required
+              rules={{
+                required: "Full Name is required",
+                pattern: {
+                  value: /^[A-Za-z\s]+$/,
+                  message: "Only letters are allowed in full name",
+                },
+              }}
+              icon="Person"
+            />
+          </motion.div>
+
+          <motion.div variants={inputVariants}>
+            <RHFTextInput
+              type="email"
+              name="email"
+              placeholder="Placeholder.EnterEmail"
+              label="Label.Email"
+              control={control}
+              required
+              rules={{
+                required: "Email is required",
+                pattern: {
+                  value: /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i,
+                  message: "Enter a valid email address",
+                },
+              }}
+              icon="Email"
+            />
+          </motion.div>
+
+          <motion.div variants={inputVariants}>
+            <RHFTextInput
+              type="tel"
+              name="mobileNumber"
+              placeholder="Placeholder.EnterMobileNumber"
+              label="Label.MobileNumber"
+              control={control}
+              maxCharCount={10}
+              required
+              rules={{
+                required: "Mobile Number is required",
+                pattern: {
+                  value: /^[6-9]\d{9}$/,
+                  message:
+                    "Enter a valid 10-digit mobile number starting with 6, 7, 8, or 9",
+                },
+              }}
+              icon="PhoneIphone"
+            />
+          </motion.div>
+
+          <motion.div variants={inputVariants}>
+            <RHFTextInput
+              type="text"
+              name="subject"
+              placeholder="Placeholder.EnterSubject"
+              label="Label.Subject"
+              control={control}
+              maxCharCount={20}
+              required
+              rules={{
+                required: "Subject is required",
+                pattern: {
+                  value: /^[A-Za-z\s]+$/,
+                  message: "Only letters are allowed in subject",
+                },
+              }}
+              icon="Subject"
+            />
+          </motion.div>
+
+          <motion.div className="col-span-2" variants={inputVariants}>
+            <RHFTextArea
+              name="message"
+              label="Label.Message"
+              placeholder="Placeholder.EnterMessage"
+              control={control}
+              maxCharCount={300}
+              helptooltip="Alphabets,Special Character Allowed"
+            />
+            <HelpCharacterCount max={300} min={3} value={messageChars} />
+          </motion.div>
+
+          <motion.div className="col-span-2" variants={inputVariants}>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="w-full"
             >
-              Send Message
-            </button>
+              <MainButton
+                ButtonName="Action.SendMessage"
+                className="!bg-orange-700 w-full h-8 font-semibold"
+                type="submit"
+                icon="Telegram"
+              />
+            </motion.button>
           </motion.div>
         </motion.form>
       </div>
-      <AnimatedContactUs />
     </section>
   );
 }

@@ -14,6 +14,7 @@
     "Login": "Login",
     "Subscribe": "Subscribe",
     "SendOTP": "Send OTP",
+    "SendMessage": "Send Message",
     "LoginWithParichay": "Login with Parichay"
   },
   "Label": {
@@ -22,6 +23,8 @@
     "VerificationCode": "Verification Code",
     "MobileNumber": "Mobile",
     "Email": "Email",
+    "Subject": "Subject",
+    "Message": "Message",
     "Password": "Password",
     "OTP": "OTP",
     "FeedbackCategory": "Feedback Category"
@@ -33,6 +36,8 @@
     "EnterEmail": "Enter Your Email",
     "EnterPassword": "Enter Your Password",
     "EnterOtp": "Enter Your OTP",
+    "EnterMessage": "Enter Your Message",
+    "EnterSubject": "Enter Your Subject",
     "EnterMobileNumber": "Enter Your (10 digits) Mobile Number",
     "SelectFeedbackCategory": "Select Feedback Category"
   },
