@@ -10,19 +10,22 @@ import {
 } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import Url from "../../components/constants/Url";
+import { useNavigate } from "react-router-dom";
 
 const menuItems = [
-  { icon: <FaUserTie />, label: "Dashboard" },
-  { icon: <FaChartBar />, label: "Overview" },
-  { icon: <FaUsers />, label: "Employees" },
-  { icon: <FaCalendarAlt />, label: "Attendance" },
-  { icon: <FaClipboardList />, label: "Tasks" },
-  { icon: <FaChartLine />, label: "Analytics" },
-  { icon: <FaUserClock />, label: "Leaves" },
-  { icon: <FaCog />, label: "Settings" },
+  { icon: <FaUserTie />, label: "Dashboard", url: `${Url.Dashboard}` },
+  { icon: <FaUserClock />, label: "Leaves", url: `${Url.Leaves}` },
+  { icon: <FaUsers />, label: "Employees", url: `${Url.Employees}` },
+  { icon: <FaCalendarAlt />, label: "Attendance", url: `${Url.Attendence}` },
+  { icon: <FaClipboardList />, label: "Tasks", url: `${Url.Tasks}` },
+  { icon: <FaChartBar />, label: "Overview", url: `${Url.Overview}` },
+  { icon: <FaChartLine />, label: "Analytics", url: `${Url.Analytics}` },
+  { icon: <FaCog />, label: "Settings", url: `${Url.Settings}` },
 ];
 
 export default function DashSidebar() {
+  const navigate = useNavigate();
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   return (
     <div className="flex">
@@ -51,7 +54,8 @@ export default function DashSidebar() {
               key={item.label}
               whileHover={{ scale: 1.05 }}
               transition={{ type: "spring", stiffness: 200 }}
-              className="gap-4 text-lg flex items-center p-3 mb-2 rounded-lg text-white hover:bg-orange-100 hover:text-amber-900 cursor-pointer transition"
+              className="gap-4 text-lg flex items-center p-3 mb-2 rounded-lg text-white hover:bg-white hover:text-amber-900 cursor-pointer transition"
+              onClick={() => navigate(item?.url)}
             >
               <span className="text-xl ml-[-10px]">{item.icon}</span>
               {isSidebarOpen && (

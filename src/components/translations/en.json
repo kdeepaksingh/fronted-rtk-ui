@@ -3,6 +3,7 @@
     "UserName": "Header Page",
     "NewUserRegister": "New User - Register",
     "ParichayLogin": "Parichay Login Here",
+    "ApplyForLeave": "Apply Leave Here",
     "LoginUser": "Existing User - Login"
   },
   "Title": {
@@ -23,10 +24,15 @@
     "VerificationCode": "Verification Code",
     "MobileNumber": "Mobile",
     "Email": "Email",
+    "Reason": "Reason",
+    "CCEmail": "CC Email",
     "Subject": "Subject",
     "Message": "Message",
     "Password": "Password",
+    "LeaveType": "Leave Type",
+    "DayType": "Day Type",
     "OTP": "OTP",
+    "ApplyTo": "Apply To",
     "FeedbackCategory": "Feedback Category"
   },
   "Placeholder": {
@@ -34,12 +40,17 @@
     "EnterVerificationCode": "Enter Verification Code",
     "EnterUserName": "Enter Your User Name",
     "EnterEmail": "Enter Your Email",
+    "EnterCCEmail": "Enter Your CC Email",
     "EnterPassword": "Enter Your Password",
     "EnterOtp": "Enter Your OTP",
+    "EnterReason": "Enter Your Reason",
     "EnterMessage": "Enter Your Message",
     "EnterSubject": "Enter Your Subject",
     "EnterMobileNumber": "Enter Your (10 digits) Mobile Number",
-    "SelectFeedbackCategory": "Select Feedback Category"
+    "SelectFeedbackCategory": "Select Feedback Category",
+    "SelectLeaveType": "Select Leave Type",
+    "SelectApplyTo": "Select Apply To",
+    "SelectDayType": "Select Day Type"
   },
   "Link": {
     "ForgotPassword": "Forgot Password?",

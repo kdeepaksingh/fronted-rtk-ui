@@ -48,7 +48,7 @@ const RHFTextInput = ({
   defaultValue = "",
 }: RHFTextInputProps) => {
   return (
-    <div style={{ marginBottom }}>
+    <div style={{ marginBottom, width: "100%" }}>
       <Controller
         name={name}
         control={control}

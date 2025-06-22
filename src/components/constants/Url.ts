@@ -10,6 +10,14 @@ export class Url {
     ContactUs: "contact",
     Services: "services",
   };
+  static Leaves = "leaves";
+  static Overview = "overview";
+  static Settings = "settings";
+  static Tasks = "tasks";
+  static Attendence = "attendence";
+  static Analytics = "analytics";
+  static Employees = "employees";
+  static Documents = "documents";
 }
 
 export default Url;

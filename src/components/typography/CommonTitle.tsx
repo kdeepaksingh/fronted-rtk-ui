@@ -26,14 +26,14 @@ const CommonTitle = ({
   if (!text) return null;
 
   return (
-    <Box className={`flex gap-6 w-full ${className}`}>
+    <Box className={`flex gap-2 w-full ${className}`}>
       {onBack && (
         <IconButton onClick={onBack} size="small">
           <ArrowBackIcon />
         </IconButton>
       )}
 
-      {icon && <Icon name={icon} />}
+      {icon && <Icon name={icon} className="mt-1.5 font-bold " />}
 
       <Translate
         dataKey={text}

@@ -38,6 +38,12 @@ const NavBar = () => {
           >
             Services
           </Link>
+          <Link
+            to={`${Url.Dashboard}`}
+            className="hover:underline !font-semibold"
+          >
+            Dashboard
+          </Link>
         </nav>
         <div>
           <MainButton

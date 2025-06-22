@@ -13,6 +13,7 @@ type SwitchButtonProps = {
   label: string;
   control: Control<any>;
   disabled?: boolean;
+  className?: string;
 };
 
 const IOSSwitch = styled((props: any) => (

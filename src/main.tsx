@@ -10,6 +10,8 @@ import "./index.css";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import "ag-grid-community/styles/ag-theme-balham.css";
+import "react-datepicker/dist/react-datepicker.css";
+
 import ErrorBoundary from "./ErrorBoundary.tsx";
 
 createRoot(document.getElementById("root")!).render(
