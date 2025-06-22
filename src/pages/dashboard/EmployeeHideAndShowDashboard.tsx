@@ -30,7 +30,7 @@ export default function EmployeeHideAndShowDashboard() {
     { title: "Projects Assigned", value: 35, total: 40, color: "bg-green-500" },
     { title: "Pending Leaves", value: 5, total: 10, color: "bg-red-500" },
   ];
-
+  
   return (
     <div className="flex">
       {/* Sidebar */}

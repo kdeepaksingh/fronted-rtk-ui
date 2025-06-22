@@ -55,30 +55,13 @@ const cards = [
     icon: <FaUserClock className="text-4xl text-yellow-900" />,
     color: "from-yellow-300 to-yellow-500",
   },
-  {
-    title: "Pending Leaves",
-    value: "5",
-    icon: <FaUserClock className="text-4xl text-yellow-900" />,
-    color: "from-yellow-300 to-yellow-500",
-  },
-  {
-    title: "Pending Leaves",
-    value: "5",
-    icon: <FaUserClock className="text-4xl text-yellow-900" />,
-    color: "from-yellow-300 to-yellow-500",
-  },
-  {
-    title: "Pending Leaves",
-    value: "5",
-    icon: <FaUserClock className="text-4xl text-yellow-900" />,
-    color: "from-yellow-300 to-yellow-500",
-  },
-  {
-    title: "Today's Attendance",
-    value: "128",
-    icon: <FaCalendarAlt className="text-4xl text-purple-900" />,
-    color: "from-purple-300 to-purple-500",
-  },
+];
+
+const stats = [
+  { title: "Active Employees", value: 120, total: 150, color: "bg-blue-500" },
+  { title: "Projects Assigned", value: 35, total: 40, color: "bg-green-500" },
+  { title: "Pending Leaves", value: 5, total: 10, color: "bg-red-500" },
+  { title: "Documents", value: 5, total: 10, color: "bg-red-900" },
 ];
 
 const DashCard = () => {
@@ -106,6 +89,34 @@ const DashCard = () => {
             </div>
           </motion.div>
         ))}
+        {stats.map((stat, idx) => {
+          const progress = (stat.value / stat.total) * 100;
+          return (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: idx * 0.2 }}
+              className="p-6 rounded-xl shadow-md bg-white"
+            >
+              <h3 className="text-lg font-semibold text-gray-700">
+                {stat.title}
+              </h3>
+              <p className="text-3xl font-bold mt-2">{stat.value}</p>
+              <div className="w-full bg-gray-200 rounded-full h-3 mt-4 overflow-hidden">
+                <motion.div
+                  className={`h-full rounded-full ${stat.color}`}
+                  initial={{ width: 0 }}
+                  animate={{ width: `${progress}%` }}
+                  transition={{ duration: 1 }}
+                />
+              </div>
+              <p className="text-sm text-gray-500 mt-2">
+                {progress.toFixed(0)}% of {stat.total}
+              </p>
+            </motion.div>
+          );
+        })}
       </div>
 
       <motion.div
