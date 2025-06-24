@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Condition from "../commons/Condition";
 import type { ReactNode } from "react";
+import NoInternetConnection from "../../pages/page-not-found/NoInternetConnection";
 
 export const CheckConnection = ({ children }: { children: ReactNode }) => {
   const [isOnline, setIsOnline] = useState<boolean>(navigator?.onLine || true);
@@ -21,7 +22,7 @@ export const CheckConnection = ({ children }: { children: ReactNode }) => {
   return (
     <>
       <Condition show={!isOnline}>
-        <div>Please check your internet connection.</div>
+        <NoInternetConnection />
       </Condition>
       <Condition show={isOnline}>{children}</Condition>
     </>
