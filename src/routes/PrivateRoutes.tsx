@@ -14,6 +14,8 @@ import FeedbackDetails from "../pages/feedback/FeedbackDetails";
 import IDCards from "../pages/id-card/IDCards";
 import LeaveRequests from "../pages/leaves/LeaveRequests";
 import UserProfile from "../pages/profile/UserProfile";
+import Settings from "../pages/setting/Setting";
+import LeaveManagement from "../pages/leaves/LeaveManagement";
 
 const DashCard = lazy(() => import("../pages/dashboard/DashCard"));
 const ApplyLeaves = lazy(() => import("../pages/leaves/ApplyLeaves"));
@@ -131,6 +133,22 @@ const PrivateRoutes = {
       element: (
         <Suspend>
           <UserProfile />
+        </Suspend>
+      ),
+    },
+    {
+      path: Url.Settings,
+      element: (
+        <Suspend>
+          <Settings />
+        </Suspend>
+      ),
+    },
+    {
+      path: Url.LeaveManagement,
+      element: (
+        <Suspend>
+          <LeaveManagement />
         </Suspend>
       ),
     },

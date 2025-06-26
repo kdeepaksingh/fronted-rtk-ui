@@ -63,7 +63,7 @@ const menuItems = [
   },
   // { icon: <FaChartBar />, label: "Overview", url: `${Url.Overview}` },
   // { icon: <FaChartLine />, label: "Analytics", url: `${Url.Analytics}` },
-  // { icon: <FaCog />, label: "Settings", url: `${Url.UserProfile}` },
+  { icon: <FaCog />, label: "Settings", url: `${Url.Settings}` },
 ];
 
 export default function DashSidebar() {
