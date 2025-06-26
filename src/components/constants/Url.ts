@@ -10,13 +10,23 @@ export class Url {
     ContactUs: "contact",
     Services: "services",
   };
-  static Leaves = "leaves";
   static Overview = "overview";
   static Settings = "settings";
   static Tasks = "tasks";
-  static Attendence = "attendence";
+  static Attendance = "attendance";
   static Analytics = "analytics";
   static Employees = "employees";
+  static Payroll = "payroll";
+  static TasksAndProjects = "tasks-and-projects";
+  static Performance = "performance";
+  static UserProfile = "user-profile";
+  static Feedback = "feedback";
+  static TeamManagement = "team-management";
+  static TasksDetails = "tasks-details";
+  static IDCard = "id-card";
+  static LeaveRequest = "leave-request";
+  static ApplyLeaves = "apply-leaves";
+  static Notifications = "notifications";
   static Documents = "documents";
 }
 

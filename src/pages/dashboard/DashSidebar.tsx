@@ -1,12 +1,19 @@
 import {
   FaUsers,
   FaCalendarAlt,
-  FaClipboardList,
+  FaCalendarCheck,
   FaUserClock,
   FaCog,
   FaChartBar,
   FaUserTie,
   FaChartLine,
+  FaFileAlt,
+  FaMoneyCheckAlt,
+  FaUsersCog,
+  FaIdBadge,
+  FaBell,
+  FaClipboardList,
+  FaRegComments,
 } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { useState } from "react";
@@ -15,13 +22,48 @@ import { useNavigate } from "react-router-dom";
 
 const menuItems = [
   { icon: <FaUserTie />, label: "Dashboard", url: `${Url.Dashboard}` },
-  { icon: <FaUserClock />, label: "Leaves", url: `${Url.Leaves}` },
+  {
+    icon: <FaClipboardList />,
+    label: "Apply Leaves",
+    url: `${Url.ApplyLeaves}`,
+  },
   { icon: <FaUsers />, label: "Employees", url: `${Url.Employees}` },
-  { icon: <FaCalendarAlt />, label: "Attendance", url: `${Url.Attendence}` },
-  { icon: <FaClipboardList />, label: "Tasks", url: `${Url.Tasks}` },
-  { icon: <FaChartBar />, label: "Overview", url: `${Url.Overview}` },
-  { icon: <FaChartLine />, label: "Analytics", url: `${Url.Analytics}` },
-  { icon: <FaCog />, label: "Settings", url: `${Url.Settings}` },
+  { icon: <FaCalendarCheck />, label: "Attendance", url: `${Url.Attendance}` },
+  { icon: <FaMoneyCheckAlt />, label: "Payroll", url: `${Url.Payroll}` },
+  { icon: <FaChartBar />, label: "Performamce", url: `${Url.Performance}` },
+  {
+    icon: <FaUsersCog />,
+    label: "Teams",
+    url: `${Url.TeamManagement}`,
+  },
+  {
+    icon: <FaIdBadge />,
+    label: "ID Card",
+    url: `${Url.IDCard}`,
+  },
+  {
+    icon: <FaBell />,
+    label: "Notifications",
+    url: `${Url.Notifications}`,
+  },
+  {
+    icon: <FaClipboardList />,
+    label: "Tasks & Projects",
+    url: `${Url.TasksAndProjects}`,
+  },
+  {
+    icon: <FaRegComments />,
+    label: "Feedback",
+    url: `${Url.Feedback}`,
+  },
+  {
+    icon: <FaFileAlt />,
+    label: "Leave Request",
+    url: `${Url.LeaveRequest}`,
+  },
+  // { icon: <FaChartBar />, label: "Overview", url: `${Url.Overview}` },
+  // { icon: <FaChartLine />, label: "Analytics", url: `${Url.Analytics}` },
+  // { icon: <FaCog />, label: "Settings", url: `${Url.UserProfile}` },
 ];
 
 export default function DashSidebar() {
@@ -32,7 +74,7 @@ export default function DashSidebar() {
       <motion.aside
         animate={{ width: isSidebarOpen ? 240 : 72 }}
         transition={{ type: "spring", stiffness: 120 }}
-        className="bg-gradient-to-b from-orange-600 to-orange-800 !text-white p-6 sticky top-0 shadow-xl  py-10 px-6 h-screen z-20"
+        className="bg-gradient-to-b from-orange-600 to-orange-800 !text-white p-2 sticky top-0 shadow-xl  py-1 px-6 h-screen z-20"
       >
         {/* Toggle Button */}
         <button
