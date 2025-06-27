@@ -2,23 +2,35 @@ import { lazy, Suspense, type ReactNode } from "react";
 import Url from "../components/constants/Url";
 import PageNotFound from "../pages/page-not-found/PageNotFound";
 import PageLoader from "../components/loader/PageLoader";
-import DashboardLayout from "../layouts/DashboardLayout";
-import EmployeesDetails from "../pages/employees/EmployeesDetails";
-import AttendanceDetails from "../pages/attendance/AttendanceDetails";
-import PayrollDetails from "../pages/payroll/PayrollDetails";
-import PerformanceRecords from "../pages/performance/PerformanceRecords";
-import TeamManagement from "../pages/team-management/TeamManagement";
-import NotificationDetails from "../pages/notification/NotificationDetails";
-import TasksAndProject from "../pages/tasks-projects/TasksAndProject";
-import FeedbackDetails from "../pages/feedback/FeedbackDetails";
-import IDCards from "../pages/id-card/IDCards";
-import LeaveRequests from "../pages/leaves/LeaveRequests";
-import UserProfile from "../pages/profile/UserProfile";
-import Settings from "../pages/setting/Setting";
-import LeaveManagement from "../pages/leaves/LeaveManagement";
 
 const DashCard = lazy(() => import("../pages/dashboard/DashCard"));
 const ApplyLeaves = lazy(() => import("../pages/leaves/ApplyLeaves"));
+const LeaveManagement = lazy(() => import("../pages/leaves/LeaveManagement"));
+const Settings = lazy(() => import("../pages/setting/Setting"));
+const UserProfile = lazy(() => import("../pages/profile/UserProfile"));
+const LeaveRequests = lazy(() => import("../pages/leaves/LeaveRequests"));
+const IDCards = lazy(() => import("../pages/id-card/IDCards"));
+const FeedbackDetails = lazy(() => import("../pages/feedback/FeedbackDetails"));
+const TasksAndProject = lazy(
+  () => import("../pages/tasks-projects/TasksAndProject")
+);
+const NotificationDetails = lazy(
+  () => import("../pages/notification/NotificationDetails")
+);
+const TeamManagement = lazy(
+  () => import("../pages/team-management/TeamManagement")
+);
+const PerformanceRecords = lazy(
+  () => import("../pages/performance/PerformanceRecords")
+);
+const PayrollDetails = lazy(() => import("../pages/payroll/PayrollDetails"));
+const AttendanceDetails = lazy(
+  () => import("../pages/attendance/AttendanceDetails")
+);
+const EmployeesDetails = lazy(
+  () => import("../pages/employees/EmployeesDetails")
+);
+const DashboardLayout = lazy(() => import("../layouts/DashboardLayout"));
 
 export const Suspend = ({ children }: SuspendProps) => (
   <Suspense fallback={<PageLoader showLogo={false} />}>{children}</Suspense>
@@ -152,7 +164,15 @@ const PrivateRoutes = {
         </Suspend>
       ),
     },
-    { path: "dashboard", element: <h1>Dashboard component</h1> },
+    {
+      path: Url.Dashboard,
+      element: (
+        <Suspend>
+          <DashCard />
+        </Suspend>
+      ),
+    },
+    // { path: "dashboard", element: <h1>Dashboard component</h1> },
     { path: "*", element: <PageNotFound /> },
   ],
 };

@@ -96,10 +96,10 @@ export default function DashSidebar() {
               key={item.label}
               whileHover={{ scale: 1.05 }}
               transition={{ type: "spring", stiffness: 200 }}
-              className="gap-4 text-lg flex items-center p-3 mb-2 rounded-lg text-white hover:bg-white hover:text-amber-900 cursor-pointer transition"
+              className="gap-4 font-normal text-lg flex items-center p-1 mb-1 rounded-lg text-white hover:bg-white hover:text-amber-900 cursor-pointer transition"
               onClick={() => navigate(item?.url)}
             >
-              <span className="text-xl ml-[-10px]">{item.icon}</span>
+              <span className="text-xl">{item.icon}</span>
               {isSidebarOpen && (
                 <span className="whitespace-nowrap">{item.label}</span>
               )}
