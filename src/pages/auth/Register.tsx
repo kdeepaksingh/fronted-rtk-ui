@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useState } from "react";
+import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { IconButton } from "@mui/material";
 import { Link } from "react-router-dom";
 import registerBg from "../../assets/svg/register-bg.svg";
-import type { RootState } from "../../store/store";
+import { useAppDispatch, type RootState } from "../../store/store";
 import Icon from "../../components/icon/Icon";
 import PageTitle from "../../components/typography/PageTitle";
 import RHFTextInput from "../../components/inputs/RHFTextInput";
@@ -12,25 +12,27 @@ import MainButton from "../../components/buttons/MainButton";
 import AlertMessage from "../../components/alert/AlertMessage";
 import { clearAlert, showSuccess } from "../../features/alertSlice/alertSlice";
 import Modal from "../../components/modal/Modal";
+import { registerUser } from "../../features/auth/authSlice";
+import { toast } from "react-toastify";
 
 interface FormData {
   userName: string;
   email: string;
   mobileNumber: string;
+  password: string;
   verificationCode: string;
 }
 
 const Register = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const alert = useSelector((state: RootState) => state.alert);
   const { control, handleSubmit, reset, watch } = useForm<FormData>();
-  const [captchaReload, setCaptchaReload] = useState(0);
-  const [isCaptchaValid, setIsCaptchaValid] = useState(false);
   const [isParichayModal, setIsParichayModal] = useState(false);
 
   const userName = watch("userName");
   const email = watch("email");
   const mobileNumber = watch("mobileNumber");
+  const password = watch("password");
   const verificationCode = watch("verificationCode");
 
   const [captchaNum1, setCaptchaNum1] = useState(() =>
@@ -45,6 +47,7 @@ const Register = () => {
     !!userName &&
     !!email &&
     !!mobileNumber &&
+    !!password &&
     verificationCode?.trim() === correctCaptchaAnswer;
 
   const handleReset = () => {
@@ -56,10 +59,47 @@ const Register = () => {
     setCaptchaNum2(Math.floor(Math.random() * 10));
   };
 
-  const onSubmit = (data: FormData) => {
-    console.log("Form Data:", data);
-    dispatch(showSuccess("Registration successfully!"));
-    refreshCaptcha();
+  const onSubmit = async (data: FormData) => {
+    const payload = {
+      name: data.userName,
+      email: data.email,
+      mobileNo: data.mobileNumber,
+      password: data.password,
+      verificationCode: data.verificationCode,
+    };
+
+    try {
+      const response = await dispatch(registerUser(payload)).unwrap();
+      if ((response as { message?: string })?.message) {
+        // dispatch(
+        //   showSuccess(
+        //     (response as { message?: string })?.message ||
+        //       "User Registration successfully!"
+        //   )
+        // );
+        toast.success(
+          (response as { message?: string })?.message ||
+            "User Registration successfully!"
+        );
+        reset();
+        refreshCaptcha();
+      }
+    } catch (error: unknown) {
+      let errorMessage = "User Registration failed!";
+      if (error instanceof Error) {
+        errorMessage = error.message;
+      } else if (
+        typeof error === "object" &&
+        error !== null &&
+        "response" in error
+      ) {
+        const responseError = error as {
+          response?: { data?: { message?: string } };
+        };
+        errorMessage = responseError.response?.data?.message || errorMessage;
+      }
+      dispatch(showSuccess(errorMessage));
+    }
   };
 
   return (
@@ -73,7 +113,7 @@ const Register = () => {
             message={alert.message}
             success={alert.success}
             onClose={() => dispatch(clearAlert())}
-            autoCloseIn={3}
+            autoCloseIn={5}
             type="snackbar"
             successSnack
           />
@@ -140,6 +180,25 @@ const Register = () => {
             }}
             icon={"PhoneIphone"}
           />
+          <RHFTextInput
+            type="password"
+            name="password"
+            placeholder={"Placeholder.EnterPassword"}
+            label={"Label.Password"}
+            control={control}
+            required
+            rules={{
+              required: "Password is required",
+              pattern: {
+                value:
+                  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+[\]{};':"\\|,.<>/?]).{8,}$/,
+                message:
+                  "Password must be at least 8 characters and include uppercase, lowercase, number, and special character",
+              },
+            }}
+            icon={"Lock"}
+          />
+
           <div className="flex items-center space-x-2">
             <RHFTextInput
               type="tel"
@@ -160,7 +219,7 @@ const Register = () => {
               icon={"Verified"}
             />
 
-            <div className="bg-gray-100 px-4 py-2 rounded-md text-md font-semibold mt-[-15px]">
+            <div className="bg-gray-100 px-4 py-2 rounded-md text-md font-semibold mt-[-15px] min-w-28 ">
               {captchaNum1} + {captchaNum2} = ?
             </div>
             <IconButton onClick={refreshCaptcha} style={{ marginTop: "-13px" }}>

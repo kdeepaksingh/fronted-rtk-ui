@@ -1,4 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { useDispatch } from "react-redux";
+
 import authReducer from "../features/auth/authSlice";
 import alertReducer from "../features/alertSlice/alertSlice";
 import globalReducer from "../features/alertSlice/globalSlice";
@@ -6,6 +8,7 @@ import newsReducer from "../features/news/newsSlice";
 import searchReducer from "../features/table/searchSlice";
 import loadingReducer from "../features/alertSlice/loadingSlice";
 
+// Create Redux store
 export const store = configureStore({
   reducer: {
     alert: alertReducer,
@@ -17,5 +20,9 @@ export const store = configureStore({
   },
 });
 
+// ✅ Typed state and dispatch types
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
+
+// ✅ Custom typed dispatch hook
+export const useAppDispatch: () => AppDispatch = useDispatch;

@@ -44,7 +44,6 @@ const RHFTextInput = ({
   onIconClick,
   control,
   rules,
-  error,
   defaultValue = "",
 }: RHFTextInputProps) => {
   return (
@@ -54,8 +53,9 @@ const RHFTextInput = ({
         control={control}
         rules={rules}
         defaultValue={defaultValue}
-        render={({ field }) => {
+        render={({ field, fieldState: { error } }) => {
           const { onChange, onBlur, value, ref } = field;
+          const errMsg = error?.message || "";
 
           return (
             <TextField
@@ -72,32 +72,26 @@ const RHFTextInput = ({
                 let val = FormValidationUtils.removeTag(e.target.value);
 
                 if (type === "tel") {
-                  val = val.replace(/\D/g, ""); // ✅ Allow only digits
-
-                  // ✅ Show warning if first digit isn't 6–9
+                  val = val.replace(/\D/g, "");
                   if (val.length > 0 && !/^[6-9]/.test(val)) {
-                    // Optionally show live error or feedback — see suggestions below
-                    // Example: toast.error("Mobile number must start with 6, 7, 8 or 9");
+                    // optional warning
                   }
-                  if (maxCharCount) {
-                    val = val.substring(0, maxCharCount);
-                  }
+                  if (maxCharCount) val = val.substring(0, maxCharCount);
                 } else if (type === "email") {
-                  // ✅ Allow only valid email characters (basic filter)
-                  val = val.replace(/[^a-zA-Z0-9@._-]/g, ""); // restrict to valid email chars
-                  val = val.replace(/\s+/g, ""); // remove any spaces
-                  // Optional: You can add stricter checks, but RHF's `pattern` will do full validation
+                  val = val
+                    .replace(/[^a-zA-Z0-9@._-]/g, "")
+                    .replace(/\s+/g, "");
+                } else if (type === "password") {
+                  val = val.trim(); // ✅ Trim whitespace
+                  // Optional: prevent all spaces → val = val.replace(/\s/g, "");
                 } else {
-                  val = val.replace(/[^A-Za-z\s]/g, ""); // ✅ Keep only letters and spaces
-
-                  val = val.replace(/\s+/g, " "); // ✅ Replace multiple spaces with a single space
-
-                  val = val.trimStart(); // // ✅ Remove leading and trailing spaces
-                  // ✅ Apply max length restriction
-                  if (maxCharCount) {
-                    val = val.substring(0, maxCharCount);
-                  }
+                  val = val
+                    .replace(/[^A-Za-z\s]/g, "")
+                    .replace(/\s+/g, " ")
+                    .trimStart();
+                  if (maxCharCount) val = val.substring(0, maxCharCount);
                 }
+
                 onChange(val);
               }}
               onBlur={onBlur}
@@ -115,7 +109,7 @@ const RHFTextInput = ({
                         position={position}
                         onClick={onIconClick}
                         className={`!text-amber-600 ${
-                          onIconClick && "cursor-pointer"
+                          onIconClick ? "cursor-pointer" : ""
                         }`}
                       >
                         <Icon name={icon} />
@@ -123,7 +117,7 @@ const RHFTextInput = ({
                     )}
                     <Condition show={!!helptooltip}>
                       <InputAdornment
-                        className="absolute m-1 !right-[0px] !text-white font-semibold rounded-full bg-amber-700 "
+                        className="absolute m-1 !right-[0px] !text-white font-semibold rounded-full bg-amber-700"
                         position="end"
                       >
                         <HelpTextIcon tooltip={helptooltip} icon={<Help />} />
@@ -138,8 +132,8 @@ const RHFTextInput = ({
                   },
                 },
               }}
-              error={Boolean(error)}
-              helperText={error || ""}
+              error={!!error}
+              helperText={errMsg}
               disabled={disabled}
             />
           );
