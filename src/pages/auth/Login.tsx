@@ -14,6 +14,8 @@ import MainButton from "../../components/buttons/MainButton";
 import RHFRadioButtons from "../../components/inputs/RHFRadioButtons";
 import { toast } from "react-toastify";
 import { loginUser } from "../../features/auth/authSlice";
+import ForgotPassword from "./ForgotPassword";
+import Translate from "../../components/typography/Translate";
 
 interface FormValues {
   loginType: "otp" | "password";
@@ -30,6 +32,7 @@ interface FormValues {
 const Login: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const [openModal, setOpenModal] = useState(false);
   const alert = useSelector((state: RootState) => state.alert);
   const { control, reset, watch, handleSubmit } = useForm<FormValues>({
     defaultValues: {
@@ -299,12 +302,13 @@ const Login: React.FC = () => {
             />
           </div>
           <div className="flex justify-between items-center mt-4 text-sm">
-            <Link
-              to="/forgot-user-id"
-              className="!text-orange-600 hover:underline"
+            <button
+              type="button"
+              className="!text-orange-600 hover:underline bg-transparent border-none p-0 m-0 cursor-pointer"
+              onClick={() => setOpenModal(true)}
             >
-              Forgot User Id?
-            </Link>
+              <Translate dataKey={"Link.ForgotPassword"} />
+            </button>
             <Link to="/register" className="!text-orange-600 hover:underline">
               New User? Register Here!
             </Link>
@@ -318,6 +322,9 @@ const Login: React.FC = () => {
           />
         </div>
       </div>
+      {openModal && (
+        <ForgotPassword open={openModal} onClose={() => setOpenModal(false)} />
+      )}
     </div>
   );
 };

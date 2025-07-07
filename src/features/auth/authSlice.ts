@@ -10,9 +10,9 @@ interface User {
   id: string;
   name: string;
   email: string;
-  password:string;
-  mobileNo:string;
-  verificationCode:string;
+  password: string;
+  mobileNo: string;
+  verificationCode: string;
   // Add more fields if needed
 }
 
@@ -25,9 +25,13 @@ interface RegisterPayload {
 interface LoginPayload {
   email: string;
   password: string;
-  loginType:string;
-  emailOrMobile:string;
+  loginType: string;
+  emailOrMobile: string;
   verificationCode: string;
+}
+
+interface ForgotPayload {
+  email: string;
 }
 
 interface AuthState {
@@ -61,7 +65,6 @@ export const registerUser = createAsyncThunk<
   }
 });
 
-
 export const loginUser = createAsyncThunk<
   User,
   LoginPayload,
@@ -69,6 +72,19 @@ export const loginUser = createAsyncThunk<
 >("auth/loginUser", async (payload, { rejectWithValue }) => {
   try {
     const response = await AxiosInstance.post("/login", payload);
+    return response.data;
+  } catch (err: any) {
+    return rejectWithValue(err.response?.data?.message || err.message);
+  }
+});
+
+export const forgotPassword = createAsyncThunk<
+  User,
+  ForgotPayload,
+  { rejectValue: string }
+>("auth/forgotPassword", async (payload, { rejectWithValue }) => {
+  try {
+    const response = await AxiosInstance.post("/forgot-password", payload);
     return response.data;
   } catch (err: any) {
     return rejectWithValue(err.response?.data?.message || err.message);
@@ -105,6 +121,21 @@ const authSlice = createSlice({
         state.data = action.payload;
       })
       .addCase(loginUser.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload ?? action.error.message ?? "Unknown error";
+      })
+      .addCase(forgotPassword.pending, (state) => {
+        state.status = "loading";
+        state.error = null;
+      })
+      .addCase(
+        forgotPassword.fulfilled,
+        (state, action: PayloadAction<User>) => {
+          state.status = "succeeded";
+          state.data = action.payload;
+        }
+      )
+      .addCase(forgotPassword.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload ?? action.error.message ?? "Unknown error";
       });
