@@ -1,17 +1,19 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import registerBg from "../../assets/svg/register-bg.svg";
 import { IconButton } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AlertMessage from "../../components/alert/AlertMessage";
-import { clearAlert } from "../../features/alertSlice/alertSlice";
-import type { RootState } from "../../store/store";
+import { clearAlert, showError } from "../../features/alertSlice/alertSlice";
+import { useAppDispatch, type RootState } from "../../store/store";
 import Icon from "../../components/icon/Icon";
 import PageTitle from "../../components/typography/PageTitle";
 import RHFTextInput from "../../components/inputs/RHFTextInput";
 import MainButton from "../../components/buttons/MainButton";
 import RHFRadioButtons from "../../components/inputs/RHFRadioButtons";
+import { toast } from "react-toastify";
+import { loginUser } from "../../features/auth/authSlice";
 
 interface FormValues {
   loginType: "otp" | "password";
@@ -26,7 +28,8 @@ interface FormValues {
 }
 
 const Login: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const alert = useSelector((state: RootState) => state.alert);
   const { control, reset, watch, handleSubmit } = useForm<FormValues>({
     defaultValues: {
@@ -48,12 +51,45 @@ const Login: React.FC = () => {
   const correctCaptchaAnswer = String(captchaNum1 + captchaNum2);
 
   const isFormValid =
-    !!userId &&
-    !!email &&
-    !!password &&
-    verificationCode?.trim() === correctCaptchaAnswer;
+    !!email && !!password && verificationCode?.trim() === correctCaptchaAnswer;
 
-  const onSubmit = () => {};
+  const onSubmit = async (data: FormValues) => {
+    if (!isFormValid) return;
+
+    const payload = {
+      email: data.email,
+      password: data.password ?? "",
+      verificationCode: data.verificationCode,
+    };
+
+    try {
+      const response = await dispatch(loginUser(payload)).unwrap();
+      if ((response as { message?: string })?.message) {
+        toast.success(
+          (response as { message?: string })?.message ||
+            "User Logged-In successfully!"
+        );
+        reset();
+        refreshCaptcha();
+        navigate("/dashboard");
+      }
+    } catch (error: unknown) {
+      let errorMessage = "User Logging failed!";
+      if (error instanceof Error) {
+        errorMessage = error.message;
+      } else if (
+        typeof error === "object" &&
+        error !== null &&
+        "response" in error
+      ) {
+        const responseError = error as {
+          response?: { data?: { message?: string } };
+        };
+        errorMessage = responseError.response?.data?.message || errorMessage;
+      }
+      dispatch(showError(errorMessage));
+    }
+  };
 
   const refreshCaptcha = () => {
     setCaptchaNum1(Math.floor(Math.random() * 10));
@@ -179,8 +215,10 @@ const Login: React.FC = () => {
                 rules={{
                   required: "Password is required",
                   pattern: {
-                    value: /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i,
-                    message: "Enter a valid email address",
+                    value:
+                      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+[\]{};':"\\|,.<>/?]).{8,}$/,
+                    message:
+                      "Password must be at least 8 characters and include uppercase, lowercase, number, and special character",
                   },
                 }}
                 icon={"Lock"}
@@ -207,7 +245,7 @@ const Login: React.FC = () => {
               className="w-1/2"
               icon={"Verified"}
             />
-            <div className="bg-gray-100 px-4 py-2 rounded-md text-md font-semibold mt-[-15px]">
+            <div className="bg-gray-100 px-4 py-2 rounded-md text-md font-semibold mt-[-15px] min-w-28">
               {captchaNum1} + {captchaNum2} = ?
             </div>
             <IconButton onClick={refreshCaptcha} style={{ marginTop: "-13px" }}>

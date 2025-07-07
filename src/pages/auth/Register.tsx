@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { IconButton } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import registerBg from "../../assets/svg/register-bg.svg";
 import { useAppDispatch, type RootState } from "../../store/store";
 import Icon from "../../components/icon/Icon";
@@ -10,7 +10,7 @@ import PageTitle from "../../components/typography/PageTitle";
 import RHFTextInput from "../../components/inputs/RHFTextInput";
 import MainButton from "../../components/buttons/MainButton";
 import AlertMessage from "../../components/alert/AlertMessage";
-import { clearAlert, showSuccess } from "../../features/alertSlice/alertSlice";
+import { clearAlert, showError } from "../../features/alertSlice/alertSlice";
 import Modal from "../../components/modal/Modal";
 import { registerUser } from "../../features/auth/authSlice";
 import { toast } from "react-toastify";
@@ -25,6 +25,7 @@ interface FormData {
 
 const Register = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const alert = useSelector((state: RootState) => state.alert);
   const { control, handleSubmit, reset, watch } = useForm<FormData>();
   const [isParichayModal, setIsParichayModal] = useState(false);
@@ -71,18 +72,13 @@ const Register = () => {
     try {
       const response = await dispatch(registerUser(payload)).unwrap();
       if ((response as { message?: string })?.message) {
-        // dispatch(
-        //   showSuccess(
-        //     (response as { message?: string })?.message ||
-        //       "User Registration successfully!"
-        //   )
-        // );
         toast.success(
           (response as { message?: string })?.message ||
             "User Registration successfully!"
         );
         reset();
         refreshCaptcha();
+        navigate("/login");
       }
     } catch (error: unknown) {
       let errorMessage = "User Registration failed!";
@@ -98,7 +94,7 @@ const Register = () => {
         };
         errorMessage = responseError.response?.data?.message || errorMessage;
       }
-      dispatch(showSuccess(errorMessage));
+      dispatch(showError(errorMessage));
     }
   };
 

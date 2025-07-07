@@ -10,6 +10,9 @@ interface User {
   id: string;
   name: string;
   email: string;
+  password:string;
+  mobileNo:string;
+  verificationCode:string;
   // Add more fields if needed
 }
 
@@ -17,6 +20,12 @@ interface RegisterPayload {
   name: string;
   email: string;
   password: string;
+}
+
+interface LoginPayload {
+  email: string;
+  password: string;
+  verificationCode: string;
 }
 
 interface AuthState {
@@ -50,6 +59,21 @@ export const registerUser = createAsyncThunk<
   }
 });
 
+
+export const loginUser = createAsyncThunk<
+  User,
+  LoginPayload,
+  { rejectValue: string }
+>("auth/loginUser", async (payload, { rejectWithValue }) => {
+  try {
+    const response = await AxiosInstance.post("/login", payload);
+    console.log("response of login slice===>", response)
+    return response.data;
+  } catch (err: any) {
+    return rejectWithValue(err.response?.data?.message || err.message);
+  }
+});
+
 // ---------------------
 // Slice
 // ---------------------
@@ -68,6 +92,18 @@ const authSlice = createSlice({
         state.data = action.payload;
       })
       .addCase(registerUser.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload ?? action.error.message ?? "Unknown error";
+      })
+      .addCase(loginUser.pending, (state) => {
+        state.status = "loading";
+        state.error = null;
+      })
+      .addCase(loginUser.fulfilled, (state, action: PayloadAction<User>) => {
+        state.status = "succeeded";
+        state.data = action.payload;
+      })
+      .addCase(loginUser.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload ?? action.error.message ?? "Unknown error";
       });
