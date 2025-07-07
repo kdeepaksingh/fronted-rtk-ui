@@ -37,9 +37,8 @@ const Login: React.FC = () => {
     },
   });
   const loginType = watch("loginType");
-  const userId = watch("userId");
+  const emailOrMobile = watch("emailOrMobile");
   const email = watch("email");
-  const mobileNumber = watch("mobileNumber");
   const password = watch("password");
   const verificationCode = watch("verificationCode");
   const [captchaNum1, setCaptchaNum1] = useState(() =>
@@ -51,19 +50,39 @@ const Login: React.FC = () => {
   const correctCaptchaAnswer = String(captchaNum1 + captchaNum2);
 
   const isFormValid =
-    !!email && !!password && verificationCode?.trim() === correctCaptchaAnswer;
+    verificationCode?.trim() === correctCaptchaAnswer &&
+    ((loginType === "password" && !!email && !!password) ||
+      (loginType === "otp" && !!emailOrMobile));
 
   const onSubmit = async (data: FormValues) => {
-    if (!isFormValid) return;
+    if (!isFormValid) {
+      dispatch(showError("Please fill in all required fields correctly."));
+      return;
+    }
 
-    const payload = {
-      email: data.email,
-      password: data.password ?? "",
-      verificationCode: data.verificationCode,
-    };
+    let payload;
+
+    if (data.loginType === "password") {
+      payload = {
+        loginType: "password",
+        email: data.email,
+        emailOrMobile: data.email ?? "",
+        password: data.password ?? "",
+        verificationCode: data.verificationCode,
+      };
+    } else {
+      payload = {
+        loginType: "otp",
+        email: "",
+        emailOrMobile: data.emailOrMobile ?? "",
+        password: "",
+        verificationCode: data.verificationCode,
+      };
+    }
 
     try {
       const response = await dispatch(loginUser(payload)).unwrap();
+
       if ((response as { message?: string })?.message) {
         toast.success(
           (response as { message?: string })?.message ||
@@ -145,45 +164,54 @@ const Login: React.FC = () => {
             <>
               <div className="p-4">
                 <RHFTextInput
-                  type="email"
-                  name="email"
-                  placeholder={"Placeholder.EnterEmail"}
-                  label={"Label.Email"}
+                  name="emailOrMobile"
+                  placeholder="Placeholder.EnterEmailOrMobile"
+                  label="Label.EmailOrMobile"
                   control={control}
                   required
                   rules={{
-                    required: "Email is required",
+                    required: "Email or Mobile Number is required",
                     pattern: {
-                      value: /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i,
-                      message: "Enter a valid email address",
+                      value:
+                        /^([6-9]\d{9}|[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/,
+                      message: "Enter a valid email or 10-digit mobile number",
                     },
                   }}
-                  icon={"Email"}
+                  icon={
+                    /^\d/.test(watch("emailOrMobile") || "") ? "Phone" : "Email"
+                  }
+                  type="emailOrPhone" // 👈 custom type for your logic
                 />
-                <MainButton
-                  ButtonName={"Action.SendOTP"}
-                  type="button"
-                  className="h-9"
-                />
+                <div className="flex items-center gap-2">
+                  <RHFTextInput
+                    type="tel"
+                    name="verificationCode"
+                    placeholder={"Placeholder.EnterVerificationCode"}
+                    label={"Label.VerificationCode"}
+                    control={control}
+                    maxCharCount={3}
+                    required
+                    rules={{
+                      required: "Verification code required",
+                      pattern: {
+                        value: /^\d{1,3}$/,
+                        message: "Enter a valid verification code",
+                      },
+                    }}
+                    className="w-1/2"
+                    icon={"Verified"}
+                  />
+                  <div className="bg-gray-100 px-4 py-2 rounded-md text-md font-semibold mt-[-15px] min-w-28">
+                    {captchaNum1} + {captchaNum2} = ?
+                  </div>
+                  <IconButton
+                    onClick={refreshCaptcha}
+                    style={{ marginTop: "-13px" }}
+                  >
+                    <Icon name={"RefreshIcon"} />
+                  </IconButton>
+                </div>
               </div>
-              <RHFTextInput
-                type="tel"
-                name="enteredOtp"
-                placeholder={"Placeholder.EnterOtp"}
-                label={"Label.OTP"}
-                control={control}
-                maxCharCount={6}
-                required
-                rules={{
-                  required: "OTP required",
-                  pattern: {
-                    value: /^\d{1,6}$/,
-                    message: "Enter a valid OTP code",
-                  },
-                }}
-                className="w-1/2"
-                icon={"Verified"}
-              />
             </>
           )}
 
@@ -223,35 +251,38 @@ const Login: React.FC = () => {
                 }}
                 icon={"Lock"}
               />
+
+              <div className="flex items-center gap-2">
+                <RHFTextInput
+                  type="tel"
+                  name="verificationCode"
+                  placeholder={"Placeholder.EnterVerificationCode"}
+                  label={"Label.VerificationCode"}
+                  control={control}
+                  maxCharCount={3}
+                  required
+                  rules={{
+                    required: "Verification code required",
+                    pattern: {
+                      value: /^\d{1,3}$/,
+                      message: "Enter a valid verification code",
+                    },
+                  }}
+                  className="w-1/2"
+                  icon={"Verified"}
+                />
+                <div className="bg-gray-100 px-4 py-2 rounded-md text-md font-semibold mt-[-15px] min-w-28">
+                  {captchaNum1} + {captchaNum2} = ?
+                </div>
+                <IconButton
+                  onClick={refreshCaptcha}
+                  style={{ marginTop: "-13px" }}
+                >
+                  <Icon name={"RefreshIcon"} />
+                </IconButton>
+              </div>
             </>
           )}
-
-          <div className="flex items-center gap-2">
-            <RHFTextInput
-              type="tel"
-              name="verificationCode"
-              placeholder={"Placeholder.EnterVerificationCode"}
-              label={"Label.VerificationCode"}
-              control={control}
-              maxCharCount={3}
-              required
-              rules={{
-                required: "Verification code required",
-                pattern: {
-                  value: /^\d{1,3}$/,
-                  message: "Enter a valid verification code",
-                },
-              }}
-              className="w-1/2"
-              icon={"Verified"}
-            />
-            <div className="bg-gray-100 px-4 py-2 rounded-md text-md font-semibold mt-[-15px] min-w-28">
-              {captchaNum1} + {captchaNum2} = ?
-            </div>
-            <IconButton onClick={refreshCaptcha} style={{ marginTop: "-13px" }}>
-              <Icon name={"RefreshIcon"} />
-            </IconButton>
-          </div>
 
           <div className="flex justify-center mt-4">
             <MainButton
@@ -264,6 +295,7 @@ const Login: React.FC = () => {
               ButtonName={"Action.Submit"}
               type="submit"
               variant="outlined"
+              disabled={!isFormValid}
             />
           </div>
           <div className="flex justify-between items-center mt-4 text-sm">

@@ -25,6 +25,8 @@ interface RegisterPayload {
 interface LoginPayload {
   email: string;
   password: string;
+  loginType:string;
+  emailOrMobile:string;
   verificationCode: string;
 }
 
@@ -67,7 +69,6 @@ export const loginUser = createAsyncThunk<
 >("auth/loginUser", async (payload, { rejectWithValue }) => {
   try {
     const response = await AxiosInstance.post("/login", payload);
-    console.log("response of login slice===>", response)
     return response.data;
   } catch (err: any) {
     return rejectWithValue(err.response?.data?.message || err.message);

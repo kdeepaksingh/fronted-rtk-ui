@@ -84,6 +84,19 @@ const RHFTextInput = ({
                 } else if (type === "password") {
                   val = val.trim(); // ✅ Trim whitespace
                   // Optional: prevent all spaces → val = val.replace(/\s/g, "");
+                } else if (type === "emailOrPhone") {
+                  const isNumberInput = /^\d/.test(val);
+                  if (isNumberInput) {
+                    val = val.replace(/\D/g, "");
+                    if (val.length > 0 && !/^[6-9]/.test(val)) {
+                      // optional warning: "Mobile number must start with 6-9"
+                    }
+                    if (maxCharCount) val = val.substring(0, maxCharCount);
+                  } else {
+                    val = val
+                      .replace(/[^a-zA-Z0-9@._-]/g, "")
+                      .replace(/\s+/g, "");
+                  }
                 } else {
                   val = val
                     .replace(/[^A-Za-z\s]/g, "")
