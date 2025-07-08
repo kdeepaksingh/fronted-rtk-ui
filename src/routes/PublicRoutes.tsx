@@ -4,6 +4,7 @@ import PublicLayout from "../layouts/PublicLayout";
 import PageNotFound from "../pages/page-not-found/PageNotFound";
 import PageLoader from "../components/loader/PageLoader";
 import Url from "../components/constants/Url";
+import ResetPassword from "../pages/auth/ResetPassword";
 
 const LoginForm = lazy(() => import("../pages/auth/Login"));
 const RegisterForm = lazy(() => import("../pages/auth/Register"));
@@ -48,6 +49,10 @@ const PublicRoutes = {
     {
       path: `${Url.Auth.AboutUs}`,
       element: <AboutUs />,
+    },
+    {
+      path: `${Url.Auth.ResetPassword}/:token`,
+      element: <ResetPassword />,
     },
     {
       path: `${Url.Auth.Feature}`,

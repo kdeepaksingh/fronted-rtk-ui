@@ -5,7 +5,6 @@ import Modal from "../../components/modal/Modal";
 import { toast } from "react-toastify";
 import { useAppDispatch } from "../../store/store";
 import { forgotPassword } from "../../features/auth/authSlice";
-import { showError } from "../../features/alertSlice/alertSlice";
 
 interface ForgotPasswordProps {
   open: boolean;
@@ -18,7 +17,13 @@ interface ForgotPasswordForm {
 
 const ForgotPassword = ({ open, onClose }: ForgotPasswordProps) => {
   const dispatch = useAppDispatch();
-  const { control, reset, handleSubmit } = useForm<ForgotPasswordForm>();
+  const { control, watch, reset, handleSubmit } = useForm<ForgotPasswordForm>({
+    defaultValues: {
+      email: "",
+    },
+  });
+
+  const email = watch("email");
 
   const onSubmit = async (data: ForgotPasswordForm) => {
     const payload = {
@@ -49,7 +54,7 @@ const ForgotPassword = ({ open, onClose }: ForgotPasswordProps) => {
         };
         errorMessage = responseError.response?.data?.message || errorMessage;
       }
-      dispatch(showError(errorMessage));
+      toast.error(errorMessage);
     }
   };
   return (
@@ -82,7 +87,7 @@ const ForgotPassword = ({ open, onClose }: ForgotPasswordProps) => {
             />
 
             <div className="flex justify-end gap-0 mt-8">
-              <MainButton ButtonName="Submit" type="submit" />
+              <MainButton ButtonName="Submit" type="submit" disabled={!email} />
               <MainButton
                 ButtonName="Reset"
                 type="button"

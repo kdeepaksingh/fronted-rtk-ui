@@ -5,6 +5,7 @@ export class Url {
   static Auth = {
     Register: "register",
     Login: "login",
+    ResetPassword: "reset-password",
     AboutUs: "about",
     Feature: "features",
     ContactUs: "contact",

@@ -34,10 +34,16 @@ interface ForgotPayload {
   email: string;
 }
 
+interface ResetPasswordPayload {
+  token: string;
+  newPassword: string;
+}
+
 interface AuthState {
-  data: User | null;
   status: "idle" | "loading" | "succeeded" | "failed";
+  data: User | null;
   error: string | null;
+  message?: string; // optional if you want to show messages like reset success
 }
 
 // ---------------------
@@ -48,6 +54,10 @@ const initialState: AuthState = {
   status: "idle",
   error: null,
 };
+
+interface ResetResponse {
+  message: string;
+}
 
 // ---------------------
 // Async Thunk
@@ -85,6 +95,23 @@ export const forgotPassword = createAsyncThunk<
 >("auth/forgotPassword", async (payload, { rejectWithValue }) => {
   try {
     const response = await AxiosInstance.post("/forgot-password", payload);
+    return response.data;
+  } catch (err: any) {
+    return rejectWithValue(err.response?.data?.message || err.message);
+  }
+});
+
+
+export const resetPassword = createAsyncThunk<
+  ResetResponse,
+  ResetPasswordPayload,
+  { rejectValue: string }
+>("auth/resetPassword", async (payload, { rejectWithValue }) => {
+  try {
+    const { token, newPassword } = payload;
+    const response = await AxiosInstance.post(`/reset-password/${token}`, {
+      newPassword, // Only send password in body
+    });
     return response.data;
   } catch (err: any) {
     return rejectWithValue(err.response?.data?.message || err.message);
@@ -136,6 +163,21 @@ const authSlice = createSlice({
         }
       )
       .addCase(forgotPassword.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload ?? action.error.message ?? "Unknown error";
+      })
+      .addCase(resetPassword.pending, (state) => {
+        state.status = "loading";
+        state.error = null;
+      })
+      .addCase(
+        resetPassword.fulfilled,
+        (state, action: PayloadAction<{ message: string }>) => {
+          state.status = "succeeded";
+          state.message = action.payload.message; // or store it if needed
+        }
+      )
+      .addCase(resetPassword.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload ?? action.error.message ?? "Unknown error";
       });
