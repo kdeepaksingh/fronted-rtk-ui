@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { IconButton } from "@mui/material";
@@ -18,17 +18,21 @@ import { toast } from "react-toastify";
 interface FormData {
   userName: string;
   email: string;
+  emailOTP: string;
+  mobileOTP: string;
   mobileNumber: string;
   password: string;
   verificationCode: string;
 }
 
-const Register = () => {
+const RegisterWithVerification = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const alert = useSelector((state: RootState) => state.alert);
   const { control, handleSubmit, reset, watch } = useForm<FormData>();
   const [isParichayModal, setIsParichayModal] = useState(false);
+  const [isEmailOTPValid, setIsEmailOTPValid] = useState(false);
+  const [isMobileOTPValid, setIsMobileOTPValid] = useState(false);
 
   const userName = watch("userName");
   const email = watch("email");
@@ -51,6 +55,16 @@ const Register = () => {
     !!password &&
     verificationCode?.trim() === correctCaptchaAnswer;
 
+  useEffect(() => {
+    const emailOTP = watch("emailOTP");
+    setIsEmailOTPValid(/^\d{6}$/.test(emailOTP));
+  }, [watch("emailOTP")]);
+
+  useEffect(() => {
+    const mobileOTP = watch("mobileOTP");
+    setIsMobileOTPValid(/^\d{6}$/.test(mobileOTP));
+  }, [watch("mobileOTP")]);
+
   const handleReset = () => {
     reset();
   };
@@ -61,12 +75,15 @@ const Register = () => {
   };
 
   const onSubmit = async (data: FormData) => {
+    console.log("data of registeration=======>", data);
     const payload = {
       name: data.userName,
       email: data.email,
       mobileNo: data.mobileNumber,
       password: data.password,
       verificationCode: data.verificationCode,
+      emailOTP: data.emailOTP,
+      mobileOTP: data.mobileOTP,
     };
 
     try {
@@ -134,6 +151,14 @@ const Register = () => {
             maxCharCount={25}
             rules={{
               required: "User Name is required",
+              minLength: {
+                value: 3,
+                message: "User Name must be at least 3 characters",
+              },
+              maxLength: {
+                value: 25,
+                message: "User Name cannot exceed 25 characters",
+              },
               pattern: {
                 value: /^[A-Za-z\s]+$/,
                 message: "Only letters are allowed in user name",
@@ -141,42 +166,129 @@ const Register = () => {
             }}
             required
           />
+          <div className="flex items-center space-x-2">
+            <RHFTextInput
+              type="email"
+              name="email"
+              placeholder={"Placeholder.EnterEmail"}
+              label={"Label.Email"}
+              control={control}
+              required
+              rules={{
+                required: "Email is required",
+                maxLength: {
+                  value: 50,
+                  message: "Email cannot exceed 50 characters",
+                },
+                pattern: {
+                  value: /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i,
+                  message: "Enter a valid email address",
+                },
+              }}
+              icon={"Email"}
+              className="!w-1/2"
+            />
 
+            <MainButton
+              ButtonName={"Action.SendOTP"}
+              type="button"
+              className="!min-w-24 h-9 !mt-[-16px]"
+              disabled={!email}
+              variant="outlined"
+            />
+          </div>
           <RHFTextInput
-            type="email"
-            name="email"
-            placeholder={"Placeholder.EnterEmail"}
-            label={"Label.Email"}
+            type="tel"
+            name="emailOTP"
+            placeholder={"Placeholder.EnterEmailOTP"}
+            label={"Label.EmailOTP"}
             control={control}
+            maxCharCount={6}
             required
             rules={{
-              required: "Email is required",
+              required: "Email OTP is required",
+              minLength: {
+                value: 6,
+                message: "OTP must be 6 digits",
+              },
+              maxLength: {
+                value: 6,
+                message: "OTP must be 6 digits",
+              },
               pattern: {
-                value: /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i,
-                message: "Enter a valid email address",
+                value: /^\d{6}$/,
+                message: "Enter a valid 6-digit Email OTP",
               },
             }}
-            icon={"Email"}
+            className="w-1/2"
+            icon={isEmailOTPValid ? "Verified" : "Error"}
+            iconColor={isEmailOTPValid ? "text-green-600" : "text-red-500"}
           />
+          <div className="flex items-center space-x-2">
+            <RHFTextInput
+              type="tel"
+              name="mobileNumber"
+              placeholder={"Placeholder.EnterMobileNumber"}
+              label={"Label.MobileNumber"}
+              control={control}
+              maxCharCount={10}
+              required
+              rules={{
+                required: "Mobile Number is required",
+                minLength: {
+                  value: 10,
+                  message: "Mobile number must be exactly 10 digits",
+                },
+                maxLength: {
+                  value: 10,
+                  message: "Mobile number must be exactly 10 digits",
+                },
+                pattern: {
+                  value: /^[6-9]\d{9}$/,
+                  message:
+                    "Enter a valid 10-digit mobile number starting with 6, 7, 8, or 9",
+                },
+              }}
+              icon={"PhoneIphone"}
+            />
+
+            <MainButton
+              ButtonName={"Action.SendOTP"}
+              type="button"
+              className="!min-w-24 h-9 !mt-[-16px]"
+              disabled={!mobileNumber}
+              variant="outlined"
+            />
+          </div>
 
           <RHFTextInput
             type="tel"
-            name="mobileNumber"
-            placeholder={"Placeholder.EnterMobileNumber"}
-            label={"Label.MobileNumber"}
+            name="mobileOTP"
+            placeholder={"Placeholder.EnterMobileOTP"}
+            label={"Label.MobileOTP"}
             control={control}
-            maxCharCount={10}
+            maxCharCount={6}
             required
             rules={{
-              required: "Mobile Number is required",
+              required: "Mobile OTP is required",
+              minLength: {
+                value: 6,
+                message: "OTP must be 6 digits",
+              },
+              maxLength: {
+                value: 6,
+                message: "OTP must be 6 digits",
+              },
               pattern: {
-                value: /^[6-9]\d{9}$/,
-                message:
-                  "Enter a valid 10-digit mobile number starting with 6, 7, 8, or 9",
+                value: /^\d{6}$/,
+                message: "Enter a valid 6-digit Mobile OTP",
               },
             }}
-            icon={"PhoneIphone"}
+            className="w-1/2"
+            icon={isMobileOTPValid ? "Verified" : "Error"}
+            iconColor={isMobileOTPValid ? "text-green-600" : "text-red-500"}
           />
+
           <RHFTextInput
             type="password"
             name="password"
@@ -186,9 +298,13 @@ const Register = () => {
             required
             rules={{
               required: "Password is required",
+              maxLength: {
+                value: 20,
+                message: "Password should not exceed 20 characters",
+              },
               pattern: {
                 value:
-                  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+[\]{};':"\\|,.<>/?]).{8,}$/,
+                  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,}$/,
                 message:
                   "Password must be at least 8 characters and include uppercase, lowercase, number, and special character",
               },
@@ -206,11 +322,21 @@ const Register = () => {
               maxCharCount={3}
               required
               rules={{
-                required: "Verification code required",
+                required: "Verification code is required",
+                minLength: {
+                  value: 1,
+                  message: "Verification code must be at least 1 digit",
+                },
+                maxLength: {
+                  value: 3,
+                  message: "Verification code cannot exceed 3 digits",
+                },
                 pattern: {
                   value: /^\d{1,3}$/,
                   message: "Enter a valid verification code",
                 },
+                validate: (value: string) =>
+                  value === correctCaptchaAnswer || "Captcha is incorrect",
               }}
               className="w-1/2"
               icon={"Verified"}
@@ -296,4 +422,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default RegisterWithVerification;

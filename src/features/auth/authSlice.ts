@@ -13,6 +13,8 @@ interface User {
   password: string;
   mobileNo: string;
   verificationCode: string;
+  mobileOTP: string;
+  emailOTP: string;
   // Add more fields if needed
 }
 
@@ -101,6 +103,31 @@ export const forgotPassword = createAsyncThunk<
   }
 });
 
+export const verifyEmailOTP = createAsyncThunk<
+  User,
+  RegisterPayload,
+  { rejectValue: string }
+>("auth/verifyEmailOTP", async (payload, { rejectWithValue }) => {
+  try {
+    const response = await AxiosInstance.post("/verify-email-otp", payload);
+    return response.data;
+  } catch (err: any) {
+    return rejectWithValue(err.response?.data?.message || err.message);
+  }
+});
+
+export const verifyMobileOTP = createAsyncThunk<
+  User,
+  RegisterPayload,
+  { rejectValue: string }
+>("auth/verifyMobileOTP", async (payload, { rejectWithValue }) => {
+  try {
+    const response = await AxiosInstance.post("/verify-mobile-otp", payload);
+    return response.data;
+  } catch (err: any) {
+    return rejectWithValue(err.response?.data?.message || err.message);
+  }
+});
 
 export const resetPassword = createAsyncThunk<
   ResetResponse,
@@ -139,6 +166,36 @@ const authSlice = createSlice({
         state.status = "failed";
         state.error = action.payload ?? action.error.message ?? "Unknown error";
       })
+      .addCase(verifyEmailOTP.pending, (state) => {
+        state.status = "loading";
+        state.error = null;
+      })
+      .addCase(
+        verifyEmailOTP.fulfilled,
+        (state, action: PayloadAction<User>) => {
+          state.status = "succeeded";
+          state.data = action.payload;
+        }
+      )
+      .addCase(verifyEmailOTP.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload ?? action.error.message ?? "Unknown error";
+      })
+      .addCase(verifyMobileOTP.pending, (state) => {
+        state.status = "loading";
+        state.error = null;
+      })
+      .addCase(
+        verifyMobileOTP.fulfilled,
+        (state, action: PayloadAction<User>) => {
+          state.status = "succeeded";
+          state.data = action.payload;
+        }
+      )
+      .addCase(verifyMobileOTP.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload ?? action.error.message ?? "Unknown error";
+      })
       .addCase(loginUser.pending, (state) => {
         state.status = "loading";
         state.error = null;
@@ -174,7 +231,7 @@ const authSlice = createSlice({
         resetPassword.fulfilled,
         (state, action: PayloadAction<{ message: string }>) => {
           state.status = "succeeded";
-          state.message = action.payload.message; // or store it if needed
+          state.message = action.payload.message;
         }
       )
       .addCase(resetPassword.rejected, (state, action) => {

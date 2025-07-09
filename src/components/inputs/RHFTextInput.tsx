@@ -27,12 +27,14 @@ interface RHFTextInputProps {
   error?: string | boolean;
   defaultValue?: string;
   className?: string;
+  iconColor?: string;
 }
 
 const RHFTextInput = ({
   name,
   label = "",
   icon,
+  iconColor,
   placeholder = "",
   type = "text",
   position = "end",
@@ -121,7 +123,7 @@ const RHFTextInput = ({
                       <InputAdornment
                         position={position}
                         onClick={onIconClick}
-                        className={`!text-amber-600 ${
+                        className={`${iconColor || "!text-amber-600"} ${
                           onIconClick ? "cursor-pointer" : ""
                         }`}
                       >

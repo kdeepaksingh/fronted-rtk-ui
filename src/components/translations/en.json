@@ -25,6 +25,8 @@
     "VerificationCode": "Verification Code",
     "MobileNumber": "Mobile",
     "Email": "Email",
+    "EmailOTP": "Email OTP",
+    "MobileOTP": "Mobile OTP",
     "Reason": "Reason",
     "CCEmail": "CC Email",
     "Subject": "Subject",
@@ -42,6 +44,8 @@
   "Placeholder": {
     "EnterFullName": "Enter Your Full Name",
     "EnterVerificationCode": "Enter Verification Code",
+    "EnterEmailOTP": "Enter Your Valid Email OTP",
+    "EnterMobileOTP": "Enter Your Valid Mobile OTP",
     "EnterUserName": "Enter Your User Name",
     "EnterEmail": "Enter Your Email",
     "EnterCCEmail": "Enter Your CC Email",
