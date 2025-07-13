@@ -8,6 +8,7 @@ import dayjs from "dayjs";
 import Icon from "../icon/Icon";
 import HelpTextIcon from "../buttons/HelpTextIcon";
 import Condition from "../commons/Condition";
+import { t } from "i18next";
 
 interface RHFDateInputProps<TFieldValues> {
   name: Path<TFieldValues>;
@@ -63,7 +64,7 @@ function RHFDateInput<TFieldValues>({
                 variant="outlined"
                 label={
                   <>
-                    {label}
+                    {t(label)}
                     {required && <span style={{ color: "red" }}> *</span>}
                   </>
                 }

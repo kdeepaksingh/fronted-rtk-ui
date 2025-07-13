@@ -99,6 +99,10 @@ const RHFTextInput = ({
                       .replace(/[^a-zA-Z0-9@._-]/g, "")
                       .replace(/\s+/g, "");
                   }
+                } else if (type === "alphanumeric" || type === "text") {
+                  val = val.replace(/[^a-zA-Z0-9 ]/g, ""); // allow letters, numbers and space
+                  val = val.replace(/\s{2,}/g, " "); // collapse multiple spaces to single
+                  if (maxCharCount) val = val.substring(0, maxCharCount);
                 } else {
                   val = val
                     .replace(/[^A-Za-z\s]/g, "")

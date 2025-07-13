@@ -1,5 +1,4 @@
 const colors = {
-  
   /**
    * Main colors
    */
@@ -25,7 +24,7 @@ const colors = {
   "ui-gray": "#606060",
   "ui-modal-gray": "#C7C7C",
   "ui-card-light": "#FFF6F0",
-  "ui-card-light1": "#F1F1F1",
+  "ui-card-light1": "#ddf3f0",
   "ui-card-dark": "#E8651F",
   "ui-danger": "#FF3B3B",
   "ui-orange": "#db5f21",

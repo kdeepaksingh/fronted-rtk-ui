@@ -1,5 +1,6 @@
 class Environment {
   static APIURI: string = import.meta.env.VITE_API_BASE_URL as string;
+  static BASEURI: string = import.meta.env.VITE_BASE_URL as string;
   static isLocal = String(window.location.host).includes("localhost");
   static PUBLIC_URI: string = import.meta.env.PUBLIC_URL as string;
 

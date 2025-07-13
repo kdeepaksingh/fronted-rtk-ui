@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { FaUserPlus, FaSearch } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import AddEmployeeForm from "./AddEmployeeForm";
+import Translate from "../../components/typography/Translate";
+import MainButton from "../../components/buttons/MainButton";
 
 const employees = [
   {
@@ -78,6 +80,7 @@ const employees = [
 
 const EmployeesDetails = () => {
   const [search, setSearch] = useState("");
+  const [isOpenModal, setIsOpenModal] = useState(false);
   const filteredEmployees = employees.filter((emp) =>
     emp.name.toLowerCase().includes(search.toLowerCase())
   );
@@ -96,13 +99,14 @@ const EmployeesDetails = () => {
             </p>
           </div>
 
-          <Link
-            to="/employees/add"
-            className="mt-4 md:mt-0 inline-flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
+          <MainButton
+            type="button"
+            className="mt-2 md:mt-0 inline-flex items-center gap-2  text-white px-4 py-2 rounded-md transition"
+            onClick={() => setIsOpenModal(true)}
           >
             <FaUserPlus />
-            Add Employee
-          </Link>
+            <Translate dataKey={"Action.AddEmployee"} />
+          </MainButton>
         </div>
 
         {/* Search */}
@@ -167,6 +171,12 @@ const EmployeesDetails = () => {
           </p>
         )}
       </div>
+      {isOpenModal && (
+        <AddEmployeeForm
+          open={isOpenModal}
+          onClose={() => setIsOpenModal(false)}
+        />
+      )}
     </section>
   );
 };

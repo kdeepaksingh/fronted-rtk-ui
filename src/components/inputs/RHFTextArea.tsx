@@ -34,7 +34,6 @@ const RHFTextArea = ({
   placeholder = "",
   required = false,
   disabled = false,
-  error = false,
   rows = 4,
   maxCharCount = 0,
   helptooltip = "",
@@ -47,8 +46,9 @@ const RHFTextArea = ({
       control={control}
       rules={rules}
       defaultValue={defaultValue}
-      render={({ field }) => {
+      render={({ field, fieldState }) => {
         const { onChange, onBlur, value, ref } = field;
+        const { error } = fieldState; // <-- get validation error from RHF here
 
         return (
           <TextField
@@ -69,14 +69,14 @@ const RHFTextArea = ({
             onChange={(e) => {
               let val = FormValidationUtils.removeTag(e.target.value);
 
-              val = val.replace(/[0-9]/g, ""); // ✅ Remove all digits (0–9)
+              val = val.replace(/[0-9]/g, ""); // Remove digits
 
-              val = val.replace(/\s+/g, " "); // ✅ Replace multiple spaces with a single space
+              val = val.replace(/\s+/g, " "); // Replace multiple spaces with single space
 
-              val = val.trimStart(); // ✅ Optionally trim leading space (but allow trailing space while typing)
+              val = val.trimStart(); // Trim leading spaces only (allow trailing)
 
               if (maxCharCount) {
-                val = val.substring(0, maxCharCount); // ✅ Apply max character count if needed
+                val = val.substring(0, maxCharCount); // Limit max chars
               }
 
               onChange(val);
@@ -84,8 +84,8 @@ const RHFTextArea = ({
             onBlur={onBlur}
             disabled={disabled}
             className="!mb-2"
-            error={Boolean(error)}
-            helperText={error || ""}
+            error={Boolean(error)} // Use validation error state here
+            helperText={error ? error.message : ""} // Show validation error message
             InputProps={{
               endAdornment: (
                 <Condition show={!!helptooltip}>

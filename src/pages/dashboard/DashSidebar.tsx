@@ -1,8 +1,6 @@
 import {
   FaUsers,
-  FaCalendarAlt,
   FaCalendarCheck,
-  FaUserClock,
   FaCog,
   FaChartBar,
   FaUserTie,
@@ -61,8 +59,8 @@ const menuItems = [
     label: "Leave Request",
     url: `${Url.LeaveRequest}`,
   },
-  // { icon: <FaChartBar />, label: "Overview", url: `${Url.Overview}` },
-  // { icon: <FaChartLine />, label: "Analytics", url: `${Url.Analytics}` },
+  { icon: <FaChartBar />, label: "Overview", url: `${Url.Overview}` },
+  { icon: <FaChartLine />, label: "Analytics", url: `${Url.Analytics}` },
   { icon: <FaCog />, label: "Settings", url: `${Url.Settings}` },
 ];
 

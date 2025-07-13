@@ -2,6 +2,7 @@
 import { Controller, type Control, type Path } from "react-hook-form";
 import { Box, Button, Typography } from "@mui/material";
 import AttachIcon from "@mui/icons-material/AttachFile";
+import { t } from "i18next";
 
 interface RHFFileInputProps<TFieldValues> {
   name: Path<TFieldValues>;
@@ -27,34 +28,52 @@ function RHFFileInput<TFieldValues>({
       name={name}
       control={control}
       rules={rules}
-      render={({ field }) => (
-        <Box mt={2}>
-          <Button
-            variant="outlined"
-            component="label"
-            startIcon={<AttachIcon />}
-            disabled={disabled}
-          >
-            {label}
-            <input
-              type="file"
-              hidden
-              multiple={multiple}
-              accept={accept}
-              onChange={(e) => field.onChange(e.target.files)}
-            />
-          </Button>
+      render={({ field, fieldState }) => {
+        const error = fieldState.error;
 
-          {field.value?.length > 0 && (
-            <Typography variant="caption" display="block" mt={1}>
-              Selected:{" "}
-              {Array.from(field.value)
-                .map((file) => file.name)
-                .join(", ")}
-            </Typography>
-          )}
-        </Box>
-      )}
+        return (
+          <Box mt={2}>
+            <Button
+              variant="outlined"
+              component="label"
+              startIcon={<AttachIcon />}
+              disabled={disabled}
+              // MUI Button has no error prop, so just visually show error below
+            >
+              {t(label)}
+              <input
+                type="file"
+                hidden
+                multiple={multiple}
+                accept={accept}
+                onChange={(e) => field.onChange(e.target.files)}
+              />
+            </Button>
+
+            {field.value?.length > 0 && (
+              <Typography variant="caption" display="block" mt={1}>
+                Selected:{" "}
+                {Array.from(field.value)
+                  .map((file) => file.name)
+                  .join(", ")}
+              </Typography>
+            )}
+
+            {/* Show validation error message below */}
+            {error && (
+              <Typography
+                variant="caption"
+                color="error"
+                role="alert"
+                mt={1}
+                aria-live="assertive"
+              >
+                {error.message}
+              </Typography>
+            )}
+          </Box>
+        );
+      }}
     />
   );
 }

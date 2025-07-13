@@ -94,81 +94,97 @@ export const RHFListInput = ({
         name={name}
         control={control}
         rules={rules}
-        render={({ field: { onChange, value } }) => {
+        render={({ field: { onChange, value }, fieldState }) => {
+          const validationError = fieldState.error;
           const selectedValue = data?.length ? value : "";
 
           return (
-            <Tooltip
-              arrow
-              title={
-                showTooltipOnEmpty && !value ? (
-                  <Translate
-                    dataKey={"Typo.SelectOnEmpty"}
-                    params={{ label }}
-                    htmlContent
-                  />
-                ) : (
-                  ""
-                )
-              }
-              open={showToolTip && !value}
-              placement={showTooltipOnEmptyPosition}
-              componentsProps={{
-                tooltip: {
-                  sx: {
-                    bgcolor: colors["ui-danger"],
-                    "& .MuiTooltip-arrow": {
-                      color: colors["ui-danger"],
+            <>
+              <Tooltip
+                arrow
+                title={
+                  showTooltipOnEmpty && !value ? (
+                    <Translate
+                      dataKey={"Typo.SelectOnEmpty"}
+                      params={{ label }}
+                      htmlContent
+                    />
+                  ) : (
+                    ""
+                  )
+                }
+                open={showToolTip && !value}
+                placement={showTooltipOnEmptyPosition}
+                componentsProps={{
+                  tooltip: {
+                    sx: {
+                      bgcolor: colors["ui-danger"],
+                      "& .MuiTooltip-arrow": {
+                        color: colors["ui-danger"],
+                      },
                     },
-                  },
-                },
-              }}
-            >
-              <TextField
-                select
-                fullWidth
-                required={required}
-                size="small"
-                disabled={disabled}
-                label={t(label)}
-                value={selectedValue ?? ""}
-                onChange={(e) => onChange(e.target.value)}
-                error={error}
-                variant="outlined"
-                InputLabelProps={{ shrink: true }} // ✅ fixes overlapping label
-                SelectProps={{
-                  displayEmpty: true,
-                }}
-                sx={{
-                  "& .MuiFormLabel-asterisk": {
-                    color: "#d32f2f",
                   },
                 }}
               >
-                {placeholder && (
-                  <MenuItem
-                    value=""
-                    disabled={!allowEmpty}
-                    style={!allowEmpty ? { display: "none" } : {}}
-                  >
-                    <span style={{ color: "#888" }}>{t(placeholder)}</span>
-                  </MenuItem>
-                )}
+                <TextField
+                  select
+                  fullWidth
+                  required={required}
+                  size="small"
+                  disabled={disabled}
+                  label={t(label)}
+                  value={selectedValue ?? ""}
+                  onChange={(e) => onChange(e.target.value)}
+                  error={Boolean(validationError)}
+                  variant="outlined"
+                  InputLabelProps={{ shrink: true }}
+                  SelectProps={{
+                    displayEmpty: true,
+                  }}
+                  sx={{
+                    "& .MuiFormLabel-asterisk": {
+                      color: "#d32f2f",
+                    },
+                  }}
+                >
+                  {placeholder && (
+                    <MenuItem
+                      value=""
+                      disabled={!allowEmpty}
+                      style={!allowEmpty ? { display: "none" } : {}}
+                    >
+                      <span style={{ color: "#888" }}>{t(placeholder)}</span>
+                    </MenuItem>
+                  )}
 
-                {data?.map((item: Record<string, any>) => (
-                  <MenuItem key={item?.[dataID]} value={item?.[dataID]}>
-                    {listWithIcon && item.icon && (
-                      <Icon name={item.icon as string} className="mr-2 -ml-2" />
-                    )}
-                    {render ? (
-                      render(item)
-                    ) : (
-                      <StringToHtml text={item?.[dataValue]} />
-                    )}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </Tooltip>
+                  {data?.map((item: Record<string, any>) => (
+                    <MenuItem key={item?.[dataID]} value={item?.[dataID]}>
+                      {listWithIcon && item.icon && (
+                        <Icon
+                          name={item.icon as string}
+                          className="mr-2 -ml-2"
+                        />
+                      )}
+                      {render ? (
+                        render(item)
+                      ) : (
+                        <StringToHtml text={item?.[dataValue]} />
+                      )}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              </Tooltip>
+              {/* Display validation error message below */}
+              {validationError && (
+                <p
+                  role="alert"
+                  style={{ color: "#d32f2f", marginTop: 4, fontSize: 12 }}
+                  aria-live="assertive"
+                >
+                  {validationError.message}
+                </p>
+              )}
+            </>
           );
         }}
       />
