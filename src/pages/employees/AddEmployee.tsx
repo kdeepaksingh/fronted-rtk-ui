@@ -85,7 +85,7 @@ export default function AddEmployee() {
         toast.success("Employee added successfully!");
       }
 
-      //   reset();
+      reset();
     } catch (error: unknown) {
       let errorMessage = "Failed to add employee.";
       if (error instanceof Error) {
@@ -510,7 +510,7 @@ export default function AddEmployee() {
                   fileSize: (files: FileList | null) => {
                     if (!files || files.length === 0) return true; // required catches this
                     const file = files[0];
-                    const maxSizeMB = 2;
+                    const maxSizeMB = 5;
                     if (file.size > maxSizeMB * 1024 * 1024) {
                       return `File size must be less than ${maxSizeMB} MB`;
                     }

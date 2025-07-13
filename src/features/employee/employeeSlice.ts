@@ -41,7 +41,7 @@ export const fetchEmployees = createAsyncThunk<
 >("employees/fetchAll", async (filters, { rejectWithValue }) => {
   try {
     const params = filters ? filters : {};
-    const response = await AxiosInstance1.get<Employee[]>("/employees", {
+    const response = await AxiosInstance1.get<Employee[]>("/employees/list", {
       params,
     });
     return response.data;

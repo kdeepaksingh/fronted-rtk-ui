@@ -1,89 +1,31 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { FaUserPlus, FaSearch } from "react-icons/fa";
 import AddEmployeeForm from "./AddEmployeeForm";
 import Translate from "../../components/typography/Translate";
 import MainButton from "../../components/buttons/MainButton";
-
-const employees = [
-  {
-    id: 1,
-    name: "Deepak Singh",
-    role: "Frontend Developer",
-    email: "deepak@company.com",
-    avatar: "https://i.pravatar.cc/150?img=31",
-  },
-  {
-    id: 2,
-    name: "Priya Sharma",
-    role: "HR Manager",
-    email: "priya@company.com",
-    avatar: "https://i.pravatar.cc/150?img=32",
-  },
-  {
-    id: 3,
-    name: "Ravi Kumar",
-    role: "Backend Developer",
-    email: "ravi@company.com",
-    avatar: "https://i.pravatar.cc/150?img=33",
-  },
-  {
-    id: 4,
-    name: "Sita Devi",
-    role: "Product Manager",
-    email: "sita@company.com",
-    avatar: "https://i.pravatar.cc/150?img=34",
-  },
-  {
-    id: 5,
-    name: "Rahul Verma",
-    role: "UI/UX Designer",
-    email: "rahul@company.com",
-    avatar: "https://i.pravatar.cc/150?img=35",
-  },
-  {
-    id: 6,
-    name: "Anita Rao",
-    role: "Data Analyst",
-    email: "anita@company.com",
-    avatar: "https://i.pravatar.cc/150?img=36",
-  },
-  {
-    id: 7,
-    name: "Vikram Singh",
-    role: "DevOps Engineer",
-    email: "vikram@company.com",
-    avatar: "https://i.pravatar.cc/150?img=37",
-  },
-  {
-    id: 8,
-    name: "Anjali Patel",
-    role: "Marketing Specialist",
-    email: "anjali@company.com",
-    avatar: "https://i.pravatar.cc/150?img=38",
-  },
-  {
-    id: 9,
-    name: "Karan Mehta",
-    role: "Sales Executive",
-    email: "karan@company.com",
-    avatar: "https://i.pravatar.cc/150?img=39",
-  },
-  {
-    id: 10,
-    name: "Amit Yadav",
-    role: "DevOps Engineer",
-    email: "amit@company.com",
-    avatar: "https://i.pravatar.cc/150?img=40",
-  },
-];
+import { useAppDispatch, useAppSelector } from "../../store/store";
+import { fetchEmployees } from "../../features/employee/employeeSlice";
+import type { AddEmployeeFormValues } from "../../types/types";
 
 const EmployeesDetails = () => {
+  const dispatch = useAppDispatch();
+  const employeeList =
+    (useAppSelector(
+      (state) => state.employees.employees
+    ) as AddEmployeeFormValues[]) ?? [];
+
   const [search, setSearch] = useState("");
   const [isOpenModal, setIsOpenModal] = useState(false);
-  const filteredEmployees = employees.filter((emp) =>
-    emp.name.toLowerCase().includes(search.toLowerCase())
-  );
+
+  const filteredEmployees = employeeList.filter((emp) => {
+    const name = `${emp?.firstName ?? ""} ${emp?.lastName ?? ""}`.toLowerCase();
+    return name.includes(search.toLowerCase());
+  });
+
+  useEffect(() => {
+    dispatch(fetchEmployees());
+  }, [dispatch]);
 
   return (
     <section className="min-h-screen bg-gray-50 dark:bg-gray-900 px-4 py-10">
@@ -135,9 +77,9 @@ const EmployeesDetails = () => {
           }}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
         >
-          {filteredEmployees.map((emp) => (
+          {filteredEmployees.map((emp, index) => (
             <motion.div
-              key={emp.id}
+              key={index}
               variants={{
                 hidden: { opacity: 0, y: 20 },
                 visible: { opacity: 1, y: 0 },
@@ -147,16 +89,17 @@ const EmployeesDetails = () => {
             >
               <div className="flex items-center gap-4">
                 <img
-                  src={emp.avatar}
-                  alt={emp.name}
+                  src={emp.profilePhotoUrl}
+                  alt={emp.firstName}
                   className="w-16 h-16 rounded-full object-cover border-2 border-blue-500"
                 />
                 <div>
                   <h4 className="text-lg font-semibold text-gray-800 dark:text-white">
-                    {emp.name}
+                    {emp.firstName} &nbsp;
+                    {emp.lastName}
                   </h4>
                   <p className="text-sm text-gray-500 dark:text-gray-400">
-                    {emp.role}
+                    {emp.designation}
                   </p>
                   <p className="text-xs text-blue-600">{emp.email}</p>
                 </div>
