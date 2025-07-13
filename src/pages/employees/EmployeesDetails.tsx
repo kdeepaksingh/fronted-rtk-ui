@@ -7,6 +7,7 @@ import MainButton from "../../components/buttons/MainButton";
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import { fetchEmployees } from "../../features/employee/employeeSlice";
 import type { AddEmployeeFormValues } from "../../types/types";
+import HomeTitle from "../../components/typography/HomeTitle";
 
 const EmployeesDetails = () => {
   const dispatch = useAppDispatch();
@@ -15,6 +16,10 @@ const EmployeesDetails = () => {
       (state) => state.employees.employees
     ) as AddEmployeeFormValues[]) ?? [];
 
+  // const { employees = [], loading } = useAppSelector(
+  //   (state) => state.employees
+  // );
+  // const employeeList = employees as AddEmployeeFormValues[];
   const [search, setSearch] = useState("");
   const [isOpenModal, setIsOpenModal] = useState(false);
 
@@ -33,12 +38,10 @@ const EmployeesDetails = () => {
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center justify-between mb-8">
           <div>
-            <h2 className="text-3xl font-bold text-gray-800 dark:text-white">
-              Employee Directory
-            </h2>
-            <p className="text-gray-600 dark:text-gray-300">
-              Manage employee information and contacts.
-            </p>
+            <HomeTitle
+              text="Header.EmployeeDirectory"
+              subtitle="SubHeader.MngEmpInfo"
+            />
           </div>
 
           <MainButton
@@ -52,15 +55,15 @@ const EmployeesDetails = () => {
         </div>
 
         {/* Search */}
-        <div className="relative mb-6">
+        <div className="relative mb-6 w-full md:w-1/2">
           <input
             type="text"
             placeholder="Search employees..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full md:w-1/2 px-4 py-2 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none"
+            className="w-full px-4 py-2 pr-10 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none"
           />
-          <FaSearch className="absolute right-4 top-3 text-gray-400" />
+          <FaSearch className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none" />
         </div>
 
         {/* Employee Cards */}

@@ -17,7 +17,7 @@ const AddEmployeeForm = ({ open, onClose }: AddEmployeeProps) => {
         onClose={onClose}
         scroll="body"
       >
-        <AddEmployee />
+        <AddEmployee onClose={onClose} />
       </Modal>
     </div>
   );

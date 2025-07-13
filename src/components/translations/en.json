@@ -4,10 +4,14 @@
     "NewUserRegister": "New User - Register",
     "ParichayLogin": "Parichay Login Here",
     "ApplyForLeave": "Apply Leave Here",
+    "EmployeeDirectory": "Employee Directory",
     "LoginUser": "Existing User - Login"
   },
   "Title": {
     "Dashboard": "Dashboard"
+  },
+  "SubHeader": {
+    "MngEmpInfo": "Manage employee information and contacts"
   },
   "Action": {
     "Submit": "Submit",

@@ -30,7 +30,11 @@ type FormValues = {
   resume: FileList | null;
 };
 
-export default function AddEmployee() {
+interface AddEmployeeProps {
+  onClose: () => void;
+}
+
+export default function AddEmployee({ onClose }: AddEmployeeProps) {
   const dispatch = useAppDispatch();
   const {
     control,
@@ -86,6 +90,7 @@ export default function AddEmployee() {
       }
 
       reset();
+      onClose();
     } catch (error: unknown) {
       let errorMessage = "Failed to add employee.";
       if (error instanceof Error) {
@@ -104,6 +109,8 @@ export default function AddEmployee() {
       toast.error(errorMessage);
     }
   };
+
+  
 
   return (
     <motion.div
