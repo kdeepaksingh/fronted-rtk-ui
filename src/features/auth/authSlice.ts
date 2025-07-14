@@ -77,6 +77,45 @@ export const registerUser = createAsyncThunk<
   }
 });
 
+// export const registerUser = createAsyncThunk<
+//   User,
+//   RegisterPayload,
+//   { rejectValue: string }
+// >("auth/registerUser", async (payload, { rejectWithValue }) => {
+//   try {
+//     const encryptedPayload = {
+//       ...payload,
+//       email: Encryption.encode(payload.email),
+//       password: Encryption.encode(payload.password),
+//     };
+
+//     const response = await AxiosInstance.post("/register", encryptedPayload);
+//     return response.data;
+//   } catch (err: any) {
+//     return rejectWithValue(err.response?.data?.message || err.message);
+//   }
+// });
+
+// export const loginUser = createAsyncThunk<
+//   User,
+//   LoginPayload,
+//   { rejectValue: string }
+// >("auth/loginUser", async (payload, { rejectWithValue }) => {
+//   try {
+//     const encryptedPayload = {
+//       ...payload,
+//       emailOrMobile: Encryption.encode(payload.emailOrMobile),
+//       password: Encryption.encode(payload.password),
+//       verificationCode: Encryption.encode(payload.verificationCode),
+//     };
+
+//     const response = await AxiosInstance.post("/login", encryptedPayload);
+//     return response.data;
+//   } catch (err: any) {
+//     return rejectWithValue(err.response?.data?.message || err.message);
+//   }
+// });
+
 export const loginUser = createAsyncThunk<
   User,
   LoginPayload,

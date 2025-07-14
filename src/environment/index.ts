@@ -3,8 +3,8 @@ class Environment {
   static BASEURI: string = import.meta.env.VITE_BASE_URL as string;
   static isLocal = String(window.location.host).includes("localhost");
   static PUBLIC_URI: string = import.meta.env.PUBLIC_URL as string;
+  static FERNET: string = import.meta.env.VITE_REACT_APP_FERNET as string;
 
-  // static FERNET = process.env.REACT_APP_FERNET;
   // static SupersetUser = "admin";
   // static DashReportUrl = process.env.REACT_APP_DASH_REPORT_URL;
   // static isProduction = process.env.REACT_APP_ENV === "PRODUCTION";
