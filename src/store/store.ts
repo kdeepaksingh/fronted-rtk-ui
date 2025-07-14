@@ -9,6 +9,7 @@ import newsReducer from "../features/news/newsSlice";
 import searchReducer from "../features/table/searchSlice";
 import loadingReducer from "../features/alertSlice/loadingSlice";
 import employeeReducer from "../features/employee/employeeSlice";
+import leaveReducer from "../features/leave/leaveSlice";
 
 // Create Redux store
 export const store = configureStore({
@@ -20,6 +21,7 @@ export const store = configureStore({
     search: searchReducer,
     auth: authReducer,
     employees: employeeReducer,
+    leaves: leaveReducer,
   },
 });
 

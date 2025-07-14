@@ -32,3 +32,18 @@ export interface Employee {
   profilePhotoUrl?: string;
   resumeUrl?: string;
 }
+
+export interface Leave {
+  _id?: string;
+  status?: string;
+  employeeId: string;
+  leaveType: "casual" | "sick" | "earned";
+  dayType: "full" | "half";
+  fromDate: string;
+  toDate: string;
+  reason: string;
+  includeWeekend?: boolean;
+  applyingTo: string;
+  ccEmails: string[];
+  attachment: FileList | null;
+}

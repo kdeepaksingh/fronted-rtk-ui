@@ -15,7 +15,6 @@ const LeaveHistory = () => {
   const [leaveHistory, setLeaveHistory] = useState<LeaveRecord[]>([]);
 
   useEffect(() => {
-    // Simulate API fetch
     const mockData: LeaveRecord[] = [
       {
         id: 101,

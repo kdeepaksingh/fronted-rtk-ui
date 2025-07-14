@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import { Controller } from "react-hook-form";
-import type { Control } from "react-hook-form";
+import type { Control, FieldValues, RegisterOptions } from "react-hook-form";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 import { styled } from "@mui/material";
@@ -14,6 +14,7 @@ type SwitchButtonProps = {
   control: Control<any>;
   disabled?: boolean;
   className?: string;
+  rules?: RegisterOptions<FieldValues, string>; // <-- support validation rules
 };
 
 const IOSSwitch = styled((props: any) => (
@@ -75,21 +76,21 @@ const SwitchButton: React.FC<SwitchButtonProps> = ({
   label,
   control,
   disabled = false,
+  rules, // <-- accept validation rules
 }) => {
   return (
     <Controller
       name={name}
       control={control}
+      rules={rules} // <-- apply here
       render={({ field }) => (
         <FormControlLabel
           labelPlacement="start"
           control={
             <IOSSwitch
               sx={{ m: 1 }}
-              checked={field.value}
-              onChange={(e: { target: { checked: any } }) =>
-                field.onChange(e.target.checked)
-              }
+              checked={!!field.value}
+              onChange={(e: any) => field.onChange(e.target.checked)}
               size="small"
               disabled={disabled}
             />

@@ -29,6 +29,8 @@
     "FirstName": "First Name",
     "LastName": "Last Name",
     "UserName": "User Name",
+    "FromDate": "From Date",
+    "ToDate": "To Date",
     "VerificationCode": "Verification Code",
     "MobileNumber": "Mobile",
     "Department": "Department",

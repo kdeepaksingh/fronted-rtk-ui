@@ -5,6 +5,7 @@ import PageLoader from "../components/loader/PageLoader";
 
 const DashCard = lazy(() => import("../pages/dashboard/DashCard"));
 const ApplyLeaves = lazy(() => import("../pages/leaves/ApplyLeaves"));
+const LeaveHistory = lazy(() => import("../pages/leaves/LeaveHistory"));
 const LeaveManagement = lazy(() => import("../pages/leaves/LeaveManagement"));
 const Settings = lazy(() => import("../pages/setting/Setting"));
 const UserProfile = lazy(() => import("../pages/profile/UserProfile"));
@@ -137,6 +138,14 @@ const PrivateRoutes = {
       element: (
         <Suspend>
           <LeaveRequests />
+        </Suspend>
+      ),
+    },
+    {
+      path: Url.LeaveHistory,
+      element: (
+        <Suspend>
+          <LeaveHistory />
         </Suspend>
       ),
     },
