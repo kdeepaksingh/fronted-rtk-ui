@@ -84,9 +84,12 @@ export const updateLeaveStatus = createAsyncThunk<
   { rejectValue: string }
 >("leaves/updateStatus", async ({ id, status }, { rejectWithValue }) => {
   try {
-    const res = await AxiosInstance1.put(`/leave/update/${id}/status`, {
-      status,
-    });
+    const res = await AxiosInstance1.put(
+      `/leave/update/${id}/${status.toLowerCase()}`,
+      {
+        status: status.toLowerCase(),
+      }
+    );
     return res.data.data;
   } catch (err: any) {
     return rejectWithValue(err.response?.data?.message || err.message);

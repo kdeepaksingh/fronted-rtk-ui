@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { motion } from "framer-motion";
+import dayjs from "dayjs";
 import {
   FaFileAlt,
   FaCheckCircle,
@@ -11,6 +12,8 @@ import {
   fetchLeaves,
   updateLeaveStatus,
 } from "../../features/leave/leaveSlice";
+import type { Leave } from "../../types/types";
+import HomeTitle from "../../components/typography/HomeTitle";
 
 const LeaveManagement = () => {
   const dispatch = useAppDispatch();
@@ -65,12 +68,11 @@ const LeaveManagement = () => {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-10"
         >
-          <h2 className="text-3xl font-bold text-yellow-600 dark:text-yellow-400 flex items-center justify-center gap-2">
-            <FaFileAlt /> Leave Management
-          </h2>
-          <p className="text-gray-600 dark:text-gray-300">
-            Submit, track, and manage leave requests
-          </p>
+          <HomeTitle
+            text="Leave Management"
+            subtitle="Submit, track, and manage leave requests"
+            icon={<FaFileAlt className="text-orange-950" />}
+          />
         </motion.div>
         <motion.div
           initial={{ opacity: 0 }}
@@ -90,7 +92,7 @@ const LeaveManagement = () => {
               </tr>
             </thead>
             <tbody>
-              {leavesList.map((leave, index) => (
+              {leavesList.map((leave: Leave, index: number) => (
                 <tr key={index} className="border-b dark:border-gray-700">
                   <td className="px-4 py-3 text-gray-800 dark:text-white font-medium">
                     {leave.employeeId}
@@ -98,8 +100,12 @@ const LeaveManagement = () => {
                   <td className="px-4 py-3 text-gray-600 dark:text-gray-300">
                     {leave.leaveType}
                   </td>
-                  <td className="px-4 py-3">{leave.fromDate}</td>
-                  <td className="px-4 py-3">{leave.toDate}</td>
+                  <td className="px-4 py-3">
+                    {dayjs(leave.fromDate).format("DD-MM-YYYY")}
+                  </td>
+                  <td className="px-4 py-3">
+                    {dayjs(leave.toDate).format("DD-MM-YYYY")}
+                  </td>
                   <td className="px-4 py-3 text-sm">{leave.reason}</td>
                   <td
                     className={`px-4 py-3 flex items-center ${statusColor(

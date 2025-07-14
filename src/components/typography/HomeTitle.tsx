@@ -7,7 +7,7 @@ interface HomeTitleProps {
   subtitle?: string;
   color?: string;
   weight?: React.CSSProperties["fontWeight"];
-  icon?: string;
+  icon?: React.ReactNode;
   style?: React.CSSProperties;
 }
 
@@ -16,6 +16,7 @@ const HomeTitle: React.FC<HomeTitleProps> = ({
   subtitle,
   color = colors["ui-orange"],
   weight = "bold",
+  icon,
   style = {},
 }) => {
   if (!text) {
@@ -23,16 +24,19 @@ const HomeTitle: React.FC<HomeTitleProps> = ({
   }
 
   return (
-    <div>
-      <Translate
-        dataKey={text}
-        className={`text-[1.6rem] font-sans text-center`}
-        style={{
-          fontWeight: weight,
-          color,
-          ...style,
-        }}
-      />
+    <div className="text-center">
+      <div className="flex justify-center items-center gap-2">
+        <span className="mt-1"> {icon}</span>
+        <Translate
+          dataKey={text}
+          className="text-[1.6rem] font-sans"
+          style={{
+            fontWeight: weight,
+            color,
+            ...style,
+          }}
+        />
+      </div>
       {subtitle && (
         <Translate
           dataKey={subtitle}
