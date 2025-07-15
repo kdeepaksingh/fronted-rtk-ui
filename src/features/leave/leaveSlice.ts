@@ -25,6 +25,7 @@ interface LeaveState {
   selectedLeave: Leave | null;
   loading: boolean;
   error: string | null;
+  summary: any; // 👈 add this
 }
 
 const initialState: LeaveState = {
@@ -32,6 +33,7 @@ const initialState: LeaveState = {
   selectedLeave: null,
   loading: false,
   error: null,
+  summary: null, // 👈
 };
 
 // Create Leave
@@ -57,6 +59,20 @@ export const fetchLeaves = createAsyncThunk<Leave[]>(
     try {
       const res = await AxiosInstance1.get("/leaves/list");
       return res.data.data;
+    } catch (err: any) {
+      return rejectWithValue(err.response?.data?.message || err.message);
+    }
+  }
+);
+
+// Leave summary
+
+export const getLeavesSummary = createAsyncThunk<any>(
+  "leaves/Summary",
+  async (_, { rejectWithValue }) => {
+    try {
+      const res = await AxiosInstance1.get("/leave/summary");
+      return res.data; // full summary object
     } catch (err: any) {
       return rejectWithValue(err.response?.data?.message || err.message);
     }
@@ -152,6 +168,22 @@ const leaveSlice = createSlice({
         }
       )
       .addCase(fetchLeaves.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+
+      .addCase(getLeavesSummary.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(
+        getLeavesSummary.fulfilled,
+        (state, action: PayloadAction<any>) => {
+          state.loading = false;
+          state.summary = action.payload; // ✅ correct place to store summary
+        }
+      )
+      .addCase(getLeavesSummary.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       })

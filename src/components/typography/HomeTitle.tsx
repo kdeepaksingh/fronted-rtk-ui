@@ -9,6 +9,7 @@ interface HomeTitleProps {
   weight?: React.CSSProperties["fontWeight"];
   icon?: React.ReactNode;
   style?: React.CSSProperties;
+  className?: string;
 }
 
 const HomeTitle: React.FC<HomeTitleProps> = ({

@@ -2,6 +2,7 @@ import { lazy, Suspense, type ReactNode } from "react";
 import Url from "../components/constants/Url";
 import PageNotFound from "../pages/page-not-found/PageNotFound";
 import PageLoader from "../components/loader/PageLoader";
+import LeaveSummaryDashboard from "../pages/leaves/LeaveSummary";
 
 const DashCard = lazy(() => import("../pages/dashboard/DashCard"));
 const ApplyLeaves = lazy(() => import("../pages/leaves/ApplyLeaves"));
@@ -170,6 +171,14 @@ const PrivateRoutes = {
       element: (
         <Suspend>
           <LeaveManagement />
+        </Suspend>
+      ),
+    },
+    {
+      path: Url.LeaveSummary,
+      element: (
+        <Suspend>
+          <LeaveSummaryDashboard />
         </Suspend>
       ),
     },

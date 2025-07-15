@@ -27,6 +27,7 @@ export class Url {
   static IDCard = "id-card";
   static LeaveRequest = "leave-request";
   static LeaveHistory = "leave-history";
+  static LeaveSummary = "leave-summary";
   static ApplyLeaves = "apply-leaves";
   static LeaveManagement = "leave-management";
   static Notifications = "notifications";

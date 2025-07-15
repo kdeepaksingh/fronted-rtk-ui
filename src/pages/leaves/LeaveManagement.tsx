@@ -9,6 +9,7 @@ import {
 } from "react-icons/fa";
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import {
+  cancelLeave,
   fetchLeaves,
   updateLeaveStatus,
 } from "../../features/leave/leaveSlice";
@@ -26,6 +27,8 @@ import {
 } from "@mui/material";
 import Icon from "../../components/icon/Icon";
 import EmptyData from "../../components/empty/EmptyData";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const headerCellStyle = {
   color: "#ffffff",
@@ -43,6 +46,7 @@ const bodyCellStyle = {
 };
 
 const LeaveManagement = () => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const leavesList = useAppSelector((state) => state.leaves.leaves);
 
@@ -62,6 +66,46 @@ const LeaveManagement = () => {
       dispatch(fetchLeaves());
     } catch (error) {
       console.error("Failed to update leave status:", error);
+    }
+  };
+
+  const handleCancelLeave = async (id?: string) => {
+    if (!id) return;
+
+    const confirmed = window.confirm(
+      "Are you sure you want to cancel this leave?"
+    );
+    if (!confirmed) return;
+
+    try {
+      const response = await dispatch(cancelLeave(id)).unwrap();
+
+      if ((response as { message?: string })?.message) {
+        toast.success(
+          (response as { message?: string })?.message ||
+            "Leave cancelled successfully!"
+        );
+      } else {
+        toast.success("Leave cancelled successfully!");
+      }
+
+      navigate("/dashboard/leave-summary");
+    } catch (error: unknown) {
+      let errorMessage = "Failed to cancel leave.";
+      if (error instanceof Error) {
+        errorMessage = error.message;
+      } else if (
+        typeof error === "object" &&
+        error !== null &&
+        "response" in error
+      ) {
+        const responseError = error as {
+          response?: { data?: { message?: string } };
+        };
+        errorMessage = responseError.response?.data?.message || errorMessage;
+      }
+
+      toast.error(errorMessage);
     }
   };
 
@@ -197,11 +241,14 @@ const LeaveManagement = () => {
                           </TableCell>
                           <TableCell
                             sx={{ ...bodyCellStyle, borderRight: "none" }}
-                            className={`px-4 py-3 flex items-center ${statusColor(
-                              data.status
-                            )}`}
+                            className={`px-4 py-3 ${statusColor(data.status)}`}
                           >
-                            {statusIcon(data.status)} {data.status || "-"}
+                            <span className="flex items-center gap-1">
+                              {statusIcon(data.status)}
+                              <span className="capitalize">
+                                {data.status || "-"}
+                              </span>
+                            </span>
                           </TableCell>
                           <TableCell sx={bodyCellStyle}>
                             {data.status === "pending" && (
@@ -221,6 +268,12 @@ const LeaveManagement = () => {
                                   className="bg-red-500 text-white px-3 py-1 rounded text-sm hover:bg-red-600 mr-2"
                                 >
                                   Reject
+                                </button>
+                                <button
+                                  onClick={() => handleCancelLeave(data._id)}
+                                  className="bg-gray-500 text-white px-3 py-1 rounded text-sm hover:bg-gray-600"
+                                >
+                                  Cancel
                                 </button>
                               </>
                             )}
@@ -244,70 +297,6 @@ const LeaveManagement = () => {
               </TableContainer>
             </Box>
           </Box>
-          {/* <table className="w-full table-auto text-sm">
-            <thead>
-              <tr className="bg-gray-100 dark:bg-gray-700 text-left">
-                <th className="px-4 py-3">Employee ID</th>
-                <th className="px-4 py-3">Type</th>
-                <th className="px-4 py-3">From</th>
-                <th className="px-4 py-3">To</th>
-                <th className="px-4 py-3">Reason</th>
-                <th className="px-4 py-3">Status</th>
-                <th className="px-4 py-3">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {leavesList.map((leave, index) => (
-                <tr key={index} className="border-b dark:border-gray-700">
-                  <td className="px-4 py-3 text-gray-800 dark:text-white font-medium">
-                    {leave.employeeId}
-                  </td>
-                  <td className="px-4 py-3 text-gray-600 dark:text-gray-300">
-                    {leave.leaveType}
-                  </td>
-                  <td className="px-4 py-3">
-                    {dayjs(leave.fromDate).format("DD-MM-YYYY")}
-                  </td>
-                  <td className="px-4 py-3">
-                    {dayjs(leave.toDate).format("DD-MM-YYYY")}
-                  </td>
-                  <td className="px-4 py-3 text-sm">{leave.reason}</td>
-                  <td
-                    className={`px-4 py-3 flex items-center ${statusColor(
-                      leave.status
-                    )}`}
-                  >
-                    {statusIcon(leave.status)} {leave.status}
-                  </td>
-                  <td className="px-4 py-3 space-x-2">
-                    {leave.status === "pending" && (
-                      <>
-                        <button
-                          onClick={() =>
-                            handleStatusChange(leave._id, "Approved")
-                          }
-                          className="bg-green-500 text-white px-3 py-1 rounded text-sm hover:bg-green-600"
-                        >
-                          Approve
-                        </button>
-                        <button
-                          onClick={() =>
-                            handleStatusChange(leave._id, "Rejected")
-                          }
-                          className="bg-red-500 text-white px-3 py-1 rounded text-sm hover:bg-red-600"
-                        >
-                          Reject
-                        </button>
-                      </>
-                    )}
-                    {leave.status?.toLowerCase() !== "pending" && (
-                      <span className="text-gray-400 text-xs">Actioned</span>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table> */}
         </motion.div>
       </div>
     </section>
