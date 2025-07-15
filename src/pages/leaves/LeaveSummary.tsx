@@ -1,5 +1,14 @@
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import React, { useEffect, useState } from "react";
+import {
+  Box,
+  Typography,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Paper,
+  useTheme,
+} from "@mui/material";
 import {
   PieChart,
   Pie,
@@ -21,6 +30,7 @@ import {
   FaListUl,
   FaCalendarDay,
 } from "react-icons/fa";
+import { motion } from "framer-motion";
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import { getLeavesSummary } from "../../features/leave/leaveSlice";
 
@@ -45,9 +55,20 @@ const months = [
   "December",
 ];
 
-const LeaveSummaryDashboard = () => {
+const counterVariants = {
+  hidden: { opacity: 0, y: 10 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.2 },
+  }),
+};
+
+const LeaveSummaryDashboard: React.FC = () => {
   const dispatch = useAppDispatch();
+  const theme = useTheme();
   const summary = useAppSelector((state) => state.leaves.summary);
+
   const [month, setMonth] = useState<string>(
     new Date().toLocaleString("default", { month: "long" })
   );
@@ -66,63 +87,134 @@ const LeaveSummaryDashboard = () => {
       }))
     : [];
 
+  const cardItems = [
+    {
+      icon: <FaCalendarCheck />,
+      label: "Approved",
+      color: "#10B981",
+      value: summary?.totalApproved || 0,
+    },
+    {
+      icon: <FaTimesCircle />,
+      label: "Rejected",
+      color: "#EF4444",
+      value: summary?.totalRejected || 0,
+    },
+    {
+      icon: <FaHourglassHalf />,
+      label: "Pending",
+      color: "#FBBF24",
+      value: summary?.totalPending || 0,
+    },
+    {
+      icon: <FaListUl />,
+      label: "Total Requests",
+      color: "#6366F1",
+      value: summary?.totalRequest || 0,
+    },
+  ];
+
   useEffect(() => {
-    dispatch(getLeavesSummary()); // Optionally pass filters here
+    dispatch(getLeavesSummary());
   }, [dispatch, month, year]);
 
-  const counterVariants = {
-    hidden: { opacity: 0, y: 10 },
-    visible: (i: number) => ({
-      opacity: 1,
-      y: 0,
-      transition: { delay: i * 0.2 },
-    }),
-  };
-
   return (
-    <section className="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 px-4 py-8">
+    <Box
+      sx={{
+        minHeight: "100vh",
+        px: 4,
+        py: 8,
+        background:
+          theme.palette.mode === "dark"
+            ? "linear-gradient(to bottom right, #111827, #1f2937)"
+            : "linear-gradient(to bottom right, #f5f3ff, #e0e7ff)",
+      }}
+    >
       <motion.div
-        initial="hidden"
-        animate="visible"
-        className="max-w-6xl mx-auto"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        style={{ maxWidth: 1200, margin: "0 auto" }}
       >
         {/* Title */}
-        <div className="text-center mb-10">
-          <h1 className="text-4xl font-bold text-indigo-600 dark:text-indigo-400 flex items-center justify-center gap-2">
+        <Box textAlign="center" mb={5}>
+          <Typography
+            variant="h4"
+            sx={{
+              fontWeight: "bold",
+              color: theme.palette.mode === "dark" ? "#818cf8" : "#6366f1",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: 1,
+            }}
+          >
             <FaChartPie />
             Leave Summary Dashboard
-          </h1>
-          <p className="text-gray-600 dark:text-gray-300 mt-2">
-            Overview of leave status and leave types
-          </p>
-        </div>
+          </Typography>
+          <Typography variant="body1" color="text.secondary" mt={1}>
+            Track leave status and category-wise breakdown.
+          </Typography>
+        </Box>
 
         {/* Filters */}
-        <div className="flex flex-wrap justify-center gap-4 mb-8">
-          <select
-            className="px-4 py-2 rounded-lg bg-white dark:bg-gray-700 dark:text-white shadow"
-            value={month}
-            onChange={(e) => setMonth(e.target.value)}
-          >
-            {months.map((m) => (
-              <option key={m}>{m}</option>
-            ))}
-          </select>
-          <select
-            className="px-4 py-2 rounded-lg bg-white dark:bg-gray-700 dark:text-white shadow"
-            value={year}
-            onChange={(e) => setYear(Number(e.target.value))}
-          >
-            {[2023, 2024, 2025].map((y) => (
-              <option key={y}>{y}</option>
-            ))}
-          </select>
-        </div>
+        <Box
+          display="flex"
+          flexWrap="wrap"
+          justifyContent="center"
+          gap={2}
+          mb={4}
+        >
+          <FormControl size="small" sx={{ minWidth: 160 }}>
+            <InputLabel id="month-select">Month</InputLabel>
+            <Select
+              labelId="month-select"
+              value={month}
+              label="Month"
+              onChange={(e) => setMonth(e.target.value)}
+            >
+              {months.map((m) => (
+                <MenuItem key={m} value={m}>
+                  {m}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl size="small" sx={{ minWidth: 120 }}>
+            <InputLabel id="year-select">Year</InputLabel>
+            <Select
+              labelId="year-select"
+              value={year}
+              label="Year"
+              onChange={(e) => setYear(Number(e.target.value))}
+            >
+              {[2023, 2024, 2025].map((y) => (
+                <MenuItem key={y} value={y}>
+                  {y}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Box>
 
-        {/* Chart + Counters */}
-        <div className="grid md:grid-cols-2 gap-8">
+        {/* Pie Chart + Cards */}
+        <Box
+          display="flex"
+          flexDirection={{ xs: "column", md: "row" }}
+          justifyContent="space-between"
+          alignItems="flex-start"
+          gap={4}
+          flexWrap="wrap"
+        >
           {/* Pie Chart */}
-          <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-md">
+          <Paper
+            elevation={3}
+            sx={{
+              flex: "1 1 350px",
+              minWidth: 350,
+              maxWidth: 450,
+              p: 2,
+            }}
+          >
             <ResponsiveContainer width="100%" height={300}>
               <PieChart>
                 <Pie
@@ -145,8 +237,120 @@ const LeaveSummaryDashboard = () => {
                 <Legend />
               </PieChart>
             </ResponsiveContainer>
-          </div>
+          </Paper>
 
+          {/* Cards Section */}
+          <Box
+            display="flex"
+            flexDirection="row"
+            flexWrap="wrap"
+            alignItems="stretch"
+            gap={2}
+            flex="1 1 500px"
+          >
+            {cardItems.map((item, i) => (
+              <motion.div
+                key={item.label}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.2 }}
+              >
+                <Paper
+                  elevation={4}
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 2,
+                    px: 2,
+                    py: 2,
+                    minWidth: 220,
+                    maxWidth: 250,
+                    height: "100%",
+                    borderLeft: `6px solid ${item.color}`,
+                    borderRadius: 3,
+                    backgroundColor:
+                      theme.palette.mode === "dark" ? "#1e293b" : "#ffffff",
+                    boxShadow:
+                      theme.palette.mode === "dark"
+                        ? "0 4px 12px rgba(0,0,0,0.4)"
+                        : "0 4px 12px rgba(0,0,0,0.1)",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      fontSize: 30,
+                      color: item.color,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      minWidth: 40,
+                    }}
+                  >
+                    {item.icon}
+                  </Box>
+                  <Box>
+                    <Typography variant="body2" color="textSecondary">
+                      {item.label}
+                    </Typography>
+                    <Typography variant="h5" fontWeight="bold">
+                      {item.value}
+                    </Typography>
+                  </Box>
+                </Paper>
+              </motion.div>
+            ))}
+          </Box>
+        </Box>
+
+        {/* Bar Chart Section */}
+        <Paper elevation={3} sx={{ mt: 6, p: 3 }}>
+          <Typography
+            variant="h6"
+            mb={2}
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: 1,
+              color: theme.palette.text.primary,
+            }}
+          >
+            <FaCalendarDay /> Leave Types Breakdown
+          </Typography>
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={leaveTypesBarData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" />
+              <YAxis allowDecimals={false} />
+              <Tooltip />
+              <Bar dataKey="value" fill="#6366F1" />
+            </BarChart>
+          </ResponsiveContainer>
+        </Paper>
+        <Paper elevation={3} sx={{ mt: 1, p: 1 }}>
+          {/* Leave Types Section */}
+          <div className="mt-10 bg-white dark:bg-gray-800 rounded-2xl p-6">
+            <h2 className="text-xl font-semibold text-gray-700 dark:text-gray-200 flex items-center gap-2 mb-4">
+              <FaCalendarDay /> Leave Types
+            </h2>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {summary?.leaveTypes &&
+                Object.entries(summary.leaveTypes).map(([type, count]) => (
+                  <div
+                    key={type}
+                    className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg flex justify-between items-center shadow-sm"
+                  >
+                    <span className="capitalize text-gray-600 dark:text-gray-200">
+                      {type.replace("Leave", " Leave")}
+                    </span>
+                    <span className="font-bold text-gray-900 dark:text-white">
+                      {count ?? ""}
+                    </span>
+                  </div>
+                ))}
+            </div>
+          </div>
+        </Paper>
+        <Paper elevation={3} sx={{ mt: 1, p: 1 }}>
           {/* Status Cards with Animation */}
           <div className="grid sm:grid-cols-2 gap-4">
             {[
@@ -187,47 +391,9 @@ const LeaveSummaryDashboard = () => {
               </motion.div>
             ))}
           </div>
-        </div>
-
-        {/* Bar Chart */}
-        <div className="mt-10 bg-white dark:bg-gray-800 rounded-2xl shadow-md p-6">
-          <h2 className="text-xl font-semibold text-gray-700 dark:text-gray-200 flex items-center gap-2 mb-4">
-            <FaCalendarDay /> Leave Types Breakdown
-          </h2>
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={leaveTypesBarData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis allowDecimals={false} />
-              <Tooltip />
-              <Bar dataKey="value" fill="#6366F1" />
-            </BarChart>
-          </ResponsiveContainer>
-          {/* Leave Types Section */}
-          <div className="mt-10 bg-white dark:bg-gray-800 rounded-2xl shadow-md p-6">
-            <h2 className="text-xl font-semibold text-gray-700 dark:text-gray-200 flex items-center gap-2 mb-4">
-              <FaCalendarDay /> Leave Types
-            </h2>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {summary?.leaveTypes &&
-                Object.entries(summary.leaveTypes).map(([type, count]) => (
-                  <div
-                    key={type}
-                    className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg flex justify-between items-center shadow-sm"
-                  >
-                    <span className="capitalize text-gray-600 dark:text-gray-200">
-                      {type.replace("Leave", " Leave")}
-                    </span>
-                    <span className="font-bold text-gray-900 dark:text-white">
-                      {count}
-                    </span>
-                  </div>
-                ))}
-            </div>
-          </div>
-        </div>
+        </Paper>
       </motion.div>
-    </section>
+    </Box>
   );
 };
 
