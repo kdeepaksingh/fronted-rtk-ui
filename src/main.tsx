@@ -1,5 +1,7 @@
 import { createRoot } from "react-dom/client";
 import { SnackbarProvider } from "notistack";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import RouteProvider from "./routes/RouteProvider.tsx";
 import { ThemeProvider } from "@mui/material";
 import { Provider } from "react-redux";
@@ -16,26 +18,28 @@ import "react-toastify/dist/ReactToastify.css"; // 👈 Toastify styles
 import ErrorBoundary from "./ErrorBoundary.tsx";
 
 createRoot(document.getElementById("root")!).render(
-  <ErrorBoundary>
-    <ThemeProvider theme={theme}>
-      <Provider store={store}>
-        <SnackbarProvider hideIconVariant preventDuplicate>
-          <>
-            <RouteProvider />
+  <LocalizationProvider dateAdapter={AdapterDateFns}>
+    <ErrorBoundary>
+      <ThemeProvider theme={theme}>
+        <Provider store={store}>
+          <SnackbarProvider hideIconVariant preventDuplicate>
+            <>
+              <RouteProvider />
 
-            {/* ✅ Global ToastContainer - Only one in app! */}
-            <ToastContainer
-              position="top-right"
-              autoClose={3000}
-              newestOnTop
-              closeOnClick
-              pauseOnHover
-              draggable
-              theme="colored"
-            />
-          </>
-        </SnackbarProvider>
-      </Provider>
-    </ThemeProvider>
-  </ErrorBoundary>
+              {/* ✅ Global ToastContainer - Only one in app! */}
+              <ToastContainer
+                position="top-right"
+                autoClose={3000}
+                newestOnTop
+                closeOnClick
+                pauseOnHover
+                draggable
+                theme="colored"
+              />
+            </>
+          </SnackbarProvider>
+        </Provider>
+      </ThemeProvider>
+    </ErrorBoundary>
+  </LocalizationProvider>
 );

@@ -8,7 +8,8 @@
     "LoginUser": "Existing User - Login"
   },
   "Title": {
-    "Dashboard": "Dashboard"
+    "Dashboard": "Dashboard",
+    "AttendenceRecords": "Attendence Records"
   },
   "SubHeader": {
     "MngEmpInfo": "Manage employee information and contacts"
@@ -21,20 +22,25 @@
     "Subscribe": "Subscribe",
     "SendOTP": "Send OTP",
     "AddEmployee": "Add Employee",
+    "AddAttendence": "Add Attendence",
     "SendMessage": "Send Message",
     "LoginWithParichay": "Login with Parichay"
   },
   "Label": {
     "FullName": "Full Name",
+    "EmployeeName": "Employee Name",
     "FirstName": "First Name",
     "LastName": "Last Name",
     "UserName": "User Name",
     "FromDate": "From Date",
+    "Date": "Date",
+    "Status": "Status",
     "ToDate": "To Date",
     "VerificationCode": "Verification Code",
     "MobileNumber": "Mobile",
     "Department": "Department",
     "Resume": "Resume",
+    "AttendanceType": "Attendance Type",
     "ProfilePhoto": "Profile Photo",
     "JoiningDate": "Joining Date",
     "Email": "Email",
@@ -60,6 +66,7 @@
   },
   "Placeholder": {
     "EnterFullName": "Enter Your Full Name",
+    "EnterEmployeeName": "Enter Your Employee Name",
     "EnterAddress": "Enter Your Full Address",
     "EnterEmployeeID": "Enter Your Employee ID",
     "EnterFirstName": "Enter Your First Name",
@@ -82,8 +89,10 @@
     "EnterMobileNumber": "Enter Your (10 digits) Mobile Number",
     "SelectFeedbackCategory": "Select Feedback Category",
     "SelectLeaveType": "Select Leave Type",
+    "SelectAttendenceType": "Select Attendence Type",
     "SelectApplyTo": "Select Apply To",
     "SelectGender": "Select Gender",
+    "SelectStatus": "Select Status",
     "SelectDayType": "Select Day Type"
   },
   "Link": {

@@ -110,8 +110,6 @@ export default function AddEmployee({ onClose }: AddEmployeeProps) {
     }
   };
 
-  
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}

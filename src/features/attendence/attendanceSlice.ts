@@ -2,18 +2,20 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { AxiosInstance1 } from "../../api/AxiosInstance";
 
-// Types
 export interface Attendance {
   _id?: string;
   employeeId: string;
   employeeName: string;
-  date: string;
-  inTime?: string;
-  outTime?: string;
-  status: "present" | "absent" | "leave" | "wfh" | "half day";
-  attendanceType: string;
-  remarks?: string;
-  attachmemnt?: string;
+  department: string;
+  designation: string;
+  gender: string;
+  inTime?: Date;
+  attendanceDate: Date;
+  outTime?: Date;
+  status?: "present" | "absent" | "leave" | "wfh" | "half day";
+  attendanceType: "office" | "remote" | "field";
+  reason?: string;
+  attachment?: FileList;
 }
 
 interface AttendanceState {
@@ -31,11 +33,13 @@ const initialState: AttendanceState = {
 // Async Thunks
 export const markAttendance = createAsyncThunk<
   Attendance,
-  Attendance,
+  FormData,
   { rejectValue: string }
->("attendance/mark", async (payload, { rejectWithValue }) => {
+>("attendance/mark", async (formData, { rejectWithValue }) => {
   try {
-    const res = await AxiosInstance1.post("/attendance/add", payload);
+    const res = await AxiosInstance1.post("/attendance/add", formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
     return res.data.data;
   } catch (err: any) {
     return rejectWithValue(

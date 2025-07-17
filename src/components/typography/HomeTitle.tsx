@@ -41,7 +41,7 @@ const HomeTitle: React.FC<HomeTitleProps> = ({
       {subtitle && (
         <Translate
           dataKey={subtitle}
-          className="text-sm sm:font-46 font-bold mt-2 block text-gray-700"
+          className="text-sm sm:font-46 font-bold mt-3 ml-2 block text-gray-700"
         />
       )}
     </div>
