@@ -10,9 +10,10 @@ export interface Attendance {
   date: string;
   inTime?: string;
   outTime?: string;
-  status: "present" | "absent" | "leave";
+  status: "present" | "absent" | "leave" | "wfh" | "half day";
   attendanceType: string;
   remarks?: string;
+  attachmemnt?: string;
 }
 
 interface AttendanceState {

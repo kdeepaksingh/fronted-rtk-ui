@@ -1,6 +1,19 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { FaCheckCircle, FaTimesCircle, FaClock } from "react-icons/fa";
+import {
+  Box,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from "@mui/material";
+import dayjs from "dayjs";
+import { statusColor } from "../../utils/statusHelper";
+import EmptyData from "../../components/empty/EmptyData";
 
 type AttendanceRecord = {
   id: number;
@@ -9,6 +22,21 @@ type AttendanceRecord = {
   inTime: string;
   outTime: string;
   status: "Present" | "Absent" | "Late";
+};
+
+const headerCellStyle = {
+  color: "#ffffff",
+  fontWeight: 600,
+  fontSize: "14px",
+  borderRight: "2px solid #ffffff",
+  textAlign: "center",
+};
+
+const bodyCellStyle = {
+  fontSize: "14px",
+  fontWeight: 500,
+  borderRight: "1px solid #ccc",
+  textAlign: "center",
 };
 
 const mockData: AttendanceRecord[] = [
@@ -77,7 +105,98 @@ const AttendanceDetails = () => {
           transition={{ delay: 0.2 }}
           className="overflow-x-auto bg-white dark:bg-gray-800 shadow rounded-lg"
         >
-          <table className="min-w-full text-sm text-left table-auto">
+          <Box p={2}>
+            <TableContainer component={Paper} elevation={0}>
+              <Table>
+                <TableHead>
+                  <TableRow sx={{ backgroundColor: "#06004c" }}>
+                    <TableCell sx={headerCellStyle}>Employee Name</TableCell>
+                    <TableCell sx={headerCellStyle}>Employee ID</TableCell>
+                    <TableCell sx={headerCellStyle}>Date</TableCell>
+                    <TableCell sx={headerCellStyle}>In-Time</TableCell>
+                    <TableCell sx={headerCellStyle}>Out-Time</TableCell>
+                    <TableCell sx={headerCellStyle}>Status</TableCell>
+                    <TableCell sx={{ ...headerCellStyle, borderRight: "none" }}>
+                      Actions
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {records.length > 0 ? (
+                    records.map((record, idx) => (
+                      <TableRow key={idx}>
+                        <TableCell sx={bodyCellStyle}>
+                          {record.name || "-"}
+                        </TableCell>
+                        <TableCell sx={bodyCellStyle}>
+                          {dayjs(record.date).format("DD-MM-YYYY")}
+                        </TableCell>
+                        <TableCell sx={bodyCellStyle}>
+                          {record.inTime || "-"}
+                        </TableCell>
+                        <TableCell sx={bodyCellStyle}>
+                          {record.outTime || "-"}
+                        </TableCell>
+                        <TableCell
+                          sx={{ ...bodyCellStyle, borderRight: "none" }}
+                          className={`${statusColor(record.status)} px-4 py-3`}
+                        >
+                          <span className="flex items-center gap-1">
+                            {getStatusIcon(record.status)}
+                            <span
+                              className={`${
+                                record.status === "Present"
+                                  ? "text-green-600"
+                                  : record.status === "Late"
+                                  ? "text-yellow-600"
+                                  : "text-red-600"
+                              } capitalize`}
+                            >
+                              {record.status || "-"}
+                            </span>
+                          </span>
+                        </TableCell>
+                        <TableCell sx={bodyCellStyle}>
+                          {record.status?.toLowerCase() === "pending" && (
+                            <>
+                              <button
+                                // onClick={() =>
+                                //   handleStatusChange(record._id, "Approved")
+                                // }
+                                className="bg-green-500 text-white px-3 py-1 rounded text-sm hover:bg-green-600 mr-2"
+                              >
+                                Approve
+                              </button>
+                              <button
+                                // onClick={() =>
+                                //   handleStatusChange(record._id, "Rejected")
+                                // }
+                                className="bg-red-500 text-white px-3 py-1 rounded text-sm hover:bg-red-600"
+                              >
+                                Reject
+                              </button>
+                            </>
+                          )}
+                          {record.status?.toLowerCase() !== "pending" && (
+                            <span className="text-gray-400 text-xs">
+                              Actioned
+                            </span>
+                          )}
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  ) : (
+                    <TableRow>
+                      <TableCell colSpan={6} align="center">
+                        <EmptyData text="No attendance records found." />
+                      </TableCell>
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Box>
+          {/* <table className="min-w-full text-sm text-left table-auto">
             <thead className="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200">
               <tr>
                 <th className="px-6 py-4 font-semibold">Employee</th>
@@ -123,7 +242,7 @@ const AttendanceDetails = () => {
                 </motion.tr>
               ))}
             </tbody>
-          </table>
+          </table> */}
         </motion.div>
       </div>
     </section>
