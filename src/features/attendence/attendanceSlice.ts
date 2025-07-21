@@ -12,7 +12,7 @@ export interface Attendance {
   inTime?: Date;
   attendanceDate: Date;
   outTime?: Date;
-  status?: "present" | "absent" | "leave" | "wfh" | "half day";
+  status?: "present" | "absent" | "leave" | "wfh" | "half day" | "late";
   attendanceType: "office" | "remote" | "field";
   reason?: string;
   attachment?: FileList;
@@ -20,12 +20,14 @@ export interface Attendance {
 
 interface AttendanceState {
   list: Attendance[];
+  data: Attendance[];
   loading: boolean;
   error: string | null;
 }
 
 const initialState: AttendanceState = {
   list: [],
+  data: [],
   loading: false,
   error: null,
 };
@@ -55,6 +57,7 @@ export const fetchAllAttendance = createAsyncThunk<
 >("attendance/fetchAll", async (_, { rejectWithValue }) => {
   try {
     const res = await AxiosInstance1.get("/attendance/list");
+    console.log("List of attendence response in slice", res);
     return res.data.data;
   } catch (err: any) {
     return rejectWithValue(
@@ -130,7 +133,7 @@ const attendanceSlice = createSlice({
         fetchAllAttendance.fulfilled,
         (state, action: PayloadAction<Attendance[]>) => {
           state.loading = false;
-          state.list = action.payload;
+          state.data = action.payload;
         }
       )
       .addCase(fetchAllAttendance.rejected, (state, action) => {

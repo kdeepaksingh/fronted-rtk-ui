@@ -11,7 +11,10 @@ import { useForm } from "react-hook-form";
 import colors from "../../color";
 import { validateNoLeadingTrailingSpaces } from "../../utils/validation";
 import RHFTimePicker from "../../components/inputs/RHFTimePicker";
-import { markAttendance } from "../../features/attendence/attendanceSlice";
+import {
+  fetchAllAttendance,
+  markAttendance,
+} from "../../features/attendence/attendanceSlice";
 import { useAppDispatch } from "../../store/store";
 import { toast } from "react-toastify";
 
@@ -98,6 +101,7 @@ const AddAttendenceForm = ({ open, onClose }: AddAttendenceProps) => {
       }
       reset();
       onClose();
+      dispatch(fetchAllAttendance());
     } catch (error: unknown) {
       let errorMessage = "Failed to apply leave.";
       if (error instanceof Error) {
@@ -236,6 +240,7 @@ const AddAttendenceForm = ({ open, onClose }: AddAttendenceProps) => {
                       "absent",
                       "leave",
                       "wfh",
+                      "late",
                       "half day",
                     ];
                     return allowed.includes(value) || "Invalid status selected";
@@ -246,6 +251,7 @@ const AddAttendenceForm = ({ open, onClose }: AddAttendenceProps) => {
                   { id: "absent", value: "Absent" },
                   { id: "leave", value: "Leave" },
                   { id: "wfh", value: "WFH" },
+                  { id: "late", value: "Late" },
                   { id: "half day", value: "Half Day" },
                 ]}
                 dataID="id"
