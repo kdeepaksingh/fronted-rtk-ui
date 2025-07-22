@@ -5,6 +5,7 @@
     "ParichayLogin": "Parichay Login Here",
     "ApplyForLeave": "Apply Leave Here",
     "EmployeeDirectory": "Employee Directory",
+    "EmployeeIDCards": "Employee ID Cards",
     "LoginUser": "Existing User - Login"
   },
   "Title": {
@@ -12,7 +13,8 @@
     "AttendenceRecords": "Attendence Records"
   },
   "SubHeader": {
-    "MngEmpInfo": "Manage employee information and contacts"
+    "MngEmpInfo": "Manage employee information and contacts",
+    "GenerateEmpIDCards": "Generate digital employee ID cards"
   },
   "Action": {
     "Submit": "Submit",

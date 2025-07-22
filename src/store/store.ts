@@ -11,6 +11,7 @@ import loadingReducer from "../features/alertSlice/loadingSlice";
 import employeeReducer from "../features/employee/employeeSlice";
 import leaveReducer from "../features/leave/leaveSlice";
 import attendanceReducer from "../features/attendence/attendanceSlice";
+import feedbackReducer from "../features/feedback/feedbackSlice";
 
 // Create Redux store
 export const store = configureStore({
@@ -24,6 +25,7 @@ export const store = configureStore({
     employees: employeeReducer,
     leaves: leaveReducer,
     attendance: attendanceReducer,
+    feedback: feedbackReducer,
   },
 });
 

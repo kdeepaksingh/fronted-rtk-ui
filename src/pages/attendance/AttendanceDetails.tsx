@@ -1,11 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import {
-  FaCheckCircle,
-  FaTimesCircle,
-  FaClock,
-  FaUserPlus,
-} from "react-icons/fa";
+import { FaUserPlus } from "react-icons/fa";
 import {
   Box,
   Paper,
@@ -31,17 +26,6 @@ import Icon from "../../components/icon/Icon";
 import AddAttendenceForm from "./AddAttendenceForm";
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import { fetchAllAttendance } from "../../features/attendence/attendanceSlice";
-
-type AttendanceRecord = {
-  id: number;
-  name: string;
-  employeeId: string;
-  employeeName: string;
-  date: string;
-  inTime: Date;
-  outTime: Date;
-  status: "present" | "absent" | "leave" | "wfh" | "half day" | "late";
-};
 
 const headerCellStyle = {
   color: "#ffffff",
