@@ -10,6 +10,9 @@ import HelpCharacterCount from "../../../components/typography/HelpCharacterCoun
 import MainButton from "../../../components/buttons/MainButton";
 import Translate from "../../../components/typography/Translate";
 import PageLoader from "../../../components/loader/PageLoader";
+import { useAppDispatch } from "../../../store/store";
+import { toast } from "react-toastify";
+import { submitContactForm } from "../../../features/contact/contactUsSlice";
 
 const inputVariants = {
   hidden: { opacity: 0, y: 20 },
@@ -38,7 +41,16 @@ const fadeIn = {
 };
 
 export default function ContactUs() {
-  const { control, watch } = useForm();
+  const dispatch = useAppDispatch();
+  const { control, watch, handleSubmit, reset } = useForm({
+    defaultValues: {
+      fullName: "",
+      email: "",
+      mobileNumber: "",
+      subject: "",
+      message: "",
+    },
+  });
   const messageChars = watch("message");
   const [animationData, setAnimationData] = useState<any>(null);
 
@@ -48,6 +60,34 @@ export default function ContactUs() {
       .then(setAnimationData)
       .catch(console.error);
   }, []);
+
+  const onSubmit = async (data: any) => {
+    try {
+      const response = await dispatch(submitContactForm(data)).unwrap();
+
+      toast.success(
+        (response as { message?: string })?.message ||
+          "Contact submitted successfully!"
+      );
+
+      reset();
+    } catch (error: unknown) {
+      let errorMessage = "Failed to submit contact.";
+      if (error instanceof Error) {
+        errorMessage = error.message;
+      } else if (
+        typeof error === "object" &&
+        error !== null &&
+        "response" in error
+      ) {
+        const responseError = error as {
+          response?: { data?: { message?: string } };
+        };
+        errorMessage = responseError.response?.data?.message || errorMessage;
+      }
+      toast.error(errorMessage);
+    }
+  };
 
   if (!animationData) {
     return <PageLoader />;
@@ -96,11 +136,9 @@ export default function ContactUs() {
         </motion.div>
 
         {/* Right Side: Form */}
-        <motion.form
+        <form
+          onSubmit={handleSubmit(onSubmit)}
           className="bg-gray-200 border-orange-800 border-[2px] dark:bg-gray-800 p-8 rounded-2xl shadow-md grid grid-cols-1 md:grid-cols-2 gap-2"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
         >
           <motion.div
             className="col-span-2 text-center"
@@ -213,22 +251,13 @@ export default function ContactUs() {
             />
             <HelpCharacterCount max={300} min={3} value={messageChars} />
           </motion.div>
-
-          <motion.div className="col-span-2" variants={inputVariants}>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="w-full"
-            >
-              <MainButton
-                ButtonName="Action.SendMessage"
-                className="!bg-orange-700 w-full h-8 font-semibold"
-                type="submit"
-                icon="Telegram"
-              />
-            </motion.button>
-          </motion.div>
-        </motion.form>
+          <MainButton
+            ButtonName="Action.SendMessage"
+            className="!bg-orange-700 w-full h-8 font-semibold"
+            type="submit"
+            icon="Telegram"
+          />
+        </form>
       </div>
     </section>
   );
