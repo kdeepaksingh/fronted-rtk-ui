@@ -120,11 +120,11 @@ export default function ContactUs() {
             </div>
             <div className="flex items-center gap-4">
               <FaPhoneAlt className="text-green-600 text-xl" />
-              <strong>+91 98765 43210</strong>
+              <strong>+91 8290 886498</strong>
             </div>
             <div className="flex items-center gap-4">
               <FaEnvelope className="text-red-600 text-xl" />
-              <strong>support@empmanage.com</strong>
+              <strong>deepak.singh97@cipl.org.in</strong>
             </div>
           </div>
 
