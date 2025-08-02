@@ -86,11 +86,25 @@ const Login: React.FC = () => {
     try {
       const response = await dispatch(loginUser(payload)).unwrap();
 
+      // if ((response as { message?: string })?.message) {
+      //   toast.success(
+      //     (response as { message?: string })?.message ||
+      //       "User Logged-In successfully!"
+      //   );
+      //   reset();
+      //   refreshCaptcha();
+      //   navigate("/dashboard");
+      // }
       if ((response as { message?: string })?.message) {
         toast.success(
           (response as { message?: string })?.message ||
             "User Logged-In successfully!"
         );
+
+        // Save user info to localStorage
+        localStorage.setItem("user", JSON.stringify(response.user));
+        localStorage.setItem("token", String(response.token));
+
         reset();
         refreshCaptcha();
         navigate("/dashboard");

@@ -7,6 +7,8 @@ import { AxiosInstance } from "../../api/AxiosInstance";
 // Types
 // ---------------------
 interface User {
+  token(arg0: string, token: any): unknown;
+  user(user: any): string;
   id: string;
   name: string;
   email: string;

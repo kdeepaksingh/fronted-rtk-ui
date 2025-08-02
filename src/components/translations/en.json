@@ -10,6 +10,7 @@
   },
   "Title": {
     "Dashboard": "Dashboard",
+    "ConfirmLogout": "Confirm Logout",
     "AttendenceRecords": "Attendence Records"
   },
   "SubHeader": {
@@ -21,6 +22,8 @@
     "Reset": "Reset",
     "Login": "Login",
     "Retry": "Retry",
+    "Logout": "Logout",
+    "Cancel": "Cancel",
     "Subscribe": "Subscribe",
     "SendOTP": "Send OTP",
     "AddEmployee": "Add Employee",
