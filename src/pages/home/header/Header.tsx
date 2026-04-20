@@ -1,10 +1,10 @@
 import NavBar from "./NavBar";
 import TopHeader from "./TopHeader";
 
-const Header = () => {
+const Header = ({ setMode }: any) => {
   return (
     <div>
-      <TopHeader />
+      <TopHeader setMode={setMode} />
       <NavBar />
     </div>
   );

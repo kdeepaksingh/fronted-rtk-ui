@@ -1,4 +1,8 @@
-@import "tailwindcss"; 
+@import "tailwindcss";
+
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
 
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -221,16 +225,11 @@
   border-bottom: 0px;
 }
 
-.ag-theme-alpine
-  .ag-header-group-cell-no-group
-  .ag-header-group-cell-label::after {
+.ag-theme-alpine .ag-header-group-cell-no-group .ag-header-group-cell-label::after {
   height: 0px !important;
 }
 
-.ag-theme-alpine
-  .ag-header-row
-  .ag-header-group-cell.ag-header-group-cell-with-group
-  + .ag-header-group-cell.ag-header-group-cell-with-group {
+.ag-theme-alpine .ag-header-row .ag-header-group-cell.ag-header-group-cell-with-group+.ag-header-group-cell.ag-header-group-cell-with-group {
   border-left: 1px solid var(--ag-border-color);
   border-right: 1px solid var(--ag-border-color);
 }

@@ -3,10 +3,10 @@ import Header from "../pages/home/header/Header";
 import Footer from "../pages/home/footer/Footer";
 import { CheckConnection } from "../components/checkconnection/CheckConnection";
 
-const PublicLayout = () => {
+const PublicLayout = ({ setMode }: any) => {
   return (
     <>
-      <Header />
+      <Header setMode={setMode} />
       <CheckConnection>
         <Outlet />
       </CheckConnection>

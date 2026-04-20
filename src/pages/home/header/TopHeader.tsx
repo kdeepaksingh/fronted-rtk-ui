@@ -8,7 +8,11 @@ import ScreenReader from "../../screen-reader/ScreenReader";
 import { useNavigate } from "react-router-dom";
 import DarkModeToggle from "../DarkModeToggle";
 
-const TopHeader = () => {
+const TopHeader = ({
+  setMode,
+}: {
+  setMode: (mode: "light" | "dark") => void;
+}) => {
   const navigate = useNavigate();
   return (
     <div className="container-fluid">
@@ -35,7 +39,7 @@ const TopHeader = () => {
             className="font-semibold cursor-pointer"
           />
           <ScreenReader />
-          <DarkModeToggle />
+          <DarkModeToggle setMode={setMode} />
           <AccessibilityTools />
         </div>
       </div>
