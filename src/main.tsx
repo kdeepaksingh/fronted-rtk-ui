@@ -15,7 +15,7 @@ import { ThemeProvider, CssBaseline } from "@mui/material";
 import { Provider } from "react-redux";
 
 import RouteProvider from "./routes/RouteProvider.tsx";
-import { store } from "./store/store.ts";
+import { store, useAppSelector } from "./store/store.ts";
 import ErrorBoundary from "./ErrorBoundary.tsx";
 import { ToastContainer } from "react-toastify";
 
@@ -28,12 +28,25 @@ import "ag-grid-community/styles/ag-theme-balham.css";
 import "react-datepicker/dist/react-datepicker.css";
 import "react-toastify/dist/ReactToastify.css";
 
-import { getTheme } from "./theme.ts"; // 🔥 IMPORTANT
+import { getTheme } from "./theme.ts";
+import { selectFontSize } from "./features/global/globalSlices.ts";
 
-// ✅ Wrapper to handle theme
 const AppWrapper = () => {
   const [mode, setMode] = useState<"light" | "dark">("light");
 
+  // Redux font size (NOW works because Provider is above)
+  const fontSize = useAppSelector(
+    selectFontSize as unknown as (
+      state: ReturnType<typeof store.getState>,
+    ) => number,
+  );
+
+  // Apply font size globally
+  useEffect(() => {
+    document.documentElement.style.fontSize = `${fontSize}px`;
+  }, [fontSize]);
+
+  // Initialize theme from localStorage/system
   useEffect(() => {
     const saved = localStorage.getItem("theme") as "light" | "dark";
 
@@ -46,8 +59,8 @@ const AppWrapper = () => {
     }
   }, []);
 
-  // 🔥 dynamic theme
-  const theme = useMemo(() => getTheme(mode), [mode]);
+  const theme = useMemo(() => getTheme(mode, fontSize), [mode, fontSize]);
+
   const RouteProviderWithMode = RouteProvider as ComponentType<{
     setMode: Dispatch<SetStateAction<"light" | "dark">>;
   }>;
@@ -56,78 +69,31 @@ const AppWrapper = () => {
     <ThemeProvider theme={theme}>
       <CssBaseline />
 
-      <Provider store={store}>
-        <SnackbarProvider hideIconVariant preventDuplicate>
-          <>
-            {/* 🔥 PASS setMode */}
-            <RouteProviderWithMode setMode={setMode} />
+      <SnackbarProvider hideIconVariant preventDuplicate>
+        <>
+          <RouteProviderWithMode setMode={setMode} />
 
-            <ToastContainer
-              position="top-right"
-              autoClose={3000}
-              newestOnTop
-              closeOnClick
-              pauseOnHover
-              draggable
-              theme={mode === "dark" ? "dark" : "light"} // 🔥 sync
-            />
-          </>
-        </SnackbarProvider>
-      </Provider>
+          <ToastContainer
+            position="top-right"
+            autoClose={3000}
+            newestOnTop
+            closeOnClick
+            pauseOnHover
+            draggable
+            theme={mode === "dark" ? "dark" : "light"}
+          />
+        </>
+      </SnackbarProvider>
     </ThemeProvider>
   );
 };
 
 createRoot(document.getElementById("root")!).render(
-  <LocalizationProvider dateAdapter={AdapterDateFns}>
-    <ErrorBoundary>
-      <AppWrapper />
-    </ErrorBoundary>
-  </LocalizationProvider>,
+  <Provider store={store}>
+    <LocalizationProvider dateAdapter={AdapterDateFns}>
+      <ErrorBoundary>
+        <AppWrapper />
+      </ErrorBoundary>
+    </LocalizationProvider>
+  </Provider>,
 );
-
-// import { createRoot } from "react-dom/client";
-// import { SnackbarProvider } from "notistack";
-// import { LocalizationProvider } from "@mui/x-date-pickers";
-// import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-// import RouteProvider from "./routes/RouteProvider.tsx";
-// import { ThemeProvider } from "@mui/material";
-// import { Provider } from "react-redux";
-// import { store } from "./store/store.ts";
-// import { ToastContainer } from "react-toastify"; // 👈 Import ToastContainer
-// import "./components/translations";
-// import theme from "./theme.ts";
-// import "./index.css";
-// import "ag-grid-community/styles/ag-grid.css";
-// import "ag-grid-community/styles/ag-theme-alpine.css";
-// import "ag-grid-community/styles/ag-theme-balham.css";
-// import "react-datepicker/dist/react-datepicker.css";
-// import "react-toastify/dist/ReactToastify.css"; // 👈 Toastify styles
-// import ErrorBoundary from "./ErrorBoundary.tsx";
-
-// createRoot(document.getElementById("root")!).render(
-//   <LocalizationProvider dateAdapter={AdapterDateFns}>
-//     <ErrorBoundary>
-//       <ThemeProvider theme={theme}>
-//         <Provider store={store}>
-//           <SnackbarProvider hideIconVariant preventDuplicate>
-//             <>
-//               <RouteProvider />
-
-//               {/* ✅ Global ToastContainer - Only one in app! */}
-//               <ToastContainer
-//                 position="top-right"
-//                 autoClose={3000}
-//                 newestOnTop
-//                 closeOnClick
-//                 pauseOnHover
-//                 draggable
-//                 theme="colored"
-//               />
-//             </>
-//           </SnackbarProvider>
-//         </Provider>
-//       </ThemeProvider>
-//     </ErrorBoundary>
-//   </LocalizationProvider>
-// );

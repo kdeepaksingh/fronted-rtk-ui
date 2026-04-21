@@ -4,7 +4,7 @@ import type { TypedUseSelectorHook } from "react-redux";
 
 import authReducer from "../features/auth/authSlice";
 import alertReducer from "../features/alertSlice/alertSlice";
-import globalReducer from "../features/alertSlice/globalSlice";
+// import globalReducer from "../features/alertSlice/globalSlice";
 import newsReducer from "../features/news/newsSlice";
 import searchReducer from "../features/table/searchSlice";
 import loadingReducer from "../features/alertSlice/loadingSlice";
@@ -13,6 +13,7 @@ import leaveReducer from "../features/leave/leaveSlice";
 import attendanceReducer from "../features/attendence/attendanceSlice";
 import feedbackReducer from "../features/feedback/feedbackSlice";
 import contactReducer from "../features/contact/contactUsSlice";
+import globalReducer from "../features/global/globalSlices";
 
 // Create Redux store
 export const store = configureStore({
@@ -31,10 +32,10 @@ export const store = configureStore({
   },
 });
 
-// ✅ Typed state and dispatch types
+//  Typed state and dispatch types
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
-// ✅ Custom typed dispatch hook
+//  Custom typed dispatch hook
 export const useAppDispatch: () => AppDispatch = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;

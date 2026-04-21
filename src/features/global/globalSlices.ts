@@ -8,7 +8,7 @@ interface GlobalState {
 }
 
 const defaultFontSize = 16;
-const initialFontSize = Storage.getData("fontSize") || defaultFontSize;
+const initialFontSize = Storage.getData("fontSize", defaultFontSize);
 
 const initialState: GlobalState = {
   defaultFontSize,
@@ -28,20 +28,12 @@ export const globalSlice = createSlice({
       Storage.removeData("fontSize");
     },
     increaseFontSize: (state) => {
-      if (state.fontSize < 19) {
-        state.fontSize += 1;
-        Storage.setData("fontSize", state.fontSize);
-      } else {
-        alert("Maximum font size reached");
-      }
+      state.fontSize = Math.min(state.fontSize + 1, 19);
+      Storage.setData("fontSize", state.fontSize);
     },
     decreaseFontSize: (state) => {
-      if (state.fontSize > 13) {
-        state.fontSize -= 1;
-        Storage.setData("fontSize", state.fontSize);
-      } else {
-        alert("Minimum font size reached");
-      }
+      state.fontSize = Math.max(state.fontSize - 1, 13);
+      Storage.setData("fontSize", state.fontSize);
     },
   },
 });

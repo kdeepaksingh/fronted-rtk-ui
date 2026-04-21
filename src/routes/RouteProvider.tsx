@@ -7,7 +7,7 @@ const RouteProvider = ({ setMode }: any) => {
   const router = createBrowserRouter([
     {
       ...PublicRoutes,
-      element: <PublicLayout setMode={setMode} />, // ✅ CRITICAL
+      element: <PublicLayout setMode={setMode} />,
     },
     PrivateRoutes,
   ]);

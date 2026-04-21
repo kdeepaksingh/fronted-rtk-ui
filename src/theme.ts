@@ -3,11 +3,11 @@ import colors from "./color";
 
 const font = "'Open Sans'";
 
-// 🔥 convert into function
-export const getTheme = (mode: "light" | "dark") =>
+//  convert into function
+export const getTheme = (mode: "light" | "dark", fontSize: number) =>
   createTheme({
     palette: {
-      mode, // ✅ VERY IMPORTANT
+      mode, //  VERY IMPORTANT
 
       primary: {
         main: colors["ui-primary"],
@@ -28,7 +28,7 @@ export const getTheme = (mode: "light" | "dark") =>
         main: colors["ui-green-dark"],
       },
 
-      // ✅ minimal safe dark support (no UI break)
+      //  minimal safe dark support (no UI break)
       background: {
         default: mode === "dark" ? "#0f172a" : "#ffffff",
         paper: mode === "dark" ? "#1e293b" : "#ffffff",
@@ -40,8 +40,9 @@ export const getTheme = (mode: "light" | "dark") =>
     },
 
     typography: {
+      fontSize,
       fontFamily: font,
-      fontSize: 14,
+      htmlFontSize: fontSize,
       body1: {
         lineHeight: 1,
         color: mode === "dark" ? "#e5e7eb" : colors["ui-black"],
@@ -87,7 +88,7 @@ export const getTheme = (mode: "light" | "dark") =>
           root: {
             fontSize: 14,
             "&.MuiInputBase-root": {
-              // ✅ FIX: dynamic bg
+              //  FIX: dynamic bg
               background: mode === "dark" ? "#334155" : "#fff",
               fieldset: {
                 borderColor: colors["ui-blue"],
@@ -184,7 +185,7 @@ export const getTheme = (mode: "light" | "dark") =>
             minWidth: 40,
             fontWeight: 600,
 
-            // ✅ dark-safe
+            //  dark-safe
             background: mode === "dark" ? "transparent" : undefined,
 
             "&.MuiButton-outlined:not([disabled])": {
@@ -258,7 +259,7 @@ export const getTheme = (mode: "light" | "dark") =>
   });
 
 // 🔥 optional fallback (for old usage)
-export default getTheme("light");
+// export default getTheme("light");
 
 // import { createTheme } from "@mui/material";
 // import colors from "./color";
