@@ -37,6 +37,13 @@ const TopHeader = ({
             size={14}
             color="primary"
             className="font-semibold cursor-pointer"
+            onClick={() => {
+              const main = document.getElementById("main-content");
+              if (main) {
+                main.focus(); // ✅ move focus
+                main.scrollIntoView({ behavior: "smooth" }); // optional scroll
+              }
+            }}
           />
           <ScreenReader />
           <DarkModeToggle setMode={setMode} />

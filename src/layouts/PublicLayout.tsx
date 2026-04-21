@@ -7,9 +7,11 @@ const PublicLayout = ({ setMode }: any) => {
   return (
     <>
       <Header setMode={setMode} />
+      {/* <main id="main-content" tabIndex={-1}> */}
       <CheckConnection>
         <Outlet />
       </CheckConnection>
+      {/* </main> */}
       <Footer />
     </>
   );

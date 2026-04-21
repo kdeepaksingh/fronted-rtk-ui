@@ -12,7 +12,7 @@ export const getTheme = (mode: "light" | "dark", fontSize: number) =>
       primary: {
         main: colors["ui-primary"],
       },
-      secondary: {
+      secondary: {  
         main: colors["ui-secondary"],
       },
       error: {
